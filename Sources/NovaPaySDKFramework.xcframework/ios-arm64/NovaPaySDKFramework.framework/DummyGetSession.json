@@ -1,0 +1,30 @@
+{
+    "session_id": "3423da4a-81ef-45e5-b6ab-887a053e88ff",
+    "phone": "+380665771712",
+    "amount": "1893.66",
+    "products": [
+        {
+            "price": "1893.66",
+            "description": "EW 1742398909",
+            "type": "primary"
+        },
+        {
+            "price": "1 893.66",
+            "description": "For delivery services",
+            "type": "secondary"
+        }
+    ],
+    "wallet": {
+        "id": 2,
+        "favourite_method": "8",
+        "cards": [
+            {
+                "id": 8,
+                "name": "NovaPay",
+                "type": "novapay",
+                "pan_mask": "517547xxxxxx2193",
+                "updated_at": null
+            }
+        ]
+    }
+}
