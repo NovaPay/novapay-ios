@@ -1,0 +1,631 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		20863C1B2DA5251B005680BB /* NovaPaySDKPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 20863C1A2DA5251B005680BB /* NovaPaySDKPackage */; };
+		208E57782DA7B3200050D96C /* NovaPaySDKPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 208E57772DA7B3200050D96C /* NovaPaySDKPackage */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		200BBF112D5F760F0078FD49 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 200BBEF72D5F760C0078FD49 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 200BBEFE2D5F760C0078FD49;
+			remoteInfo = "PaymentSheet Example";
+		};
+		200BBF1B2D5F760F0078FD49 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 200BBEF72D5F760C0078FD49 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 200BBEFE2D5F760C0078FD49;
+			remoteInfo = "PaymentSheet Example";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		200BBEFF2D5F760C0078FD49 /* PaymentSheet Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PaymentSheet Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		200BBF102D5F760F0078FD49 /* PaymentSheet ExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PaymentSheet ExampleTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		200BBF1A2D5F760F0078FD49 /* PaymentSheet ExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PaymentSheet ExampleUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		200BBF012D5F760C0078FD49 /* PaymentSheet Example */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "PaymentSheet Example";
+			sourceTree = "<group>";
+		};
+		200BBF132D5F760F0078FD49 /* PaymentSheet ExampleTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "PaymentSheet ExampleTests";
+			sourceTree = "<group>";
+		};
+		200BBF1D2D5F760F0078FD49 /* PaymentSheet ExampleUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "PaymentSheet ExampleUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		200BBEFC2D5F760C0078FD49 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				20863C1B2DA5251B005680BB /* NovaPaySDKPackage in Frameworks */,
+				208E57782DA7B3200050D96C /* NovaPaySDKPackage in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		200BBF0D2D5F760F0078FD49 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		200BBF172D5F760F0078FD49 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		200BBEF62D5F760C0078FD49 = {
+			isa = PBXGroup;
+			children = (
+				200BBF012D5F760C0078FD49 /* PaymentSheet Example */,
+				200BBF132D5F760F0078FD49 /* PaymentSheet ExampleTests */,
+				200BBF1D2D5F760F0078FD49 /* PaymentSheet ExampleUITests */,
+				200BBF002D5F760C0078FD49 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		200BBF002D5F760C0078FD49 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				200BBEFF2D5F760C0078FD49 /* PaymentSheet Example.app */,
+				200BBF102D5F760F0078FD49 /* PaymentSheet ExampleTests.xctest */,
+				200BBF1A2D5F760F0078FD49 /* PaymentSheet ExampleUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		200BBEFE2D5F760C0078FD49 /* PaymentSheet Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 200BBF242D5F760F0078FD49 /* Build configuration list for PBXNativeTarget "PaymentSheet Example" */;
+			buildPhases = (
+				200BBEFB2D5F760C0078FD49 /* Sources */,
+				200BBEFC2D5F760C0078FD49 /* Frameworks */,
+				200BBEFD2D5F760C0078FD49 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				200BBF012D5F760C0078FD49 /* PaymentSheet Example */,
+			);
+			name = "PaymentSheet Example";
+			packageProductDependencies = (
+				20863C1A2DA5251B005680BB /* NovaPaySDKPackage */,
+				208E57772DA7B3200050D96C /* NovaPaySDKPackage */,
+			);
+			productName = "PaymentSheet Example";
+			productReference = 200BBEFF2D5F760C0078FD49 /* PaymentSheet Example.app */;
+			productType = "com.apple.product-type.application";
+		};
+		200BBF0F2D5F760F0078FD49 /* PaymentSheet ExampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 200BBF272D5F760F0078FD49 /* Build configuration list for PBXNativeTarget "PaymentSheet ExampleTests" */;
+			buildPhases = (
+				200BBF0C2D5F760F0078FD49 /* Sources */,
+				200BBF0D2D5F760F0078FD49 /* Frameworks */,
+				200BBF0E2D5F760F0078FD49 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				200BBF122D5F760F0078FD49 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				200BBF132D5F760F0078FD49 /* PaymentSheet ExampleTests */,
+			);
+			name = "PaymentSheet ExampleTests";
+			packageProductDependencies = (
+			);
+			productName = "PaymentSheet ExampleTests";
+			productReference = 200BBF102D5F760F0078FD49 /* PaymentSheet ExampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		200BBF192D5F760F0078FD49 /* PaymentSheet ExampleUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 200BBF2A2D5F760F0078FD49 /* Build configuration list for PBXNativeTarget "PaymentSheet ExampleUITests" */;
+			buildPhases = (
+				200BBF162D5F760F0078FD49 /* Sources */,
+				200BBF172D5F760F0078FD49 /* Frameworks */,
+				200BBF182D5F760F0078FD49 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				200BBF1C2D5F760F0078FD49 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				200BBF1D2D5F760F0078FD49 /* PaymentSheet ExampleUITests */,
+			);
+			name = "PaymentSheet ExampleUITests";
+			packageProductDependencies = (
+			);
+			productName = "PaymentSheet ExampleUITests";
+			productReference = 200BBF1A2D5F760F0078FD49 /* PaymentSheet ExampleUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		200BBEF72D5F760C0078FD49 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					200BBEFE2D5F760C0078FD49 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					200BBF0F2D5F760F0078FD49 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 200BBEFE2D5F760C0078FD49;
+					};
+					200BBF192D5F760F0078FD49 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 200BBEFE2D5F760C0078FD49;
+					};
+				};
+			};
+			buildConfigurationList = 200BBEFA2D5F760C0078FD49 /* Build configuration list for PBXProject "PaymentSheet Example" */;
+			developmentRegion = uk;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				uk,
+			);
+			mainGroup = 200BBEF62D5F760C0078FD49;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				208E57762DA7B3200050D96C /* XCLocalSwiftPackageReference "../../../NovaPaySDKPackage" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 200BBF002D5F760C0078FD49 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				200BBEFE2D5F760C0078FD49 /* PaymentSheet Example */,
+				200BBF0F2D5F760F0078FD49 /* PaymentSheet ExampleTests */,
+				200BBF192D5F760F0078FD49 /* PaymentSheet ExampleUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		200BBEFD2D5F760C0078FD49 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		200BBF0E2D5F760F0078FD49 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		200BBF182D5F760F0078FD49 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		200BBEFB2D5F760C0078FD49 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		200BBF0C2D5F760F0078FD49 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		200BBF162D5F760F0078FD49 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		200BBF122D5F760F0078FD49 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 200BBEFE2D5F760C0078FD49 /* PaymentSheet Example */;
+			targetProxy = 200BBF112D5F760F0078FD49 /* PBXContainerItemProxy */;
+		};
+		200BBF1C2D5F760F0078FD49 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 200BBEFE2D5F760C0078FD49 /* PaymentSheet Example */;
+			targetProxy = 200BBF1B2D5F760F0078FD49 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		200BBF222D5F760F0078FD49 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		200BBF232D5F760F0078FD49 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		200BBF252D5F760F0078FD49 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "PaymentSheet Example/PaymentSheet_Example.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"PaymentSheet Example/Preview Content\"";
+				DEVELOPMENT_TEAM = XW5CHAGH2W;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "PaymentSheet-Example-Info.plist";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ua.novapay.novapaymobile;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Debug;
+		};
+		200BBF262D5F760F0078FD49 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "PaymentSheet Example/PaymentSheet_Example.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"PaymentSheet Example/Preview Content\"";
+				DEVELOPMENT_TEAM = X836ASFVVB;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "PaymentSheet-Example-Info.plist";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ua.novapay.novapaymobile;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Release;
+		};
+		200BBF282D5F760F0078FD49 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XW5CHAGH2W;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "NP.PaymentSheet-ExampleTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PaymentSheet Example.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PaymentSheet Example";
+				XROS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Debug;
+		};
+		200BBF292D5F760F0078FD49 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XW5CHAGH2W;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "NP.PaymentSheet-ExampleTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PaymentSheet Example.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PaymentSheet Example";
+				XROS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Release;
+		};
+		200BBF2B2D5F760F0078FD49 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XW5CHAGH2W;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "NP.PaymentSheet-ExampleUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_TARGET_NAME = "PaymentSheet Example";
+				XROS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Debug;
+		};
+		200BBF2C2D5F760F0078FD49 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XW5CHAGH2W;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "NP.PaymentSheet-ExampleUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_TARGET_NAME = "PaymentSheet Example";
+				XROS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		200BBEFA2D5F760C0078FD49 /* Build configuration list for PBXProject "PaymentSheet Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				200BBF222D5F760F0078FD49 /* Debug */,
+				200BBF232D5F760F0078FD49 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		200BBF242D5F760F0078FD49 /* Build configuration list for PBXNativeTarget "PaymentSheet Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				200BBF252D5F760F0078FD49 /* Debug */,
+				200BBF262D5F760F0078FD49 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		200BBF272D5F760F0078FD49 /* Build configuration list for PBXNativeTarget "PaymentSheet ExampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				200BBF282D5F760F0078FD49 /* Debug */,
+				200BBF292D5F760F0078FD49 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		200BBF2A2D5F760F0078FD49 /* Build configuration list for PBXNativeTarget "PaymentSheet ExampleUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				200BBF2B2D5F760F0078FD49 /* Debug */,
+				200BBF2C2D5F760F0078FD49 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		208E57762DA7B3200050D96C /* XCLocalSwiftPackageReference "../../../NovaPaySDKPackage" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../../../NovaPaySDKPackage;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		20863C1A2DA5251B005680BB /* NovaPaySDKPackage */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NovaPaySDKPackage;
+		};
+		208E57772DA7B3200050D96C /* NovaPaySDKPackage */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NovaPaySDKPackage;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 200BBEF72D5F760C0078FD49 /* Project object */;
+}
