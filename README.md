@@ -35,10 +35,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         // Initialize SDK
-        NovaPay.initialize(
-            environment: "development" // Options: "development", "staging", "production"
+        NPAPIClient.configure(
+            environment: .dev // Options: dev, staging, production
         )
-        
+
         return true
     }
 }
@@ -46,72 +46,366 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 ## 💳 Features
 
-### Payment Sheet
+### Payment Sheet 
+### Integration
+#### UIKit Implementation
+
 
 The SDK provides a ready-to-use payment sheet that handles the complete payment flow. Here's a complete example:
 
-```swift
-import NovaPaySDK
+import NovaPaySDKFramework
 
 class PaymentViewController: UIViewController {
     
+    // MARK: - Properties
+    private var paymentSheet: PaymentSheet?
+    private let sessionId: String
+    private let merchantIdentifier: String
+    private let payButton = UIButton()
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupPaymentButton()
+        setupUI()
+        setupPaymentSheet()
     }
     
-    private func setupPaymentButton() {
-        let button = UIButton(type: .system)
-        button.setTitle("Pay Now", for: .normal)
-        button.addTarget(self, action: #selector(showPaymentSheet), for: .touchUpInside)
-        // Add button to your view hierarchy
+    // MARK: - UI Setup
+    private func setupUI() {
+        view.backgroundColor = .white
+        
+        // Configure payment button
+        payButton.setTitle("Pay Now", for: .normal)
+        payButton.backgroundColor = .systemBlue
+        payButton.setTitleColor(.white, for: .normal)
+        payButton.layer.cornerRadius = 8
+        payButton.addTarget(self, action: #selector(payButtonTapped), for: .touchUpInside)
     }
     
-    @objc private func showPaymentSheet() {
-        // First, get session ID from your backend
-        getSessionId { [weak self] sessionId in
-            guard let self = self else { return }
-            
-            NovaPay.showPaymentSheet(
-                viewController: self,
-                sessionId: sessionId,
-                sessionStatusCallback: { [weak self] status in
-                    switch status {
-                    case "SUCCESS":
-                        self?.handleSuccess()
-                    case "FAILED":
-                        self?.handleFailure()
-                    default:
-                        self?.handleOtherStatus(status)
+    // MARK: - Payment Setup
+    private func setupPaymentSheet() {
+        // Disable the button until payment sheet is ready
+        payButton.isEnabled = false
+        payButton.setTitle("Loading...", for: .normal)
+
+        Task {
+            do {
+                // Initialize the payment sheet
+                self.paymentSheet = try await PaymentSheet(
+                    sessionId: sessionId,
+                    merchantIdentifier: merchantIdentifier,
+                    environment: .dev,
+                    sessionStatusCallback: { [weak self] status in
+                        self?.handleSessionStatus(status)
+                    },
+                    paymentSheetStatusCallback: { [weak self] status in
+                        self?.handlePaymentSheetStatus(status)
                     }
-                },
-                paymentSheetStatusCallback: { status in
-                    print("PaymentSheet: \(status)")
-                }
-            )
+                )
+
+                // Enable the button when payment sheet is ready
+                self.payButton.isEnabled = true
+                self.payButton.setTitle("Pay Now", for: .normal)
+            } catch {
+                self.handleError(error)
+            }
         }
     }
     
-    private func getSessionId(completion: @escaping (String) -> Void) {
-        // Implement your API call to get session ID
-        // This should be called from your backend
-        let sessionId = "your_session_id"
-        completion(sessionId)
+    // MARK: - Actions
+    @objc private func payButtonTapped() {
+        guard let paymentSheet = paymentSheet else {
+            print("Payment sheet not initialized")
+            return
+        }
+        
+        // Present the payment sheet
+        paymentSheet.present(
+            from: self,
+            sessionStatusCallback: { [weak self] status in
+                self?.handleSessionStatus(status)
+            },
+            paymentSheetStatusCallback: { [weak self] status in
+                self?.handlePaymentSheetStatus(status)
+            }
+        )
+    }
+
+    // MARK: - Callbacks
+    private func handleSessionStatus(_ status: NPSessionStatusType) {
+        switch status {
+        case .holded:
+            showAlert(title: "Payment Successful", message: "Your payment was processed successfully.")
+        case .failed:
+            showAlert(title: "Payment Failed", message: "There was an issue processing your payment.")
+        // Add other cases as needed based on your NPSessionStatusType enum
+        default:
+            break
+        }
     }
     
-    private func handleSuccess() {
-        // Handle successful payment
-        print("Payment successful")
+    private func handlePaymentSheetStatus(_ status: PaymentSheetStatus) {
+        switch status {
+        case .canceled:
+            print("Payment was canceled by user")
+        case .undefined:
+            print("Payment status is undefined")
+        // Add other cases as needed
+        }
     }
     
-    private func handleFailure() {
-        // Handle failed payment
-        print("Payment failed")
+    private func handleError(_ error: Error) {
+        payButton.isEnabled = false
+        payButton.setTitle("Error", for: .normal)
+        showAlert(title: "Error", message: "Failed to initialize payment: \(error.localizedDescription)")
     }
     
-    private func handleOtherStatus(_ status: String) {
-        // Handle other statuses
-        print("Payment status: \(status)")
+    private func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+}
+
+#### SwiftUI Implementation
+import SwiftUI
+import NovaPaySDKFramework
+
+struct PaymentView: View {
+    @StateObject private var paymentModel = PaymentModel()
+    @State private var showPaymentSheet = false
+    
+    var body: some View {
+        VStack {
+            if paymentModel.isLoading {
+                ProgressView("Preparing payment...")
+            } else {
+                // Standard button approach
+                Button("Pay with Standard Button") {
+                    paymentModel.fetchSessionIdAndInitializePayment()
+                }
+                .padding()
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(8)
+                
+                // PaymentButton convenience wrapper approach
+                if let paymentSheet = paymentModel.paymentSheet {
+                    PaymentSheet.PaymentButton(
+                        paymentSheet: paymentSheet,
+                        sessionStatusCallback: paymentModel.handleSessionStatus,
+                        paymentSheetStatusCallback: paymentModel.handlePaymentSheetStatus
+                    ) {
+                        Text("Pay")
+                            .padding()
+                            .background(Color.green)
+                            .foregroundColor(.white)
+                            .cornerRadius(8)
+                    }
+                    .padding(.top, 20)
+                }
+                
+                // When payment sheet should be presented
+                if let paymentSheet = paymentModel.paymentSheet {
+                    EmptyView()
+                        .paymentSheet(
+                            isPresented: $paymentModel.isPresentedPaymentSheet,
+                            paymentSheet: paymentSheet,
+                            sessionStatusCallback: paymentModel.handleSessionStatus,
+                            paymentSheetStatusCallback: paymentModel.handlePaymentSheetStatus
+                        )
+                }
+            }
+        }
+        .padding()
+        .alert(isPresented: $paymentModel.showError) {
+            Alert(
+                title: Text("Error"),
+                message: Text(paymentModel.errorMessage ?? "An unknown error occurred"),
+                dismissButton: .default(Text("OK"))
+            )
+        }
+    }
+}
+
+class PaymentModel: ObservableObject {
+    @Published var paymentSheet: PaymentSheet?
+    @Published var isPresentedPaymentSheet = false
+    @Published var isLoading = false
+    @Published var showError = false
+    @Published var errorMessage: String?
+    
+    func fetchSessionIdAndInitializePayment() {
+        isLoading = true
+        
+        // Call your backend to get a session ID
+        getSessionId { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let sessionId):
+                self.preparePaymentSheet(sessionId: sessionId)
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    self.showError(message: error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    private func getSessionId(completion: @escaping (Result<String, Error>) -> Void) {
+        // Implement your API call to get session ID from your backend
+        // For example purposes, we're returning a mock result
+        completion(.success("mock_session_id"))
+    }
+    
+    func preparePaymentSheet(sessionId: String) {
+        Task {
+            do {
+                let sheet = try await PaymentSheet(
+                    sessionId: sessionId,
+                    merchantIdentifier: "Your merchantIdentifier",
+                    environment: .dev,
+                    sessionStatusCallback: handleSessionStatus,
+                    paymentSheetStatusCallback: handlePaymentSheetStatus
+                )
+                
+                await MainActor.run {
+                    self.paymentSheet = sheet
+                    self.isPresentedPaymentSheet = true
+                    self.isLoading = false
+                }
+            } catch {
+                await MainActor.run {
+                    self.isLoading = false
+                    self.showError(message: error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    func handleSessionStatus(result: NPSessionStatusType) {
+        switch result {
+        case .preprocessing:
+            print("Payment preprocessing...")
+        case .processing:
+            print("Payment processing...")
+            startPolling()
+            dismissPaymentSheet()
+        case .holded:
+            print("Payment on hold")
+            dismissPaymentSheet()
+        case .voided:
+            print("Payment voided")
+            dismissPaymentSheet()
+        case .paid:
+            print("Payment successful")
+            dismissPaymentSheet()
+        case .failed:
+            print("Payment failed")
+            dismissPaymentSheet()
+            showError(message: "Payment failed")
+        @unknown default:
+            print("Unknown status")
+            dismissPaymentSheet()
+        }
+    }
+    
+    func handlePaymentSheetStatus(result: PaymentSheetStatus) {
+        switch result {
+        case .canceled:
+            print("Payment canceled by user")
+            dismissPaymentSheet()
+        case .undefined:
+            print("Payment sheet closed with undefined status")
+            dismissPaymentSheet()
+        }
+    }
+    
+    private func dismissPaymentSheet() {
+        paymentSheet?.dismiss()
+        isPresentedPaymentSheet = false
+    }
+    
+    func showError(message: String) {
+        errorMessage = message
+        showError = true
+    }
+    
+    func startPolling() {
+        guard let paymentSheet = paymentSheet else { return }
+        let sessionId = paymentSheet.sessionId
+        
+        let sessionService = NPSessionStatusService()
+        Task {
+            await sessionService.startPolling(sessionId: sessionId) { result in
+                // Handle polling results
+            }
+        }
+    }
+}
+
+
+#### Payment Status Handling
+The SDK provides callbacks to handle different payment statuses:
+Session Status Types
+swiftenum NPSessionStatusType {
+    case preprocessing // Payment is being prepared
+    case processing    // Payment is being processed
+    case holded        // Payment is on hold
+    case voided        // Payment was voided
+    case paid          // Payment was successful
+    case failed        // Payment failed
+}
+
+#### Payment Sheet Status Types
+swift@frozen public enum PaymentSheetStatus {
+    case undefined // Payment sheet was closed with undefined status
+    case canceled  // User canceled the payment
+}
+
+#### Advanced Usage
+Polling for Payment Status
+For payments that require additional processing time, you can implement polling:
+swiftfunc startPolling(sessionId: String) {
+    let sessionService = NPSessionStatusService()
+    Task {
+        await sessionService.startPolling(sessionId: sessionId) { result in
+            switch result {
+            case .success(let statusItem):
+                guard let status = statusItem.status else { return }
+                
+                // Handle different status types
+                switch status {
+                case .paid:
+                    // Payment successful
+                    Task {
+                        await sessionService.stopPolling()
+                    }
+                case .failed:
+                    // Payment failed
+                    guard let reasonMessage = statusItem.reason_uk else { return }
+                    // Show error message to user
+                    Task {
+                        await sessionService.stopPolling()
+                    }
+                case .processing, .preprocessing, .holded, .voided:
+                    // Handle other statuses
+                    break
+                @unknown default:
+                    break
+                }
+                
+            case .failure(let error):
+                // Handle polling error
+                print("Polling error: \(error)")
+            }
+        }
     }
 }
 ```
