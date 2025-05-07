@@ -47,12 +47,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 ## 💳 Features
 
 ### Payment Sheet 
-### Integration
+
 #### UIKit Implementation
 
-
 The SDK provides a ready-to-use payment sheet that handles the complete payment flow. Here's a complete example:
-
+```swift
 import NovaPaySDKFramework
 
 class PaymentViewController: UIViewController {
@@ -170,8 +169,11 @@ class PaymentViewController: UIViewController {
         present(alert, animated: true)
     }
 }
+```
 
 #### SwiftUI Implementation
+
+```swift
 import SwiftUI
 import NovaPaySDKFramework
 
@@ -349,12 +351,14 @@ class PaymentModel: ObservableObject {
         }
     }
 }
+```
 
+### Payment Status Handling
 
-#### Payment Status Handling
 The SDK provides callbacks to handle different payment statuses:
 Session Status Types
-swiftenum NPSessionStatusType {
+```swift
+enum NPSessionStatusType {
     case preprocessing // Payment is being prepared
     case processing    // Payment is being processed
     case holded        // Payment is on hold
@@ -362,17 +366,23 @@ swiftenum NPSessionStatusType {
     case paid          // Payment was successful
     case failed        // Payment failed
 }
+```
 
 #### Payment Sheet Status Types
-swift@frozen public enum PaymentSheetStatus {
+
+```swift
+@frozen public enum PaymentSheetStatus {
     case undefined // Payment sheet was closed with undefined status
     case canceled  // User canceled the payment
 }
+```
 
 #### Advanced Usage
 Polling for Payment Status
 For payments that require additional processing time, you can implement polling:
-swiftfunc startPolling(sessionId: String) {
+
+```swift
+func startPolling(sessionId: String) {
     let sessionService = NPSessionStatusService()
     Task {
         await sessionService.startPolling(sessionId: sessionId) { result in
