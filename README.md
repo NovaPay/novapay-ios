@@ -103,7 +103,10 @@ class PaymentViewController: UIViewController {
                     },
                     paymentSheetStatusCallback: { [weak self] status in
                         self?.handlePaymentSheetStatus(status)
-                    }
+                    },
+                    sessionErrorCallback: { [weak self] error in
+                        self?.handleError(error)
+                    },
                 )
 
                 // Enable the button when payment sheet is ready
@@ -130,7 +133,10 @@ class PaymentViewController: UIViewController {
             },
             paymentSheetStatusCallback: { [weak self] status in
                 self?.handlePaymentSheetStatus(status)
-            }
+            },
+            sessionErrorCallback: { [weak self] error in
+                self?.handleError(error)
+            },
         )
     }
 
@@ -200,7 +206,8 @@ struct PaymentView: View {
                     PaymentSheet.PaymentButton(
                         paymentSheet: paymentSheet,
                         sessionStatusCallback: paymentModel.handleSessionStatus,
-                        paymentSheetStatusCallback: paymentModel.handlePaymentSheetStatus
+                        paymentSheetStatusCallback: paymentModel.handlePaymentSheetStatus,
+                        sessionErrorCallback: paymentModel.sessionErrorCallback
                     ) {
                         Text("Pay")
                             .padding()
@@ -218,7 +225,8 @@ struct PaymentView: View {
                             isPresented: $paymentModel.isPresentedPaymentSheet,
                             paymentSheet: paymentSheet,
                             sessionStatusCallback: paymentModel.handleSessionStatus,
-                            paymentSheetStatusCallback: paymentModel.handlePaymentSheetStatus
+                            paymentSheetStatusCallback: paymentModel.handlePaymentSheetStatus,
+                            sessionErrorCallback: paymentModel.handleError
                         )
                 }
             }
@@ -274,7 +282,8 @@ class PaymentModel: ObservableObject {
                     merchantIdentifier: "Your merchantIdentifier",
                     environment: .dev,
                     sessionStatusCallback: handleSessionStatus,
-                    paymentSheetStatusCallback: handlePaymentSheetStatus
+                    paymentSheetStatusCallback: handlePaymentSheetStatus,
+                    sessionErrorCallback: handleError
                 )
                 
                 await MainActor.run {
@@ -327,6 +336,11 @@ class PaymentModel: ObservableObject {
             print("Payment sheet closed with undefined status")
             dismissPaymentSheet()
         }
+    }
+    
+    func handleError(error: Error) {
+        showError(message: error.localizedDescription)
+        dismissPaymentSheet()
     }
     
     private func dismissPaymentSheet() {
