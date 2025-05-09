@@ -33,9 +33,9 @@ import NovaPaySDK
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+
         // Initialize SDK
-        NPAPIClient.configure(
+        NPAPIClient.shared.configure(
             environment: .dev // Options: dev, staging, production
         )
 
