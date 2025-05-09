@@ -5,7 +5,8 @@ struct ExamplePaymentSheetSwiftIUView: View {
     @ObservedObject var model = MyBackendModel()
     @State private var phoneNumber: String = UserDefaults.standard.string(forKey: "savedPhoneNumber") ?? "+380"
     @Environment(\.colorScheme) var colorScheme
-    
+    @State private var selectedEnvironment: NPEnvironmentType = .dev
+
     var body: some View {
         VStack {
             if model.isPresentedPaymentSheet {
@@ -15,7 +16,8 @@ struct ExamplePaymentSheetSwiftIUView: View {
                             isPresented: $model.isPresentedPaymentSheet,
                             paymentSheet: paymentSheet,
                             sessionStatusCallback: model.statusHandler,
-                            paymentSheetStatusCallback: model.onDispose
+                            paymentSheetStatusCallback: model.onDispose,
+                            sessionErrorCallback: model.errorHandler
                         )
                 } else {
                     ExampleLoadingView()
@@ -23,6 +25,26 @@ struct ExamplePaymentSheetSwiftIUView: View {
             } else if model.isLoading {
                 ExampleLoadingView()
             } else {
+                // Environment selection radio buttons
+                VStack(alignment: .leading) {
+                    Text("Environment:")
+                        .font(.headline)
+                        .padding(.bottom, 5)
+                    
+                    RadioButtonGroup(
+                        selectedId: $selectedEnvironment,
+                        options: [
+                            RadioOption(id: .dev, label: "Development"),
+                            RadioOption(id: .staging, label: "Staging")
+                        ]
+                    )
+                    .onChange(of: selectedEnvironment) { oldValue, newValue in
+                        // Configure the NPAPIClient with the selected environment
+                        NPAPIClient.shared.configure(with: newValue)
+                    }
+                }
+                .padding(.horizontal, 30)
+                .padding(.top, 20)
                 // Phone number input field
                 TextField("Phone Number", text: $phoneNumber)
                     .padding(.horizontal, 30)
@@ -51,7 +73,10 @@ struct ExamplePaymentSheetSwiftIUView: View {
                     ForEach(model.waybills, id: \.id) { waybill in
                         WaybillRowView(waybill: waybill)
                             .onTapGesture {
-                                model.initializePayment(waybill: waybill)
+                                model.initializePayment(
+                                    waybill: waybill,
+                                    environment: selectedEnvironment
+                                )
                             }
                     }
                 }
@@ -99,11 +124,11 @@ class MyBackendModel: ObservableObject {
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "Content-type")
         request.addValue("lolkekcheburek", forHTTPHeaderField: "x-token")
-        
+
         let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
             DispatchQueue.main.async {
                 self?.isLoading = false
-                
+
                 if let error = error {
                     self?.showError("Error fetching waybills: \(error.localizedDescription)")
                     return
@@ -133,7 +158,10 @@ class MyBackendModel: ObservableObject {
         self.showErrorAlert = true
     }
 
-    func initializePayment(waybill: WaybillsResponse) {
+    func initializePayment(
+        waybill: WaybillsResponse,
+        environment: NPEnvironmentType
+    ) {
         isLoading = true
 
         // Create the payment initialization request
@@ -170,7 +198,10 @@ class MyBackendModel: ObservableObject {
                     print(string)
                     do {
                         let response = try JSONDecoder().decode(PaymentInitResponse.self, from: data)
-                        self?.preparePaymentSheet(sessionId: response.session_id)
+                        self?.preparePaymentSheet(
+                            sessionId: response.session_id,
+                            environment: environment
+                        )
                     } catch {
                         self?.showError("Error decoding payment init response: \(error)")
                         self?.isLoading = false
@@ -185,7 +216,10 @@ class MyBackendModel: ObservableObject {
         }
     }
 
-    func preparePaymentSheet(sessionId: String) {
+    func preparePaymentSheet(
+        sessionId: String,
+        environment: NPEnvironmentType
+    ) {
         if sessionId.count == 0 {
             return
         }
@@ -195,8 +229,10 @@ class MyBackendModel: ObservableObject {
                 let paymentSheet = try await PaymentSheet.init(
                     sessionId: sessionId,
                     merchantIdentifier: "merchant.ua.novapay.novapaymobile",
+                    environment: environment,
                     sessionStatusCallback: statusHandler,
-                    paymentSheetStatusCallback: onDispose
+                    paymentSheetStatusCallback: onDispose,
+                    sessionErrorCallback: errorHandler
                 )
                 self.paymentSheet = paymentSheet
                 isPresentedPaymentSheet = true
@@ -237,6 +273,12 @@ class MyBackendModel: ObservableObject {
         @unknown default:
             print("Unknown")
         }
+    }
+    
+    func errorHandler(error: Error) {
+        self.paymentSheet?.dismiss()
+        finishSwiftUIIssues()
+        self.showError(error.localizedDescription)
     }
 
     func onDispose(result: PaymentSheetStatus) {
@@ -421,6 +463,59 @@ struct ExampleLoadingView: View {
         } else {
             Text("Preparing payment…")
         }
+    }
+}
+
+// Radio button components
+struct RadioOption<T: Hashable>: Identifiable {
+    let id: T
+    let label: String
+}
+
+struct RadioButtonGroup<T: Hashable>: View {
+    @Binding var selectedId: T
+    let options: [RadioOption<T>]
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            ForEach(options, id: \.id) { option in
+                RadioButton(
+                    label: option.label,
+                    isSelected: selectedId == option.id,
+                    action: { selectedId = option.id }
+                )
+            }
+        }
+    }
+}
+
+struct RadioButton: View {
+    let label: String
+    let isSelected: Bool
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: 10) {
+                ZStack {
+                    Circle()
+                        .stroke(Color.blue, lineWidth: 2)
+                        .frame(width: 20, height: 20)
+                    
+                    if isSelected {
+                        Circle()
+                            .fill(Color.blue)
+                            .frame(width: 12, height: 12)
+                    }
+                }
+                
+                Text(label)
+                    .foregroundColor(.primary)
+                
+                Spacer()
+            }
+        }
+        .buttonStyle(PlainButtonStyle())
     }
 }
 
