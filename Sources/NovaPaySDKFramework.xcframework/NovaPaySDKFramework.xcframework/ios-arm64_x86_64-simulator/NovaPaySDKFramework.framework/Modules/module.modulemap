@@ -1,0 +1,6 @@
+framework module NovaPaySDKFramework {
+  umbrella header "NovaPaySDKFramework.h"
+  export *
+
+  module * { export * }
+}
