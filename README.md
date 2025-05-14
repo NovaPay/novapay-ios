@@ -36,7 +36,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Initialize SDK
         NPAPIClient.shared.configure(
-            environment: .dev // Options: dev, staging, production
+            environment: .dev, // Options: dev, staging, production . By default dev
+            languageType: .uk, Options: uk, en . By default uk
         )
 
         return true
@@ -97,16 +98,11 @@ class PaymentViewController: UIViewController {
                 self.paymentSheet = try await PaymentSheet(
                     sessionId: sessionId,
                     merchantIdentifier: merchantIdentifier,
-                    environment: .dev,
-                    sessionStatusCallback: { [weak self] status in
-                        self?.handleSessionStatus(status)
-                    },
+                    environment: .dev, // Optional
+                    language: .uk, // Optional
                     paymentSheetStatusCallback: { [weak self] status in
                         self?.handlePaymentSheetStatus(status)
-                    },
-                    sessionErrorCallback: { [weak self] error in
-                        self?.handleError(error)
-                    },
+                    }
                 )
 
                 // Enable the button when payment sheet is ready
@@ -128,15 +124,9 @@ class PaymentViewController: UIViewController {
         // Present the payment sheet
         paymentSheet.present(
             from: self,
-            sessionStatusCallback: { [weak self] status in
-                self?.handleSessionStatus(status)
-            },
             paymentSheetStatusCallback: { [weak self] status in
                 self?.handlePaymentSheetStatus(status)
-            },
-            sessionErrorCallback: { [weak self] error in
-                self?.handleError(error)
-            },
+            }
         )
     }
 
@@ -205,9 +195,7 @@ struct PaymentView: View {
                 if let paymentSheet = paymentModel.paymentSheet {
                     PaymentSheet.PaymentButton(
                         paymentSheet: paymentSheet,
-                        sessionStatusCallback: paymentModel.handleSessionStatus,
-                        paymentSheetStatusCallback: paymentModel.handlePaymentSheetStatus,
-                        sessionErrorCallback: paymentModel.sessionErrorCallback
+                        paymentSheetStatusCallback: paymentModel.handlePaymentSheetStatus
                     ) {
                         Text("Pay")
                             .padding()
@@ -224,9 +212,7 @@ struct PaymentView: View {
                         .paymentSheet(
                             isPresented: $paymentModel.isPresentedPaymentSheet,
                             paymentSheet: paymentSheet,
-                            sessionStatusCallback: paymentModel.handleSessionStatus,
-                            paymentSheetStatusCallback: paymentModel.handlePaymentSheetStatus,
-                            sessionErrorCallback: paymentModel.handleError
+                            paymentSheetStatusCallback: paymentModel.handlePaymentSheetStatus
                         )
                 }
             }
@@ -281,11 +267,9 @@ class PaymentModel: ObservableObject {
                     sessionId: sessionId,
                     merchantIdentifier: "Your merchantIdentifier",
                     environment: .dev,
-                    sessionStatusCallback: handleSessionStatus,
-                    paymentSheetStatusCallback: handlePaymentSheetStatus,
-                    sessionErrorCallback: handleError
+                    paymentSheetStatusCallback: handlePaymentSheetStatus
                 )
-                
+
                 await MainActor.run {
                     self.paymentSheet = sheet
                     self.isPresentedPaymentSheet = true
@@ -300,44 +284,22 @@ class PaymentModel: ObservableObject {
         }
     }
     
-    func handleSessionStatus(result: NPSessionStatusType) {
+    func handlePaymentSheetStatus(result: NPSessionStatusType) {
         switch result {
-        case .preprocessing:
-            print("Payment preprocessing...")
-        case .processing:
-            print("Payment processing...")
-            startPolling()
-            dismissPaymentSheet()
-        case .holded:
-            print("Payment on hold")
-            dismissPaymentSheet()
-        case .voided:
-            print("Payment voided")
-            dismissPaymentSheet()
-        case .paid:
-            print("Payment successful")
-            dismissPaymentSheet()
-        case .failed:
-            print("Payment failed")
-            dismissPaymentSheet()
-            showError(message: "Payment failed")
-        @unknown default:
-            print("Unknown status")
-            dismissPaymentSheet()
+            case .canceled:
+                dismissPaymentSheet()
+                print("Canceled!")
+            case .undefined:
+                dismissPaymentSheet()
+                print("Undefined!")
+            case .failed(let errorMessage):
+                showError(message: errorMessage)
+            case .completed:
+                print("Completed!")
+                dismissPaymentSheet()
         }
     }
-    
-    func handlePaymentSheetStatus(result: PaymentSheetStatus) {
-        switch result {
-        case .canceled:
-            print("Payment canceled by user")
-            dismissPaymentSheet()
-        case .undefined:
-            print("Payment sheet closed with undefined status")
-            dismissPaymentSheet()
-        }
-    }
-    
+
     func handleError(error: Error) {
         showError(message: error.localizedDescription)
         dismissPaymentSheet()

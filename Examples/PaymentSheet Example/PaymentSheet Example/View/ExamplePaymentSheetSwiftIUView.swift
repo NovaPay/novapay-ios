@@ -15,9 +15,7 @@ struct ExamplePaymentSheetSwiftIUView: View {
                         .paymentSheet(
                             isPresented: $model.isPresentedPaymentSheet,
                             paymentSheet: paymentSheet,
-                            sessionStatusCallback: model.statusHandler,
-                            paymentSheetStatusCallback: model.onDispose,
-                            sessionErrorCallback: model.errorHandler
+                            paymentSheetStatus: model.onDispose
                         )
                 } else {
                     ExampleLoadingView()
@@ -29,7 +27,7 @@ struct ExamplePaymentSheetSwiftIUView: View {
                 VStack(alignment: .leading) {
                     Text("Environment:")
                         .font(.headline)
-                        .padding(.bottom, 5)
+                        .padding(.bottom, 5) 
                     
                     RadioButtonGroup(
                         selectedId: $selectedEnvironment,
@@ -41,6 +39,10 @@ struct ExamplePaymentSheetSwiftIUView: View {
                     .onChange(of: selectedEnvironment) { oldValue, newValue in
                         // Configure the NPAPIClient with the selected environment
                         NPAPIClient.shared.configure(with: newValue)
+                    }
+                    .onAppear {
+                        // Trigger initial configuration
+                        NPAPIClient.shared.configure(with: selectedEnvironment)
                     }
                 }
                 .padding(.horizontal, 30)
@@ -74,8 +76,7 @@ struct ExamplePaymentSheetSwiftIUView: View {
                         WaybillRowView(waybill: waybill)
                             .onTapGesture {
                                 model.initializePayment(
-                                    waybill: waybill,
-                                    environment: selectedEnvironment
+                                    waybill: waybill
                                 )
                             }
                     }
@@ -104,7 +105,7 @@ class MyBackendModel: ObservableObject {
     @Published var showErrorAlert: Bool = false
     @Published var waybills: [WaybillsResponse] = []
     private var sessionId: String?
-    
+
     func fetchWaybills(phoneNumber: String) {
         isLoading = true
 
@@ -159,8 +160,7 @@ class MyBackendModel: ObservableObject {
     }
 
     func initializePayment(
-        waybill: WaybillsResponse,
-        environment: NPEnvironmentType
+        waybill: WaybillsResponse
     ) {
         isLoading = true
 
@@ -199,8 +199,7 @@ class MyBackendModel: ObservableObject {
                     do {
                         let response = try JSONDecoder().decode(PaymentInitResponse.self, from: data)
                         self?.preparePaymentSheet(
-                            sessionId: response.session_id,
-                            environment: environment
+                            sessionId: response.session_id
                         )
                     } catch {
                         self?.showError("Error decoding payment init response: \(error)")
@@ -217,8 +216,7 @@ class MyBackendModel: ObservableObject {
     }
 
     func preparePaymentSheet(
-        sessionId: String,
-        environment: NPEnvironmentType
+        sessionId: String
     ) {
         if sessionId.count == 0 {
             return
@@ -229,10 +227,7 @@ class MyBackendModel: ObservableObject {
                 let paymentSheet = try await PaymentSheet.init(
                     sessionId: sessionId,
                     merchantIdentifier: "merchant.ua.novapay.novapaymobile",
-                    environment: environment,
-                    sessionStatusCallback: statusHandler,
-                    paymentSheetStatusCallback: onDispose,
-                    sessionErrorCallback: errorHandler
+                    paymentSheetStatus: onDispose
                 )
                 self.paymentSheet = paymentSheet
                 isPresentedPaymentSheet = true
@@ -244,50 +239,25 @@ class MyBackendModel: ObservableObject {
         }
     }
 
-    func statusHandler(result: NPSessionStatusType) {
-        switch result {
-        case .preprocessing:
-            print("Payment preprocessing…")
-        case .processing:
-            print("Payment processing…")
-            self.startPolling()
-            self.paymentSheet?.dismiss()
-            finishSwiftUIIssues()
-        case .holded:
-            print("Payment holded")
-            self.paymentSheet?.dismiss()
-            finishSwiftUIIssues()
-        case .voided:
-            print("Payment voided")
-            self.paymentSheet?.dismiss()
-            finishSwiftUIIssues()
-        case .paid:
-            print("Payment paid")
-            self.paymentSheet?.dismiss()
-            finishSwiftUIIssues()
-        case .failed:
-            print("Payment failed")
-            self.paymentSheet?.dismiss()
-            finishSwiftUIIssues()
-            self.showError("Payment failed")
-        @unknown default:
-            print("Unknown")
-        }
-    }
-    
-    func errorHandler(error: Error) {
+    func errorHandler(errorMessage: String) {
         self.paymentSheet?.dismiss()
         finishSwiftUIIssues()
-        self.showError(error.localizedDescription)
+        self.showError(errorMessage)
     }
 
-    func onDispose(result: PaymentSheetStatus) {
+    func onDispose(result: PaymentSheetResult) {
         switch result {
             case .canceled:
                 self.paymentSheet?.dismiss()
                 finishSwiftUIIssues()
                 print("Canceled!")
             case .undefined:
+                self.paymentSheet?.dismiss()
+                finishSwiftUIIssues()
+            case .failed(let errorMessage):
+                errorHandler(errorMessage: errorMessage)
+            case .completed:
+                print("Completed!")
                 self.paymentSheet?.dismiss()
                 finishSwiftUIIssues()
         }
@@ -318,7 +288,7 @@ class MyBackendModel: ObservableObject {
                         print("Payment paid")
                     case .failed:
                         print("Payment failed")
-                        guard let reason_uk = statusItem.reason_uk else { return }
+                        guard let reason_uk = statusItem.reason else { return }
                         Task {
                             await sessionService.stopPolling()
                         }
