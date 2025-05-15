@@ -248,7 +248,6 @@ class MyBackendModel: ObservableObject {
     func onDispose(result: PaymentSheetResult) {
         switch result {
             case .canceled:
-                self.paymentSheet?.dismiss()
                 finishSwiftUIIssues()
                 print("Canceled!")
             case .undefined:
