@@ -13,92 +13,6 @@ import WebKit
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
-public struct NPProductItem : Swift.Codable, Swift.Sendable {
-  public let price: Swift.String
-  public let description: Swift.String
-  public let type: Swift.String
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-@_Concurrency.MainActor final public class ImageLoader {
-  @_Concurrency.MainActor public init()
-  @_Concurrency.MainActor final public func loadImage(walletId: Swift.Int, cardId: Swift.Int, into imageView: UIKit.UIImageView, placeholderImage: UIKit.UIImage? = nil, updatedAtString: Swift.String? = nil)
-  @objc deinit
-}
-public enum NPFonts {
-  public static func interRegular(size: CoreFoundation.CGFloat) -> UIKit.UIFont
-  public static func interSemibold(size: CoreFoundation.CGFloat) -> UIKit.UIFont
-  public static func interMedum(size: CoreFoundation.CGFloat) -> UIKit.UIFont
-  public static func registerFonts(named names: [Swift.String]) throws
-  public enum InputFormFonts {
-    public static var errorFont: UIKit.UIFont {
-      get
-    }
-    public static var placholderFont: UIKit.UIFont {
-      get
-    }
-    public static var placholderSelectedFont: UIKit.UIFont {
-      get
-    }
-    public static var textFont: UIKit.UIFont {
-      get
-    }
-  }
-}
-public struct NPSessionItem : Swift.Codable, Swift.Sendable {
-  public let session_id: Swift.String?
-  public let phone: Swift.String?
-  public let amount: Swift.Double?
-  public let products: [NovaPaySDKFramework.NPProductItem]?
-  public let wallet: NovaPaySDKFramework.NPWalletItem?
-  public let uuid: Swift.String?
-  public let type: Swift.String?
-  public let error: Swift.String?
-  public let code: Swift.String?
-  public let reason_uk: Swift.String?
-  public let reason_en: Swift.String?
-  public var favouriteCard: NovaPaySDKFramework.NPCardItem? {
-    get
-  }
-  public func isApplePayFavourite() -> Swift.Bool
-  public func hasFavourite() -> Swift.Bool
-  public func isPaymentWithoutConfirmation() -> Swift.Bool
-  public init(from decoder: any Swift.Decoder) throws
-  public func encode(to encoder: any Swift.Encoder) throws
-}
-public enum NPErrorCode : Swift.Int {
-  case connectionError
-  public init?(rawValue: Swift.Int)
-  public typealias RawValue = Swift.Int
-  public var rawValue: Swift.Int {
-    get
-  }
-}
-public enum NPSessionStatusType : Swift.String, Swift.Codable, Swift.Sendable {
-  case paid
-  case failed
-  case holded
-  case voided
-  case preprocessing
-  case processing
-  public init?(rawValue: Swift.String)
-  public typealias RawValue = Swift.String
-  public var rawValue: Swift.String {
-    get
-  }
-}
-public struct NPSessionStatusItem : Swift.Codable, Swift.Sendable {
-  public let session_id: Swift.String
-  public let status: NovaPaySDKFramework.NPSessionStatusType?
-  public let uuid: Swift.String?
-  public let type: Swift.String?
-  public let error: Swift.String?
-  public let code: Swift.String?
-  public let reason_uk: Swift.String?
-  public let reason_en: Swift.String?
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
 public enum FontError : Swift.Error {
   case failedToRegisterFont
   public static func == (a: NovaPaySDKFramework.FontError, b: NovaPaySDKFramework.FontError) -> Swift.Bool
@@ -129,11 +43,6 @@ public enum NPColors {
 extension UIKit.UITextField {
   @_Concurrency.MainActor @preconcurrency public func fixCaretPosition()
 }
-@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor @preconcurrency public class PaymentSheetFavouriteButtonView : UIKit.UIView {
-  @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
-  @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
-  @objc deinit
-}
 public struct NPWalletItem : Swift.Codable, Swift.Sendable {
   public let id: Swift.Int
   public let without_confirmation: Swift.Bool?
@@ -142,6 +51,18 @@ public struct NPWalletItem : Swift.Codable, Swift.Sendable {
   public func hasCard(with id: Swift.Int) -> Swift.Bool
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor @preconcurrency public class PaymentSheetFavouriteButtonView : UIKit.UIView {
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+extension Swift.String {
+  public func isMasterCard() -> Swift.Bool
+  public func isVisa() -> Swift.Bool
+}
+extension UIKit.UITextView {
+  @_Concurrency.MainActor @preconcurrency public func addHyperLinksToText(originalText: Swift.String, hyperLinks: [Swift.String : Swift.String], font: UIKit.UIFont, textColor: UIKit.UIColor, linkColor: UIKit.UIColor, underlineLink: Swift.Bool = false)
 }
 public enum NPFeaturesImages : Swift.String, Swift.CaseIterable {
   case mastercard_placeholder_icon
@@ -161,13 +82,6 @@ public enum NPFeaturesImages : Swift.String, Swift.CaseIterable {
     get
   }
 }
-extension Swift.String {
-  public func isMasterCard() -> Swift.Bool
-  public func isVisa() -> Swift.Bool
-}
-extension UIKit.UITextView {
-  @_Concurrency.MainActor @preconcurrency public func addHyperLinksToText(originalText: Swift.String, hyperLinks: [Swift.String : Swift.String], font: UIKit.UIFont, textColor: UIKit.UIColor, linkColor: UIKit.UIColor, underlineLink: Swift.Bool = false)
-}
 public actor NPSessionStatusService {
   public init()
   public func startPolling(sessionId: Swift.String, completion: @escaping @_Concurrency.MainActor @Sendable (Swift.Result<NovaPaySDKFramework.NPSessionStatusItem, any Swift.Error>) -> Swift.Void) async
@@ -178,36 +92,18 @@ public actor NPSessionStatusService {
     get
   }
 }
-extension Swift.String {
-  public static func localize(_ key: Swift.String, comment: Swift.String? = nil) -> Swift.String
-}
-extension SwiftUICore.View {
-  @_Concurrency.MainActor @preconcurrency public func paymentSheet(isPresented: SwiftUICore.Binding<Swift.Bool>, paymentSheet: NovaPaySDKFramework.PaymentSheet, sessionStatusCallback: @escaping (NovaPaySDKFramework.NPSessionStatusType) -> Swift.Void, paymentSheetStatusCallback: @escaping (NovaPaySDKFramework.PaymentSheetStatus) -> Swift.Void, sessionErrorCallback: @escaping (any Swift.Error) -> Swift.Void) -> some SwiftUICore.View
-  
-}
-@frozen public enum PaymentSheetStatus {
-  case undefined
-  case canceled
-  public static func == (a: NovaPaySDKFramework.PaymentSheetStatus, b: NovaPaySDKFramework.PaymentSheetStatus) -> Swift.Bool
-  public func hash(into hasher: inout Swift.Hasher)
-  public var hashValue: Swift.Int {
-    get
-  }
-}
-@_Concurrency.MainActor public class PaymentSheet {
-  @_Concurrency.MainActor public init(sessionId: Swift.String, merchantIdentifier: Swift.String, environment: NovaPaySDKFramework.NPEnvironmentType = .dev, sessionStatusCallback: ((NovaPaySDKFramework.NPSessionStatusType) -> Swift.Void)? = nil, paymentSheetStatusCallback: ((NovaPaySDKFramework.PaymentSheetStatus) -> Swift.Void)? = nil, sessionErrorCallback: ((any Swift.Error) -> Swift.Void)? = nil) async throws
-  @_Concurrency.MainActor public func dismiss()
-  @_Concurrency.MainActor public func present(from presentingViewController: UIKit.UIViewController, sessionStatusCallback: @escaping (NovaPaySDKFramework.NPSessionStatusType) -> Swift.Void, paymentSheetStatusCallback: @escaping (NovaPaySDKFramework.PaymentSheetStatus) -> Swift.Void, sessionErrorCallback: @escaping (any Swift.Error) -> Swift.Void)
+@_hasMissingDesignatedInitializers public class NPAPIClient {
+  public static let NPSDKVersion: Swift.String
+  nonisolated(unsafe) public static let shared: NovaPaySDKFramework.NPAPIClient
+  public func configure(with environment: NovaPaySDKFramework.NPEnvironmentType? = nil, languageType: NovaPaySDKFramework.LanguageType? = nil)
+  public func getSession(sessionId: Swift.String) async throws -> NovaPaySDKFramework.NPSessionItem?
+  public func getCardArtImage(walletId: Swift.Int, cardId: Swift.Int) async throws -> NovaPaySDKFramework.NPCardArtItem?
+  public func pay(sessionId: Swift.String, type: NovaPaySDKFramework.NPPayInstrumentType, isFavourite: Swift.Bool) async throws -> NovaPaySDKFramework.NPPayResponse?
+  public func getSessionStatus(sessionId: Swift.String) async throws -> NovaPaySDKFramework.NPSessionStatusItem?
   @objc deinit
 }
-extension NovaPaySDKFramework.PaymentSheet {
-  @_Concurrency.MainActor @preconcurrency public struct PaymentButton<Content> : SwiftUICore.View where Content : SwiftUICore.View {
-    @_Concurrency.MainActor @preconcurrency public init(paymentSheet: NovaPaySDKFramework.PaymentSheet, sessionStatusCallback: @escaping (NovaPaySDKFramework.NPSessionStatusType) -> Swift.Void, paymentSheetStatusCallback: @escaping (NovaPaySDKFramework.PaymentSheetStatus) -> Swift.Void, sessionErrorCallback: @escaping (any Swift.Error) -> Swift.Void, @SwiftUICore.ViewBuilder content: () -> Content)
-    @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
-      get
-    }
-    public typealias Body = @_opaqueReturnTypeOf("$s19NovaPaySDKFramework12PaymentSheetC0D6ButtonV4bodyQrvp", 0) __<Content>
-  }
+extension Swift.String {
+  public static func localize(_ key: Swift.String, comment: Swift.String? = nil) -> Swift.String
 }
 public struct CurrencyAmount {
   public init(value: Swift.Double, currencyCode: Swift.String? = nil)
@@ -216,15 +112,47 @@ public struct CurrencyAmount {
 extension NovaPaySDKFramework.CurrencyAmount {
   public func currencySymbol() -> Swift.String?
 }
-@_hasMissingDesignatedInitializers public class NPAPIClient {
-  public static let NPSDKVersion: Swift.String
-  nonisolated(unsafe) public static let shared: NovaPaySDKFramework.NPAPIClient
-  public func configure(with environment: NovaPaySDKFramework.NPEnvironmentType)
-  public func getSession(sessionId: Swift.String) async throws -> NovaPaySDKFramework.NPSessionItem?
-  public func getCardArtImage(walletId: Swift.Int, cardId: Swift.Int) async throws -> NovaPaySDKFramework.NPCardArtItem?
-  public func pay(sessionId: Swift.String, type: NovaPaySDKFramework.NPPayInstrumentType, isFavourite: Swift.Bool) async throws -> NovaPaySDKFramework.NPPayResponse?
-  public func getSessionStatus(sessionId: Swift.String) async throws -> NovaPaySDKFramework.NPSessionStatusItem?
+public struct NPCardArtItem : Swift.Codable, Swift.Sendable {
+  public let width: Swift.Int?
+  public let height: Swift.Int?
+  public let image: Swift.String?
+  public func makeImage() -> UIKit.UIImage?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public func paymentSheet(isPresented: SwiftUICore.Binding<Swift.Bool>, paymentSheet: NovaPaySDKFramework.PaymentSheet, paymentSheetStatus: @escaping (NovaPaySDKFramework.PaymentSheetResult) -> Swift.Void) -> some SwiftUICore.View
+  
+}
+@frozen public enum LanguageType : Swift.String {
+  case uk
+  case en
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public enum PaymentSheetResult {
+  case undefined
+  case canceled
+  case failed(Swift.String)
+  case completed(NovaPaySDKFramework.NPSessionStatusType?)
+}
+@_Concurrency.MainActor public class PaymentSheet {
+  @_Concurrency.MainActor public init(sessionId: Swift.String, merchantIdentifier: Swift.String, environment: NovaPaySDKFramework.NPEnvironmentType? = nil, language: NovaPaySDKFramework.LanguageType? = nil, paymentSheetStatus: ((NovaPaySDKFramework.PaymentSheetResult) -> Swift.Void)? = nil) async throws
+  @_Concurrency.MainActor public func dismiss()
+  @_Concurrency.MainActor public func present(from presentingViewController: UIKit.UIViewController? = nil, paymentSheetStatus: @escaping (NovaPaySDKFramework.PaymentSheetResult) -> Swift.Void)
   @objc deinit
+}
+extension NovaPaySDKFramework.PaymentSheet {
+  @_Concurrency.MainActor @preconcurrency public struct PaymentButton<Content> : SwiftUICore.View where Content : SwiftUICore.View {
+    @_Concurrency.MainActor @preconcurrency public init(paymentSheet: NovaPaySDKFramework.PaymentSheet, paymentSheetStatus: @escaping (NovaPaySDKFramework.PaymentSheetResult) -> Swift.Void, @SwiftUICore.ViewBuilder content: () -> Content)
+    @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+      get
+    }
+    public typealias Body = @_opaqueReturnTypeOf("$s19NovaPaySDKFramework12PaymentSheetC0D6ButtonV4bodyQrvp", 0) __<Content>
+  }
 }
 @objc @_inheritsConvenienceInitializers @IBDesignable @_Concurrency.MainActor @preconcurrency open class CreditCardInputTextfield : UIKit.UITextField {
   @objc @_Concurrency.MainActor @preconcurrency open var isLTRLanguage: Swift.Bool {
@@ -366,22 +294,6 @@ extension NovaPaySDKFramework.CurrencyAmount {
   }
   @objc deinit
 }
-public struct PaymentSheetConfiguration {
-  public static func registerFonts()
-}
-public struct NPCardArtItem : Swift.Codable, Swift.Sendable {
-  public let width: Swift.Int?
-  public let height: Swift.Int?
-  public let image: Swift.String?
-  public func makeImage() -> UIKit.UIImage?
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor @preconcurrency final public class BottomSheetViewController : UIKit.UIViewController {
-  @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
-  @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
-  @objc deinit
-}
 public enum NPCardItemFavouriteCodeType : Swift.String {
   case apple_pay
   case google_pay
@@ -399,6 +311,27 @@ public struct NPCardItem : Swift.Codable, Swift.Sendable {
   public let updated_at: Swift.String?
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
+}
+public struct PaymentSheetConfiguration {
+  public static func registerFonts()
+}
+public enum NPEnvironmentType : Swift.String {
+  case prod
+  case dev
+  case staging
+  public var apiBaseURL: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor @preconcurrency final public class BottomSheetViewController : UIKit.UIViewController {
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
 }
 public protocol CreditCardViewSwiftDelegate : AnyObject {
   func cardNumberValidated(cardNumber: Swift.String)
@@ -426,6 +359,14 @@ extension NovaPaySDKFramework.CreditCardViewSwift : UIKit.UITextFieldDelegate {
   nonisolated(unsafe) public static let shared: NovaPaySDKFramework.NPSessionClient
   @objc deinit
 }
+public struct NPErrorItem : Swift.Codable, Swift.Sendable {
+  public let uuid: Swift.String?
+  public let type: Swift.String?
+  public let error: Swift.String?
+  public let code: Swift.String?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
 @objc @_inheritsConvenienceInitializers @_Concurrency.MainActor @preconcurrency final public class Confirm3dsViewController : UIKit.UIViewController {
   @_Concurrency.MainActor @preconcurrency final public var completionHandler: ((NovaPaySDKFramework.NPSessionStatusType) -> Swift.Void)?
   @_Concurrency.MainActor @preconcurrency @objc override final public func viewDidLoad()
@@ -437,23 +378,14 @@ extension NovaPaySDKFramework.Confirm3dsViewController : WebKit.WKNavigationDele
   @_Concurrency.MainActor @preconcurrency @objc final public func webView(_ webView: WebKit.WKWebView, didFinish navigation: WebKit.WKNavigation!)
   @_Concurrency.MainActor @preconcurrency @objc final public func webView(_ webView: WebKit.WKWebView, didStartProvisionalNavigation navigation: WebKit.WKNavigation!)
 }
-public enum NPEnvironmentType : Swift.String {
-  case prod
-  case dev
-  case staging
-  public var apiBaseURL: Swift.String {
-    get
-  }
-  public init?(rawValue: Swift.String)
-  public typealias RawValue = Swift.String
-  public var rawValue: Swift.String {
-    get
-  }
+public enum NPPayInstrumentType {
+  case oneTimeCard(pan: Swift.String, expire: Swift.String, cvv: Swift.String)
+  case walletCard(walletCardId: Swift.Int, walletPhone: Swift.String?)
+  case applePay(appleData: Foundation.Data?)
+  public func httpBody(isFavourite: Swift.Bool = false) throws -> Foundation.Data?
 }
 @objc @_inheritsConvenienceInitializers @_Concurrency.MainActor @preconcurrency final public class ManualInputViewController : UIKit.UIViewController {
-  @_Concurrency.MainActor @preconcurrency final public var sessionStatusCallback: ((NovaPaySDKFramework.NPSessionStatusType) -> Swift.Void)?
-  @_Concurrency.MainActor @preconcurrency final public var paymentSheetStatusCallback: ((NovaPaySDKFramework.PaymentSheetStatus) -> Swift.Void)?
-  @_Concurrency.MainActor @preconcurrency final public var sessionErrorCallback: ((any Swift.Error) -> Swift.Void)?
+  @_Concurrency.MainActor @preconcurrency final public var paymentSheetStatus: ((NovaPaySDKFramework.PaymentSheetResult) -> Swift.Void)?
   @_Concurrency.MainActor @preconcurrency @objc override final public func viewDidLoad()
   @_Concurrency.MainActor @preconcurrency @objc override final public func viewWillAppear(_ animated: Swift.Bool)
   @_Concurrency.MainActor @preconcurrency @objc override final public func viewWillDisappear(_ animated: Swift.Bool)
@@ -466,19 +398,11 @@ extension NovaPaySDKFramework.ManualInputViewController : @preconcurrency NovaPa
   @_Concurrency.MainActor @preconcurrency final public func cardExpiryValidated(cardExpiry: Swift.String)
   @_Concurrency.MainActor @preconcurrency final public func cardCVVValidated(cvvNumber: Swift.String)
 }
-public enum NPPayInstrumentType {
-  case oneTimeCard(pan: Swift.String, expire: Swift.String, cvv: Swift.String)
-  case walletCard(walletCardId: Swift.Int, walletPhone: Swift.String?)
-  case applePay(appleData: Foundation.Data?)
-  public func httpBody(isFavourite: Swift.Bool = false) throws -> Foundation.Data?
-}
 public struct NPPayResponse : Swift.Codable, Swift.Sendable {
   public let session_id: Swift.String?
-  public let status: Swift.String?
+  public let status: NovaPaySDKFramework.NPSessionStatusType?
   public let redirect_url: Swift.String?
-  public let uuid: Swift.String?
-  public let type: Swift.String?
-  public let error: Swift.String?
+  public let reason: Swift.String?
   public let code: Swift.String?
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
@@ -489,22 +413,96 @@ public struct NPPayRequest : Swift.Encodable {
 public struct NPPayRequestInstrumentItem : Swift.Encodable {
   public func encode(to encoder: any Swift.Encoder) throws
 }
-extension NovaPaySDKFramework.ImageLoader : Swift.Sendable {}
-extension NovaPaySDKFramework.NPErrorCode : Swift.Equatable {}
-extension NovaPaySDKFramework.NPErrorCode : Swift.Hashable {}
-extension NovaPaySDKFramework.NPErrorCode : Swift.RawRepresentable {}
-extension NovaPaySDKFramework.NPSessionStatusType : Swift.Equatable {}
-extension NovaPaySDKFramework.NPSessionStatusType : Swift.Hashable {}
-extension NovaPaySDKFramework.NPSessionStatusType : Swift.RawRepresentable {}
+@_Concurrency.MainActor final public class ImageLoader {
+  @_Concurrency.MainActor public init()
+  @_Concurrency.MainActor final public func loadImage(walletId: Swift.Int, cardId: Swift.Int, into imageView: UIKit.UIImageView, placeholderImage: UIKit.UIImage? = nil, updatedAtString: Swift.String? = nil)
+  @objc deinit
+}
+public struct NPProductItem : Swift.Codable, Swift.Sendable {
+  public let price: Swift.String
+  public let description: Swift.String
+  public let type: Swift.String
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public enum NPErrorCode : Swift.Int {
+  case connectionError
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum NPFonts {
+  public static func interRegular(size: CoreFoundation.CGFloat) -> UIKit.UIFont
+  public static func interSemibold(size: CoreFoundation.CGFloat) -> UIKit.UIFont
+  public static func interMedum(size: CoreFoundation.CGFloat) -> UIKit.UIFont
+  public static func registerFonts(named names: [Swift.String]) throws
+  public enum InputFormFonts {
+    public static var errorFont: UIKit.UIFont {
+      get
+    }
+    public static var placholderFont: UIKit.UIFont {
+      get
+    }
+    public static var placholderSelectedFont: UIKit.UIFont {
+      get
+    }
+    public static var textFont: UIKit.UIFont {
+      get
+    }
+  }
+}
+public struct NPSessionItem : Swift.Codable, Swift.Sendable {
+  public let session_id: Swift.String?
+  public let phone: Swift.String?
+  public let amount: Swift.Double?
+  public let products: [NovaPaySDKFramework.NPProductItem]?
+  public let wallet: NovaPaySDKFramework.NPWalletItem?
+  public var favouriteCard: NovaPaySDKFramework.NPCardItem? {
+    get
+  }
+  public func isApplePayFavourite() -> Swift.Bool
+  public func hasFavourite() -> Swift.Bool
+  public func isPaymentWithoutConfirmation() -> Swift.Bool
+  public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+public enum NPSessionStatusType : Swift.String, Swift.Codable, Swift.Sendable {
+  case paid
+  case failed
+  case holded
+  case voided
+  case preprocessing
+  case processing
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct NPSessionStatusItem : Swift.Codable, Swift.Sendable {
+  public let session_id: Swift.String
+  public let status: NovaPaySDKFramework.NPSessionStatusType?
+  public let uuid: Swift.String?
+  public let type: Swift.String?
+  public let error: Swift.String?
+  public let code: Swift.String?
+  public let reason: Swift.String?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
 extension NovaPaySDKFramework.FontError : Swift.Equatable {}
 extension NovaPaySDKFramework.FontError : Swift.Hashable {}
 extension NovaPaySDKFramework.NPFeaturesImages : Swift.Equatable {}
 extension NovaPaySDKFramework.NPFeaturesImages : Swift.Hashable {}
 extension NovaPaySDKFramework.NPFeaturesImages : Swift.RawRepresentable {}
-extension NovaPaySDKFramework.PaymentSheetStatus : Swift.Equatable {}
-extension NovaPaySDKFramework.PaymentSheetStatus : Swift.Hashable {}
-extension NovaPaySDKFramework.PaymentSheetStatus : Swift.Sendable {}
-extension NovaPaySDKFramework.PaymentSheetStatus : Swift.BitwiseCopyable {}
+extension NovaPaySDKFramework.LanguageType : Swift.Equatable {}
+extension NovaPaySDKFramework.LanguageType : Swift.Hashable {}
+extension NovaPaySDKFramework.LanguageType : Swift.RawRepresentable {}
+extension NovaPaySDKFramework.LanguageType : Swift.Sendable {}
+extension NovaPaySDKFramework.LanguageType : Swift.BitwiseCopyable {}
+extension NovaPaySDKFramework.PaymentSheetResult : Swift.Sendable {}
 extension NovaPaySDKFramework.PaymentSheet : Swift.Sendable {}
 extension NovaPaySDKFramework.PaymentSheet.PaymentButton : Swift.Sendable {}
 extension NovaPaySDKFramework.NPCardItemFavouriteCodeType : Swift.Equatable {}
@@ -513,3 +511,10 @@ extension NovaPaySDKFramework.NPCardItemFavouriteCodeType : Swift.RawRepresentab
 extension NovaPaySDKFramework.NPEnvironmentType : Swift.Equatable {}
 extension NovaPaySDKFramework.NPEnvironmentType : Swift.Hashable {}
 extension NovaPaySDKFramework.NPEnvironmentType : Swift.RawRepresentable {}
+extension NovaPaySDKFramework.ImageLoader : Swift.Sendable {}
+extension NovaPaySDKFramework.NPErrorCode : Swift.Equatable {}
+extension NovaPaySDKFramework.NPErrorCode : Swift.Hashable {}
+extension NovaPaySDKFramework.NPErrorCode : Swift.RawRepresentable {}
+extension NovaPaySDKFramework.NPSessionStatusType : Swift.Equatable {}
+extension NovaPaySDKFramework.NPSessionStatusType : Swift.Hashable {}
+extension NovaPaySDKFramework.NPSessionStatusType : Swift.RawRepresentable {}
