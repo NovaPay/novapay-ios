@@ -417,6 +417,290 @@ NovaPay.getSession(sessionId: "your_session_id") { result in
 }
 ```
 
+### 💳 Wallet Sheet 
+
+The WalletSheet provides a comprehensive interface for managing saved payment cards, allowing users to add, remove, and manage their favorite payment methods.
+
+#### UIKit Implementation
+
+```swift
+import NovaPaySDKFramework
+
+class WalletViewController: UIViewController {
+    
+    // MARK: - Properties
+    private var walletSheet: WalletSheet?
+    private let token: String
+    private let walletButton = UIButton()
+    
+    init(token: String) {
+        self.token = token
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Lifecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupUI()
+        setupWalletSheet()
+    }
+    
+    // MARK: - UI Setup
+    private func setupUI() {
+        view.backgroundColor = .white
+        
+        // Configure wallet button
+        walletButton.setTitle("Manage Cards", for: .normal)
+        walletButton.backgroundColor = .systemGreen
+        walletButton.setTitleColor(.white, for: .normal)
+        walletButton.layer.cornerRadius = 8
+        walletButton.addTarget(self, action: #selector(walletButtonTapped), for: .touchUpInside)
+        
+        // Add constraints (implementation depends on your layout approach)
+        view.addSubview(walletButton)
+        // Add your constraints here
+    }
+    
+    // MARK: - Wallet Setup
+    private func setupWalletSheet() {
+        // Disable the button until wallet sheet is ready
+        walletButton.isEnabled = false
+        walletButton.setTitle("Loading...", for: .normal)
+
+        Task {
+            do {
+                // Initialize the wallet sheet
+                self.walletSheet = try await WalletSheet(
+                    token: token
+                )
+
+                // Enable the button when wallet sheet is ready
+                await MainActor.run {
+                    self.walletButton.isEnabled = true
+                    self.walletButton.setTitle("Manage Cards", for: .normal)
+                }
+            } catch {
+                await MainActor.run {
+                    self.handleError(error)
+                }
+            }
+        }
+    }
+    
+    // MARK: - Actions
+    @objc private func walletButtonTapped() {
+        guard let walletSheet = walletSheet else {
+            print("Wallet sheet not initialized")
+            return
+        }
+        
+        // Present the wallet sheet
+        walletSheet.present(
+            from: self
+        )
+    }
+
+    private func handleError(_ error: Error) {
+        walletButton.isEnabled = false
+        walletButton.setTitle("Error", for: .normal)
+        showAlert(title: "Error", message: "Failed to initialize wallet: \(error.localizedDescription)")
+    }
+    
+    private func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+}
+```
+
+#### SwiftUI Implementation
+
+```swift
+import SwiftUI
+import NovaPaySDKFramework
+
+struct WalletView: View {
+    @StateObject private var walletModel = WalletModel()
+    
+    var body: some View {
+        VStack {
+            if walletModel.isLoading {
+                ProgressView("Loading wallet...")
+            } else {
+                // Standard button approach
+                Button("Manage Cards") {
+                    walletModel.isPresentedWalletSheet = true
+                }
+                .padding()
+                .background(Color.green)
+                .foregroundColor(.white)
+                .cornerRadius(8)
+                
+                // WalletSheet PaymentButton convenience wrapper approach
+                if let walletSheet = walletModel.walletSheet {
+                    WalletSheet.PaymentButton(
+                        walletSheet: walletSheet
+                    ) {
+                        Text("Wallet")
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(8)
+                    }
+                    .padding(.top, 20)
+                }
+                
+                // When wallet sheet should be presented
+                if let walletSheet = walletModel.walletSheet {
+                    EmptyView()
+                        .walletSheet(
+                            isPresented: $walletModel.isPresentedWalletSheet,
+                            walletSheet: walletSheet
+                        )
+                }
+            }
+        }
+        .padding()
+        .alert(isPresented: $walletModel.showError) {
+            Alert(
+                title: Text("Error"),
+                message: Text(walletModel.errorMessage ?? "An unknown error occurred"),
+                dismissButton: .default(Text("OK"))
+            )
+        }
+        .onAppear {
+            walletModel.initializeWalletSheet()
+        }
+    }
+}
+
+class WalletModel: ObservableObject {
+    @Published var walletSheet: WalletSheet?
+    @Published var isPresentedWalletSheet = false
+    @Published var isLoading = false
+    @Published var showError = false
+    @Published var errorMessage: String?
+    
+    private let token: String
+    
+    init(token: String = "your_auth_token_here") {
+        self.token = token
+    }
+    
+    func initializeWalletSheet() {
+        isLoading = true
+        
+        Task {
+            do {
+                let sheet = try await WalletSheet(
+                    token: token
+                )
+
+                await MainActor.run {
+                    self.walletSheet = sheet
+                    self.isLoading = false
+                }
+            } catch {
+                await MainActor.run {
+                    self.isLoading = false
+                    self.showError(message: error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    func handleWalletSheetStatus(_ result: WalletSheetResult) {
+        switch result {
+        case .addCard(let card):
+            print("Card added: \(card)")
+            dismissWalletSheet()
+        case .removeCard:
+            print("Card removed")
+            dismissWalletSheet()
+        case .favouriteCardChanged(let cardId, let isFavourite):
+            print("Favourite card changed - ID: \(cardId ?? -1), isFavourite: \(isFavourite ?? false)")
+        case .mainCardChanged(let cardId, let isMain):
+            print("Main card changed - ID: \(cardId ?? -1), isMain: \(isMain ?? false)")
+        case .canceled:
+            dismissWalletSheet()
+            print("Wallet management canceled!")
+        case .failed(let errorMessage):
+            showError(message: errorMessage)
+            dismissWalletSheet()
+        case .undefined:
+            dismissWalletSheet()
+            print("Wallet status undefined!")
+        }
+    }
+    
+    func handleSessionStatus(_ status: NPSessionStatusType) {
+        // Handle session status if needed
+        switch status {
+        case .completed:
+            print("Session completed")
+        case .failed:
+            print("Session failed")
+        default:
+            break
+        }
+    }
+    
+    private func dismissWalletSheet() {
+        walletSheet?.dismiss()
+        isPresentedWalletSheet = false
+    }
+    
+    func showError(message: String) {
+        errorMessage = message
+        showError = true
+    }
+}
+```
+
+#### Authentication Requirements
+
+The WalletSheet requires authentication via a token. Ensure you have a valid authentication token before initializing:
+
+```swift
+// Get authentication token from your backend
+func getAuthToken(completion: @escaping (Result<String, Error>) -> Void) {
+    // Implement your authentication logic here
+    // This should call your backend API to get a valid token
+}
+
+// Then use it to initialize WalletSheet
+getAuthToken { result in
+    switch result {
+    case .success(let token):
+        Task {
+            do {
+                let walletSheet = try await WalletSheet(token: token)
+                // Use wallet sheet
+            } catch {
+                print("Failed to initialize wallet sheet: \(error)")
+            }
+        }
+    case .failure(let error):
+        print("Failed to get auth token: \(error)")
+    }
+}
+```
+
+#### Card Management Features
+
+The WalletSheet provides comprehensive card management capabilities:
+
+- **Add New Cards**: Users can add new payment cards to their wallet
+- **Remove Cards**: Users can remove existing cards from their wallet
+- **Set Favourite Cards**: Users can mark cards as favourites for quick access
+- **Set Main Card**: Users can designate a primary card for default payments
+- **View Card Details**: Users can view their saved card information
+
 ## 📱 Example Project
 
 The SDK includes a complete example project in the `Examples/PaymentSheet Example` directory. To run the example:
