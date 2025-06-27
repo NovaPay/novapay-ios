@@ -10,11 +10,11 @@
 		</data>
 		<key>Assets.car</key>
 		<data>
-		Je7VkFnHfZpOE7gsb5s4dLAXfNU=
+		selK9k7axfxGdNsOd1VEuaqz/ng=
 		</data>
 		<key>CreditCardView.nib</key>
 		<data>
-		C1D5eEolGZJUWbT8rd1z8gugjdw=
+		Su1UEZZ1a/PgJtwF3gf2NVUttEg=
 		</data>
 		<key>DummyGetSession.json</key>
 		<data>
@@ -54,43 +54,43 @@
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		kEMoGCFmnRfdCCNL/L3ImNBYt/s=
+		liileTvIlWubvVz3gv+VkmT6Kgg=
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		q+n+OVKRmxVPAnSBmwGS/YF23wE=
+		2AHs8OMXP5gWhA4P+Oi0JJL9pus=
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		OoiXNLwBSMhF1H2Z490PgdMmkMs=
+		qC0ek5jF3QRBTXsOQR2GuCFfIlo=
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		+xqxdgF80DIdCn+R+HFZuMpgsww=
+		LXqSAzFXvFytj4Fe2sPBJZQ7koI=
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		vEfNv9s7RB4KaENlj5LbpTournU=
+		RVSKGG0p/HX46KFRtPEDfM5Ve5E=
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		kEMoGCFmnRfdCCNL/L3ImNBYt/s=
+		liileTvIlWubvVz3gv+VkmT6Kgg=
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		MX5JmolWiChVxyqZDfAR/44Is8o=
+		Lg32Tf4Tr5HThVZZClGxuDTaC9U=
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		YPhd0x3OySkRGAnjc/5cVWHc83Y=
+		p3KV7pqudSpvHym31suvOJknHfQ=
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		0Xftc7gUAATLzLUioZPKVEkt/Yk=
+		DlYu5hxjdauIzK1dBj/MJUV48j8=
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		bonpIjIcqEgOJ3LZMosRKD1KUTk=
+		KFYtYFw/0uZn8xc8CDvj4o7OrrI=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -156,6 +156,34 @@
 		<data>
 		0dbUfzs3oBUSRtIRZegcgQ6w99I=
 		</data>
+		<key>PayoutCreditCardView.nib</key>
+		<data>
+		K2puRwecdkg5IvX8EgIUsGNLvSE=
+		</data>
+		<key>PayoutSheet.storyboardc/Dlc-DA-WvP-view-Mtz-Dz-f6y.nib</key>
+		<data>
+		cBFCSeR/6wi60Q914oXSIumfl+8=
+		</data>
+		<key>PayoutSheet.storyboardc/Info.plist</key>
+		<data>
+		Kn+hIPaXV9f3R3xCn4iGpEZ8n3Q=
+		</data>
+		<key>PayoutSheet.storyboardc/N2F-7k-w2L-view-nit-AV-21g.nib</key>
+		<data>
+		WhM8yrNVArWSwLO43YFH26svo3E=
+		</data>
+		<key>PayoutSheet.storyboardc/PayoutManualInputViewController.nib</key>
+		<data>
+		b/bs9rGidtakkRI/tkf7QtjcCQQ=
+		</data>
+		<key>PayoutSheet.storyboardc/PayoutManualNavigationInputViewController.nib</key>
+		<data>
+		cnsPfzeUqBZ2QPHMHbw72zXXGtY=
+		</data>
+		<key>PayoutSheet.storyboardc/UINavigationController-a4g-0I-DBF.nib</key>
+		<data>
+		ShWb9sRtzR7DT5mAzBUI5YuD7/w=
+		</data>
 		<key>Proxima-Nova-Bold.woff2</key>
 		<data>
 		Dc6x0LehOLWhCHNBf/nT+aQq5pA=
@@ -170,11 +198,11 @@
 		</data>
 		<key>WalletCreditCardView.nib</key>
 		<data>
-		NmkKPozjVz2knQvkLCuiRkCU8zo=
+		Du7XP2FE1BNh5RRVhbBxArmEjWA=
 		</data>
 		<key>WalletSheet.storyboardc/Dlc-DA-WvP-view-Mtz-Dz-f6y.nib</key>
 		<data>
-		PlBihfh0OG0mxoZqJXjx2cMUJlg=
+		UbrX2YF0dTTPHEi9W+msFYWnOIU=
 		</data>
 		<key>WalletSheet.storyboardc/Info.plist</key>
 		<data>
@@ -202,7 +230,7 @@
 		</data>
 		<key>WalletSheet.storyboardc/Upt-9M-vsH-view-RIM-FN-eDk.nib</key>
 		<data>
-		Hwl+NM3pm8ebvyv1wR0NQgewA54=
+		170KSSXLY3sAVzPN5R0B7tQjopY=
 		</data>
 		<key>WalletSheet.storyboardc/VlC-xJ-LS2-view-jAR-71-1Wh.nib</key>
 		<data>
@@ -238,13 +266,13 @@
 		</data>
 		<key>WalletSheet.storyboardc/ktK-HB-fX1-view-eCe-h1-9vW.nib</key>
 		<data>
-		Aqzz4DrTZyBXhUfQPUs94eu9UM8=
+		14YGKu/doQ7Yqe5zL2cy3YF9AGg=
 		</data>
 		<key>en.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			qpWHmYPr8iY5Ur9aNoTs73do57A=
+			mk7T6eAhPhQ1TEoqQZa5aCXcqMQ=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -253,7 +281,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			gaB1o/ouI7jhi5ouXOCogeUPT8Y=
+			cgq2IiDSJi48X1AeG4Tz4amhP1U=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -272,14 +300,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			13A4GOu64LpTgkUkD3dMhO+oA9Ens9+PWPYTWVOXzbY=
+			2pbvyzW+67Gdg3AqDe3UZAqJnHLS3rvHwuKbVAM0kX0=
 			</data>
 		</dict>
 		<key>CreditCardView.nib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			oRantXiGsJBAmOuK9/tew78Gnzd8gn8K5QYOCg5Ajls=
+			lCscZw73R1sNcCVU9Z6XCA8QJ5YMVHufZ4VmeKhvvZY=
 			</data>
 		</dict>
 		<key>DummyGetSession.json</key>
@@ -342,70 +370,70 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			03m3qka1b/nHHGlz5cdWZPbUFhDe32Irb2BUnUWCCUc=
+			zmsXvhguySpSaonm+VfopI7EAqmHrSlgRiEYKdZE70w=
 			</data>
 		</dict>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			HgWJj/hEcmWpCA064yBYyBt/HxicNIGFUuBs4a9OZrM=
+			d8Tr7RwrC9l+U5NAaGnwOnqyKo+gC/ueTUZS6JYrSco=
 			</data>
 		</dict>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			9upDcqoD2uO64xcIJC4NRnlnSMXft2HlDSPFWrLqQfs=
+			lKUe0/XDeGyXWd06tK2831APNu3wmkrwMFznsZ03Xno=
 			</data>
 		</dict>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			lwietgbuuJ2/mwuFioFZTNHGlfErEyMBV8wwj487bgE=
+			Sl7bDEIXkHlhe51wyu/XPjt5Q+sJktt98VTdgIqwE/I=
 			</data>
 		</dict>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			rVztAKLX1+6DsaMyrNfGd+7KBQm0DKU+h9O/KrFq40w=
+			i+angWy5vUA2SYa3Nyy+FMXtcocaW+es6PB2Af1pE44=
 			</data>
 		</dict>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			03m3qka1b/nHHGlz5cdWZPbUFhDe32Irb2BUnUWCCUc=
+			zmsXvhguySpSaonm+VfopI7EAqmHrSlgRiEYKdZE70w=
 			</data>
 		</dict>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			jLqMkhu+wCL/xWtSoySVBcMp6kQzo6/RL3MW4KtkGP0=
+			YyOj7pAUP7yMJGLJUGBY4mZ138gjrIiGxorbALEY4gU=
 			</data>
 		</dict>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			IA7LUO9ulfqNy3gmsnHa4lI9mo5D/xpRvoXpstYhEUE=
+			b4fRaQ04nasrdtEh7D2c07FINW+GpkvQNh5hphk00cw=
 			</data>
 		</dict>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			fm9WvtFK6BqxM7LDkeAPUqw8RbvyomWFF43/pRqoqzA=
+			cuRzeCN+MNsk9jeIY2PU8JHVXubJ1vvvnzLh2y73N1o=
 			</data>
 		</dict>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			96uPnSO1oxzryGaqWnSkoxsvlsfE/9ugsu+c0pIbdZY=
+			po00XZo3AFDqc78+f4/isfpjibnT6CqwPoTJva0i+dY=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
@@ -520,6 +548,55 @@
 			AjF6GxFl714AbSdqu3/DyB5DTrQOilIGajNucWioB0I=
 			</data>
 		</dict>
+		<key>PayoutCreditCardView.nib</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			ICB4/fc5KochVArXl0qJ88Ahu+2WhyepNcBMaBDITuw=
+			</data>
+		</dict>
+		<key>PayoutSheet.storyboardc/Dlc-DA-WvP-view-Mtz-Dz-f6y.nib</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			tU9JZDtDYgPzl9OgppO4KYKKZcl2wfhxINrRUthnUv0=
+			</data>
+		</dict>
+		<key>PayoutSheet.storyboardc/Info.plist</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			Cjb/NxfDYTp/p0CJ1PrTDf98kSAQdktLDvQN/tKqvNA=
+			</data>
+		</dict>
+		<key>PayoutSheet.storyboardc/N2F-7k-w2L-view-nit-AV-21g.nib</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			T3lS3NXcnj4EegmLZpUTxG7sj/MTXgGxh2SW804wHFY=
+			</data>
+		</dict>
+		<key>PayoutSheet.storyboardc/PayoutManualInputViewController.nib</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			+LiZvTgjdzseHsSV3gIJ/aR9mzIYLw9Xx/Tkp1g5S0M=
+			</data>
+		</dict>
+		<key>PayoutSheet.storyboardc/PayoutManualNavigationInputViewController.nib</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			WHLlfmHM/VpWue0aDRma4RI3TTsyH7HqfxtgSEl9ZWs=
+			</data>
+		</dict>
+		<key>PayoutSheet.storyboardc/UINavigationController-a4g-0I-DBF.nib</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			WXWFIASKi3PsKwnjkmUODbO/Z9zKEfECUb0W9MwIBNs=
+			</data>
+		</dict>
 		<key>Proxima-Nova-Bold.woff2</key>
 		<dict>
 			<key>hash2</key>
@@ -545,14 +622,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			27z4sdJ+sa+7JetZG+pcD+NxfD2EDbR/o3GiwiHQr2g=
+			AVdAKizIo177MjbIFvliWnJHLuXPl0GZxjyh4VC7fLQ=
 			</data>
 		</dict>
 		<key>WalletSheet.storyboardc/Dlc-DA-WvP-view-Mtz-Dz-f6y.nib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			KUWTdmh386vH0ZcBa5DmbSQZIRHPdNQNYNCTMWYNtQY=
+			nmDi4imVhR3XWWbLTbC9V+6vw9Ixde265Who0syZh/Y=
 			</data>
 		</dict>
 		<key>WalletSheet.storyboardc/Info.plist</key>
@@ -601,7 +678,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			KJ2zWEvG2ZJJg+siZ9wgzyweUpztS5rPPv3xqq+oiPc=
+			IAJ6rg1NR+4LCwobjT9Vu8Hw0fFEWQ9B9dkhSn4s3vs=
 			</data>
 		</dict>
 		<key>WalletSheet.storyboardc/VlC-xJ-LS2-view-jAR-71-1Wh.nib</key>
@@ -664,14 +741,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			38bOqOx0P6LFBtjldzquuP+Us7rMXDC70G45ITgH4/0=
+			aoaCK2OSFJGj8qIkqGszEiNpl48Mxv+GaQ0bEXNemXc=
 			</data>
 		</dict>
 		<key>en.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			s7GGic21zVxM2vbbzUOVL1eoFFfrCIrRTqllBM2sZ2U=
+			ggq0uKpVtkaqOmYcYK/IxxBkqBN7oJf1deHwUM72H+w=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -680,7 +757,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			1Smvx/NRQUhN4LC3Q6m/cD3iftzgnXO9lKIYNnkpvkI=
+			SDuYJhFMzXh7PWHn1sQGuwFPgNNfQ/f8JTnjE4ArjI4=
 			</data>
 			<key>optional</key>
 			<true/>
