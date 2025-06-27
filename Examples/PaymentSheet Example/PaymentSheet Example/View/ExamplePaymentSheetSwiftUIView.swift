@@ -32,6 +32,17 @@ struct ExamplePaymentSheetSwiftUIView: View {
                 } else {
                     LoadingView()
                 }
+            } else if viewModel.isPresentedPayout {
+                if let payoutSheet = viewModel.payoutSheet {
+                    LoadingView()
+                        .payoutSheet(
+                            isPresented: $viewModel.isPresentedPayout,
+                            payoutSheet: payoutSheet,
+                            payoutSheetStatusHandler: viewModel.payoutStatusHandler
+                        )
+                } else {
+                    LoadingView()
+                }
             } else if viewModel.isLoading {
                 LoadingView()
             } else {
@@ -142,6 +153,17 @@ struct ExamplePaymentSheetSwiftUIView: View {
                 viewModel.initializeWallet(phone: phoneNumber)
             } label: {
                 Text("Wallet")
+                    .foregroundColor(.white)
+                    .frame(width: 200, height: 50, alignment: .center)
+            }
+            .background(.blue)
+            .cornerRadius(8)
+            
+            // Button to show payout
+            Button {
+                viewModel.initializePayout(phone: phoneNumber)
+            } label: {
+                Text("Payout")
                     .foregroundColor(.white)
                     .frame(width: 200, height: 50, alignment: .center)
             }
