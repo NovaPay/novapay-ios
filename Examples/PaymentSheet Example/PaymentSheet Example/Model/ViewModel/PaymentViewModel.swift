@@ -4,8 +4,10 @@ import NovaPaySDKFramework
 class PaymentViewModel: ObservableObject {
     @Published var paymentSheet: PaymentSheet?
     @Published var walletSheet: WalletSheet?
+    @Published var payoutSheet: PayoutSheet?
     @Published var isPresentedPaymentSheet: Bool = false
     @Published var isPresentedWallet: Bool = false
+    @Published var isPresentedPayout: Bool = false
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
     @Published var showErrorAlert: Bool = false
@@ -109,6 +111,66 @@ class PaymentViewModel: ObservableObject {
             break
         }
     }
+    
+    // Show payout sheet
+    
+    func initializePayout(
+        phone: String
+    ) {
+        isLoading = true
+        Task {
+            do {
+                let uuid = UUID().uuidString
+                let metadata = PaymentMetadata(payer_type: "", source: "", client_verified: true, client_npuid: "", ref_settlement_recipient: "", ref_settlement_sender: "")
+                let payoutRequest = PayoutInitRequest(phone: phone, external_id: uuid, metadata: metadata)
+                let response = try await apiService.initializePayout(payoutRequest: payoutRequest)
+                await showPayoutSheet(sessionId: response.id)
+            } catch {
+                showError(error.localizedDescription)
+            }
+        }
+    }
+    
+    
+    func showPayoutSheet(sessionId: String) async {
+        self.isPresentedPayout = true
+        do {
+            let payoutSheet = try await PayoutSheet(
+                sessionId: sessionId,
+                payoutSheetStatusHandler: payoutStatusHandler
+            )
+            self.payoutSheet = payoutSheet
+            isPresentedPayout = true
+            isLoading = false
+        } catch {
+            isLoading = false
+            showError(error.localizedDescription)
+        }
+    }
+
+    // Payout status handler
+    func payoutStatusHandler(result: PayoutSheetResult) {
+        switch result {
+        case .canceled:
+            isPresentedPayout = false
+            self.payoutSheet = nil
+            print("Canceled!")
+        case .undefined:
+            isPresentedPayout = false
+            self.payoutSheet = nil
+        case .failed(let error):
+            isPresentedPayout = false
+            self.paymentSheet?.dismiss(completion: {
+                self.payoutSheet = nil
+                self.showError(error)
+            })
+        case .success:
+            isPresentedPayout = false
+            self.payoutSheet = nil
+            print("PayoutCardChanged!")
+        }
+    }
+
 
     // Prepare payment sheet
     func preparePaymentSheet(

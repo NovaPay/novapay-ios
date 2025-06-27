@@ -81,6 +81,28 @@ extension NovaPayAPIService {
     }
 }
 
+extension NovaPayAPIService {
+    // Initialize payout
+    func initializePayout(payoutRequest: PayoutInitRequest) async throws -> PayoutInitResponse {
+        guard let url = URL(string: "\(baseURL)/v1/init-payout") else {
+            throw APIError.invalidURL
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-type")
+        request.addValue(token, forHTTPHeaderField: "x-token")
+        
+        let jsonData = try JSONEncoder().encode(payoutRequest)
+        request.httpBody = jsonData
+
+        let (data, _) = try await URLSession.shared.data(for: request)
+        let string = String(data: data, encoding: .utf8)!
+        print(string)
+        return try JSONDecoder().decode(PayoutInitResponse.self, from: data)
+    }
+}
+
 // MARK: - API Errors
 enum APIError: Error, LocalizedError {
     case invalidPhoneFormat
