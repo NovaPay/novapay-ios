@@ -701,6 +701,162 @@ The WalletSheet provides comprehensive card management capabilities:
 - **Set Main Card**: Users can designate a primary card for default payments
 - **View Card Details**: Users can view their saved card information
 
+### 🧾 Payout Sheet
+
+The `PayoutSheet` is a drop-in solution to present a customizable payout flow for transferring or withdrawing funds.
+
+#### SwiftUI Implementation
+
+```swift
+import SwiftUI
+import NovaPaySDKFramework
+
+struct PayoutView: View {
+    @State private var payoutSheet: PayoutSheet?
+    @State private var isPresented = false
+
+    var body: some View {
+        VStack {
+            if let payoutSheet = payoutSheet {
+                PayoutSheet.PaymentButton(
+                    payoutSheet: payoutSheet,
+                    payoutSheetStatusHandler: handlePayoutStatus
+                ) {
+                    Text("Withdraw Funds")
+                        .padding()
+                        .background(Color.purple)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+
+                // Alternatively, use the ViewModifier directly
+                EmptyView()
+                    .payoutSheet(
+                        isPresented: $isPresented,
+                        payoutSheet: payoutSheet,
+                        payoutSheetStatusHandler: handlePayoutStatus
+                    )
+            } else {
+                ProgressView("Preparing payout...")
+            }
+        }
+        .onAppear {
+            Task {
+                do {
+                    let sheet = try await PayoutSheet(
+                        sessionId: "your_session_id"
+                    )
+                    self.payoutSheet = sheet
+                } catch {
+                    print("Failed to initialize payout sheet: \(error)")
+                }
+            }
+        }
+    }
+
+    func handlePayoutStatus(_ result: PayoutSheetResult) {
+        switch result {
+        case .success:
+            print("Payout completed!")
+        case .canceled:
+            print("Payout canceled")
+        case .failed(let error):
+            print("Payout failed: \(error)")
+        case .undefined:
+            print("Payout status undefined")
+        }
+    }
+}
+```
+
+#### UIKit Implementation
+
+```swift
+import NovaPaySDKFramework
+
+class PayoutViewController: UIViewController {
+
+    private var payoutSheet: PayoutSheet?
+    private let sessionId: String
+    private let payoutButton = UIButton()
+
+    init(sessionId: String) {
+        self.sessionId = sessionId
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        setupButton()
+        setupPayoutSheet()
+    }
+
+    private func setupButton() {
+        payoutButton.setTitle("Withdraw", for: .normal)
+        payoutButton.backgroundColor = .systemPurple
+        payoutButton.setTitleColor(.white, for: .normal)
+        payoutButton.layer.cornerRadius = 8
+        payoutButton.addTarget(self, action: #selector(payoutButtonTapped), for: .touchUpInside)
+        payoutButton.isEnabled = false
+        view.addSubview(payoutButton)
+        // Add layout constraints here
+    }
+
+    private func setupPayoutSheet() {
+        Task {
+            do {
+                let sheet = try await PayoutSheet(sessionId: sessionId)
+                self.payoutSheet = sheet
+                DispatchQueue.main.async {
+                    self.payoutButton.isEnabled = true
+                }
+            } catch {
+                print("Failed to initialize payout sheet: \(error)")
+            }
+        }
+    }
+
+    @objc private func payoutButtonTapped() {
+        guard let sheet = payoutSheet else { return }
+        sheet.present(from: self) { result in
+            switch result {
+            case .success:
+                print("Payout completed")
+            case .canceled:
+                print("Payout canceled")
+            case .failed(let message):
+                print("Payout failed: \(message)")
+            case .undefined:
+                print("Payout status undefined")
+            }
+        }
+    }
+}
+```
+
+#### Result Types
+
+```swift
+@frozen public enum PayoutSheetResult {
+    case undefined
+    case canceled
+    case failed(String)
+    case success
+}
+```
+
+#### Integration Highlights
+
+- ✅ SwiftUI + UIKit support
+- ✅ `.payoutSheet` ViewModifier and `PaymentButton` view
+- ✅ Built-in error handling and async-ready
+
+
 ## 📱 Example Project
 
 The SDK includes a complete example project in the `Examples/PaymentSheet Example` directory. To run the example:
