@@ -10,7 +10,7 @@
 		</data>
 		<key>Assets.car</key>
 		<data>
-		XZxwtX4FkNEJ26ysbGXfj4FH3u0=
+		uTzcDc+W1TmklGQttbqGmq7x+3g=
 		</data>
 		<key>CreditCardView.nib</key>
 		<data>
@@ -54,43 +54,43 @@
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		vMpT5C4NmNablJdvUbVM1/VGchk=
+		G/v2SGN1wlRdDOQkC4b+qju5/A0=
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		G2DzAVJvBNNyy7Y0GUxakIHZoGk=
+		RzjLlxkcwaiJbdewD/IRzFM/fBE=
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		LUzsgsCiW1At0ob0nkDkN4cJKBA=
+		eWMcNBs6UYWegVP09zvdDndB3+s=
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		X97fo4RapUcV+0f2BItEOuTUpKM=
+		OCt4J6V3GxKpTexQBJQURhae0Zg=
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		vbL5Unv3yR42dslR3VMPwWx2uAQ=
+		H+Dd93Nx2Y9lpmF5sY5LIKFJD7g=
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		vMpT5C4NmNablJdvUbVM1/VGchk=
+		G/v2SGN1wlRdDOQkC4b+qju5/A0=
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		gFp/HL479IGS4PkTel9UQpK7hzI=
+		WKFOAARuM0caH2JERsJe8kL1Ggk=
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		OGJ1dHKz/XvLPPWBHD4Ec193658=
+		ZGutlnbTmkCK+qqNa9WU/ep8+50=
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		he6WQKnHQDJ9Lm9v+HLRhRfnp0Q=
+		XOzLAlL1ynZ0wDIDQuu5b6flkMM=
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		LbH6BskrMKObNXYGx1FFRy/0daE=
+		Mlfl0oyQkGDBGCh8uhYQXFwrFSs=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -272,7 +272,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			u/acGbM4xkxYToooFERKBiiWu54=
+			aMjyR1CyH31amC94djetEgJpVNA=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -281,7 +281,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			IPdQUdT0OBQ5IlZ2kdXHKWfwnMM=
+			cX169PT9q8632Vo9vK/yF7PY2Eg=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -300,7 +300,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			YXTZeCxLqllSpA7tDX4pi3z42yIeqTbiMoREk67mPuY=
+			QQn1UFPbT4jxpr/ZTghMcMi9yyau9fnjkK24+y5Y+8g=
 			</data>
 		</dict>
 		<key>CreditCardView.nib</key>
@@ -370,70 +370,70 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			jCJHA0gMBql8tjEbN27nFdx6RJ0L/fDYMUbRpawYcZg=
+			BDq2Mtu+HOQNx0h+RwOY6UiTOR2npJiA3ruiFbRKJj8=
 			</data>
 		</dict>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			+czFblWDbrwDwqIU/CT/o18vdPWvHTBG3eSX1+C1Xck=
+			0G5D2IoBZLLnkT+HcyHPLFNO8E8BHPH7ZDe5pZmvUco=
 			</data>
 		</dict>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			sVgS+nCLDnHVypLri17eypCFjp/dBN1VEvi4xlE9gUc=
+			Jz0xXizTTm1CMVo7/Q3hJ6ItBb4OYuZETMbT5n1jfW8=
 			</data>
 		</dict>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2VJ1BcpJqtFNvkF1/4ucTGovoEAkSXxThB+k8OoQigc=
+			NeS/t5XvuoacbGJhU2rV5HJVqLzymTPhrzLAmzpO5GM=
 			</data>
 		</dict>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Z8JJeiW5Xuv6m0W/Cl5nslJ77n/yDkQI/SRXAyvsUAw=
+			CLExF1nv8xoyEIQgafSPnmqLorB8PP0xZSIuSizXLVc=
 			</data>
 		</dict>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			jCJHA0gMBql8tjEbN27nFdx6RJ0L/fDYMUbRpawYcZg=
+			BDq2Mtu+HOQNx0h+RwOY6UiTOR2npJiA3ruiFbRKJj8=
 			</data>
 		</dict>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			lnLSceYnYhoeCPwqHr4yCWPyXBnWbzgTyJpz39Hmlws=
+			Ufr2klLG9C4E0gEfOGRxZehyAl2QFxosDRLCvzFUKak=
 			</data>
 		</dict>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Vop9EwiDUbnW8tq98H5TVb6UjJQJF1NWC2f4X11kx3w=
+			2PCgTzfjTovO60ciKKKKeirAMPrMZum/+AaNxeJQfS8=
 			</data>
 		</dict>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			tDWoDeAICiLZAmIe5lQNCAJeTPh5YyG/iXGJa31mqU0=
+			TY7jNElUMnATS1Zdcv5uzXadTIW/jSiEgLZPRKrjEgY=
 			</data>
 		</dict>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2hd4a6X6XPkYgrCTAzHzMQmpplUb5Oc+9hJtGZSZJlY=
+			imevEtsNbihUArhOUW1TBYve/RmC9czoGDNr80HOAEQ=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
@@ -748,7 +748,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			jeSSpFQqcuAlWVIqjqkKCSDigIBIIOq7eJSCrOSv9d8=
+			zAl+DMoXIwAvw0woUPQj+Dg00VJfi2HLgETCqYSJXGo=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -757,7 +757,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			u6hY7DMwNpQYRrdPDuOdyxAhQhvJxBNV5EZKsk5/6+w=
+			lbAx0a9ICZK7P2PBawy+zULHpoiHZTNSb0qwyyge8/c=
 			</data>
 			<key>optional</key>
 			<true/>
