@@ -50,7 +50,7 @@ class NovaPayAPIService {
     // Monitor session status
     func startPolling(sessionId: String, completion: @escaping @Sendable (PaymentSheetResult) -> Void) async throws {
         let sessionService = NPSessionStatusService()
-        await try sessionService.startPolling(sessionId: sessionId, completion: completion)
+        try await sessionService.startPolling(sessionId: sessionId, completion: completion)
     }
 
     func stopPolling() async {
