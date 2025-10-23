@@ -5419,57 +5419,6 @@
         "children": [
           {
             "kind": "Var",
-            "name": "NPSDKVersion",
-            "printedName": "NPSDKVersion",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:19NovaPaySDKFramework11NPAPIClientC12NPSDKVersionSSvpZ",
-            "mangledName": "$s19NovaPaySDKFramework11NPAPIClientC12NPSDKVersionSSvpZ",
-            "moduleName": "NovaPaySDKFramework",
-            "static": true,
-            "declAttributes": [
-              "HasInitialValue",
-              "Final",
-              "HasStorage",
-              "AccessControl"
-            ],
-            "isLet": true,
-            "hasStorage": true,
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "String",
-                    "printedName": "Swift.String",
-                    "usr": "s:SS"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:19NovaPaySDKFramework11NPAPIClientC12NPSDKVersionSSvgZ",
-                "mangledName": "$s19NovaPaySDKFramework11NPAPIClientC12NPSDKVersionSSvgZ",
-                "moduleName": "NovaPaySDKFramework",
-                "static": true,
-                "implicit": true,
-                "declAttributes": [
-                  "Final"
-                ],
-                "accessorKind": "get"
-              }
-            ]
-          },
-          {
-            "kind": "Var",
             "name": "shared",
             "printedName": "shared",
             "children": [
@@ -5653,7 +5602,7 @@
           {
             "kind": "Function",
             "name": "pay",
-            "printedName": "pay(sessionId:type:isFavourite:)",
+            "printedName": "pay(sessionId:type:isFavourite:withoutConfirmation:)",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -5686,11 +5635,25 @@
                 "name": "Bool",
                 "printedName": "Swift.Bool",
                 "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.Bool?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "usr": "s:Sq"
               }
             ],
             "declKind": "Func",
-            "usr": "s:19NovaPaySDKFramework11NPAPIClientC3pay9sessionId4type11isFavouriteAA13NPPayResponseVSgSS_AA0K14InstrumentTypeOSbtYaKF",
-            "mangledName": "$s19NovaPaySDKFramework11NPAPIClientC3pay9sessionId4type11isFavouriteAA13NPPayResponseVSgSS_AA0K14InstrumentTypeOSbtYaKF",
+            "usr": "s:19NovaPaySDKFramework11NPAPIClientC3pay9sessionId4type11isFavourite19withoutConfirmationAA13NPPayResponseVSgSS_AA0M14InstrumentTypeOS2bSgtYaKF",
+            "mangledName": "$s19NovaPaySDKFramework11NPAPIClientC3pay9sessionId4type11isFavourite19withoutConfirmationAA13NPPayResponseVSgSS_AA0M14InstrumentTypeOS2bSgtYaKF",
             "moduleName": "NovaPaySDKFramework",
             "declAttributes": [
               "AccessControl"
@@ -8602,7 +8565,7 @@
           {
             "kind": "Function",
             "name": "httpBody",
-            "printedName": "httpBody(isFavourite:)",
+            "printedName": "httpBody(isFavourite:withoutConfirmation:)",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -8624,11 +8587,25 @@
                 "printedName": "Swift.Bool",
                 "hasDefaultArg": true,
                 "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.Bool?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "usr": "s:Sq"
               }
             ],
             "declKind": "Func",
-            "usr": "s:19NovaPaySDKFramework19NPPayInstrumentTypeO8httpBody11isFavourite10Foundation4DataVSgSb_tKF",
-            "mangledName": "$s19NovaPaySDKFramework19NPPayInstrumentTypeO8httpBody11isFavourite10Foundation4DataVSgSb_tKF",
+            "usr": "s:19NovaPaySDKFramework19NPPayInstrumentTypeO8httpBody11isFavourite19withoutConfirmation10Foundation4DataVSgSb_SbSgtKF",
+            "mangledName": "$s19NovaPaySDKFramework19NPPayInstrumentTypeO8httpBody11isFavourite19withoutConfirmation10Foundation4DataVSgSb_SbSgtKF",
             "moduleName": "NovaPaySDKFramework",
             "declAttributes": [
               "AccessControl"
@@ -11914,13 +11891,6 @@
         "moduleName": "NovaPaySDKFramework"
       },
       {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "NovaPaySDKFramework"
-      },
-      {
         "kind": "TypeDecl",
         "name": "NovaPayAPIConfiguration",
         "printedName": "NovaPayAPIConfiguration",
@@ -11971,62 +11941,6 @@
                 "moduleName": "NovaPaySDKFramework",
                 "static": true,
                 "implicit": true,
-                "spi_group_names": [
-                  "STP"
-                ],
-                "accessorKind": "get"
-              }
-            ]
-          },
-          {
-            "kind": "Var",
-            "name": "NPSDKVersion",
-            "printedName": "NPSDKVersion",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:19NovaPaySDKFramework0aB16APIConfigurationV12NPSDKVersionSSvpZ",
-            "mangledName": "$s19NovaPaySDKFramework0aB16APIConfigurationV12NPSDKVersionSSvpZ",
-            "moduleName": "NovaPaySDKFramework",
-            "static": true,
-            "declAttributes": [
-              "HasInitialValue",
-              "HasStorage",
-              "AccessControl",
-              "RawDocComment"
-            ],
-            "isFromExtension": true,
-            "spi_group_names": [
-              "STP"
-            ],
-            "isLet": true,
-            "hasStorage": true,
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "String",
-                    "printedName": "Swift.String",
-                    "usr": "s:SS"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:19NovaPaySDKFramework0aB16APIConfigurationV12NPSDKVersionSSvgZ",
-                "mangledName": "$s19NovaPaySDKFramework0aB16APIConfigurationV12NPSDKVersionSSvgZ",
-                "moduleName": "NovaPaySDKFramework",
-                "static": true,
-                "implicit": true,
-                "isFromExtension": true,
                 "spi_group_names": [
                   "STP"
                 ],
@@ -20686,6 +20600,13 @@
             "mangledName": "$ss9EscapableP"
           }
         ]
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "NovaPaySDKFramework"
       },
       {
         "kind": "Import",
@@ -29592,42 +29513,42 @@
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Commons\/Core\/Models\/API\/NPAPIClient.swift",
       "kind": "Dictionary",
-      "offset": 445,
+      "offset": 371,
       "length": 3,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Commons\/Core\/Models\/API\/NPAPIClient.swift",
       "kind": "BooleanLiteral",
-      "offset": 3239,
+      "offset": 3307,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Commons\/Core\/Models\/API\/NPAPIClient.swift",
       "kind": "BooleanLiteral",
-      "offset": 3279,
+      "offset": 3347,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Commons\/Core\/Models\/API\/NPAPIClient.swift",
       "kind": "BooleanLiteral",
-      "offset": 13094,
+      "offset": 13162,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Commons\/Core\/Models\/API\/NPAPIClient.swift",
       "kind": "BooleanLiteral",
-      "offset": 13711,
+      "offset": 13779,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Commons\/Core\/Models\/API\/NPPayInstrumentType.swift",
       "kind": "BooleanLiteral",
-      "offset": 259,
+      "offset": 268,
       "length": 5,
       "value": "false"
     },
@@ -29637,13 +29558,6 @@
       "offset": 86,
       "length": 5,
       "value": "false"
-    },
-    {
-      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Commons\/Core\/Models\/NovaPayAPIConfiguration+Version.swift",
-      "kind": "StringLiteral",
-      "offset": 137,
-      "length": 7,
-      "value": "\"1.0.0\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Categories\/UITextView+HyperLinks.swift",
@@ -30020,34 +29934,34 @@
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/PaymentSheet\/BottomSheet\/UIViewController+BottomSheet.swift",
       "kind": "FloatLiteral",
       "offset": 2006,
-      "length": 5,
-      "value": "100.0"
+      "length": 3,
+      "value": "0.0"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/PaymentSheet\/BottomSheet\/UIViewController+BottomSheet.swift",
       "kind": "StringLiteral",
-      "offset": 2191,
+      "offset": 2189,
       "length": 26,
       "value": "\"favouriteTypeSheetDetent\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/PaymentSheet\/BottomSheet\/UIViewController+BottomSheet.swift",
       "kind": "FloatLiteral",
-      "offset": 2329,
+      "offset": 2327,
       "length": 5,
       "value": "390.0"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/PaymentSheet\/BottomSheet\/UIViewController+BottomSheet.swift",
       "kind": "StringLiteral",
-      "offset": 2517,
+      "offset": 2515,
       "length": 26,
       "value": "\"favouriteTypeSheetDetent\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/PaymentSheet\/BottomSheet\/UIViewController+BottomSheet.swift",
       "kind": "FloatLiteral",
-      "offset": 2655,
+      "offset": 2653,
       "length": 5,
       "value": "275.0"
     },
@@ -30187,7 +30101,7 @@
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/PaymentSheet\/Helpers\/PaymentService.swift",
       "kind": "BooleanLiteral",
-      "offset": 613,
+      "offset": 656,
       "length": 5,
       "value": "false"
     },

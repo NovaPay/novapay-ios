@@ -170,7 +170,6 @@ public actor NSAddCardStatusService {
   }
 }
 @_hasMissingDesignatedInitializers public class NPAPIClient {
-  public static let NPSDKVersion: Swift.String
   nonisolated(unsafe) public static let shared: NovaPaySDKFramework.NPAPIClient
   #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor public func configure(with environment: NovaPaySDKFramework.NPEnvironmentType? = nil, languageType: NovaPaySDKFramework.LanguageType? = nil)
@@ -182,7 +181,7 @@ public actor NSAddCardStatusService {
   public func getCardArtImage(walletId: Swift.Int, cardId: Swift.Int) async throws -> NovaPaySDKFramework.NPCardArtItem?
   #endif
   #if compiler(>=5.3) && $NonescapableTypes
-  public func pay(sessionId: Swift.String, type: NovaPaySDKFramework.NPPayInstrumentType, isFavourite: Swift.Bool) async throws -> NovaPaySDKFramework.NPPayResponse?
+  public func pay(sessionId: Swift.String, type: NovaPaySDKFramework.NPPayInstrumentType, isFavourite: Swift.Bool, withoutConfirmation: Swift.Bool?) async throws -> NovaPaySDKFramework.NPPayResponse?
   #endif
   #if compiler(>=5.3) && $NonescapableTypes
   public func getSessionStatus(sessionId: Swift.String) async throws -> NovaPaySDKFramework.NPSessionStatusItem?
@@ -316,7 +315,7 @@ public enum NPPayInstrumentType {
   case walletCard(walletCardId: Swift.Int, walletPhone: Swift.String?)
   case applePay(appleData: Foundation.Data?)
   #if compiler(>=5.3) && $NonescapableTypes
-  public func httpBody(isFavourite: Swift.Bool = false) throws -> Foundation.Data?
+  public func httpBody(isFavourite: Swift.Bool = false, withoutConfirmation: Swift.Bool?) throws -> Foundation.Data?
   #endif
 }
 public struct NPPaymentSessionItem : Swift.Codable, Swift.Sendable {
