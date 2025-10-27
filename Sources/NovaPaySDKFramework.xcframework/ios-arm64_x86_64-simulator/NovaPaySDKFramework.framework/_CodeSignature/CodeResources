@@ -10,7 +10,7 @@
 		</data>
 		<key>Assets.car</key>
 		<data>
-		dBsy/364b+u7GcZ2oUnuHgUXeXA=
+		MwwvrcYVRHmynN/MkxNar/W0AB4=
 		</data>
 		<key>CreditCardView.nib</key>
 		<data>
@@ -46,7 +46,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		ORFv8k724ysZAO97uo3hPAzQIiY=
+		XbdHum2EKylfVzAGKFoQDDvAyc8=
 		</data>
 		<key>Inter-Medium.woff2</key>
 		<data>
@@ -78,7 +78,7 @@
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		ezbvEhPbFUtKQJQqW3N5sZaB+kw=
+		FE5MD1LwUcSaM4U8dvwkSiUD+k4=
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -98,7 +98,7 @@
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		Igi46DnP43iv6q6zP2xxYw3c6eA=
+		ZPLSIwN6ntGy4OQwQQ9BUOvyybI=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -299,7 +299,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			XEJvuKky4cQ/vxEtfNGWwnxK9yV/7A54b7dlfbKu0tQ=
+			+U/gxiLBqnklZAj322AapYkxmfja7tUTUzjni+kQ7To=
 			</data>
 		</dict>
 		<key>CreditCardView.nib</key>
@@ -411,7 +411,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			ZBlA/s+3Qoi2RlBSkBBlbp3nVsat0zWGK09WOAAU/1E=
+			WPH5rnnBp32E42ZgXrGvY7I0c6RHeU4G2jBtX7sq1i4=
 			</data>
 		</dict>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
@@ -446,7 +446,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			AlUKy3E51rgeNBfbIFBG2o2B47Mh0Cpvx7qpGUL0sH4=
+			Yj89yk0cAyCcfbeu5NRt31sRZ3AMGpPD3jIMvNAp1G0=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
