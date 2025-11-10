@@ -14,7 +14,12 @@ import WebKit
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
+@_Concurrency.MainActor public protocol ImageLoadObserver : AnyObject, Swift.Sendable {
+  @_Concurrency.MainActor func imageDidLoad(cardId: Swift.Int, image: UIKit.UIImage)
+}
 @_hasMissingDesignatedInitializers @_Concurrency.MainActor final public class ImageLoader {
+  @_Concurrency.MainActor final public func addObserver(_ observer: any NovaPaySDKFramework.ImageLoadObserver)
+  @_Concurrency.MainActor final public func removeObserver(_ observer: any NovaPaySDKFramework.ImageLoadObserver)
   #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor final public func loadImage(walletId: Swift.Int, cardId: Swift.Int, into imageView: UIKit.UIImageView, placeholderImage: UIKit.UIImage? = nil, updatedAtString: Swift.String? = nil)
   #endif

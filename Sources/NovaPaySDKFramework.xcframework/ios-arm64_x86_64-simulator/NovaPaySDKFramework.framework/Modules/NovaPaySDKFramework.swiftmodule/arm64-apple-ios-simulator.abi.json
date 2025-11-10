@@ -34,9 +34,149 @@
       },
       {
         "kind": "TypeDecl",
+        "name": "ImageLoadObserver",
+        "printedName": "ImageLoadObserver",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "imageDidLoad",
+            "printedName": "imageDidLoad(cardId:image:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "UIImage",
+                "printedName": "UIKit.UIImage",
+                "usr": "c:objc(cs)UIImage"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:19NovaPaySDKFramework17ImageLoadObserverP08imageDidE06cardId0G0ySi_So7UIImageCtF",
+            "mangledName": "$s19NovaPaySDKFramework17ImageLoadObserverP08imageDidE06cardId0G0ySi_So7UIImageCtF",
+            "moduleName": "NovaPaySDKFramework",
+            "genericSig": "<τ_0_0 where τ_0_0 : NovaPaySDKFramework.ImageLoadObserver>",
+            "sugared_genericSig": "<Self where Self : NovaPaySDKFramework.ImageLoadObserver>",
+            "protocolReq": true,
+            "declAttributes": [
+              "Custom"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Protocol",
+        "usr": "s:19NovaPaySDKFramework17ImageLoadObserverP",
+        "mangledName": "$s19NovaPaySDKFramework17ImageLoadObserverP",
+        "moduleName": "NovaPaySDKFramework",
+        "genericSig": "<τ_0_0 : AnyObject, τ_0_0 : Swift.Sendable>",
+        "sugared_genericSig": "<Self : AnyObject, Self : Swift.Sendable>",
+        "declAttributes": [
+          "AccessControl",
+          "Custom"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SendableMetatype",
+            "printedName": "SendableMetatype",
+            "usr": "s:s16SendableMetatypeP",
+            "mangledName": "$ss16SendableMetatypeP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
         "name": "ImageLoader",
         "printedName": "ImageLoader",
         "children": [
+          {
+            "kind": "Function",
+            "name": "addObserver",
+            "printedName": "addObserver(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "ImageLoadObserver",
+                "printedName": "any NovaPaySDKFramework.ImageLoadObserver",
+                "usr": "s:19NovaPaySDKFramework17ImageLoadObserverP"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:19NovaPaySDKFramework11ImageLoaderC11addObserveryyAA0d4LoadG0_pF",
+            "mangledName": "$s19NovaPaySDKFramework11ImageLoaderC11addObserveryyAA0d4LoadG0_pF",
+            "moduleName": "NovaPaySDKFramework",
+            "declAttributes": [
+              "Custom",
+              "Final",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "removeObserver",
+            "printedName": "removeObserver(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "ImageLoadObserver",
+                "printedName": "any NovaPaySDKFramework.ImageLoadObserver",
+                "usr": "s:19NovaPaySDKFramework17ImageLoadObserverP"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:19NovaPaySDKFramework11ImageLoaderC14removeObserveryyAA0d4LoadG0_pF",
+            "mangledName": "$s19NovaPaySDKFramework11ImageLoaderC14removeObserveryyAA0d4LoadG0_pF",
+            "moduleName": "NovaPaySDKFramework",
+            "declAttributes": [
+              "Custom",
+              "Final",
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
           {
             "kind": "Function",
             "name": "loadImage",
@@ -29484,10 +29624,10 @@
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Commons\/Core\/Helpers\/ImageLoader.swift",
-      "kind": "IntegerLiteral",
-      "offset": 105,
-      "length": 1,
-      "value": "0"
+      "kind": "Dictionary",
+      "offset": 571,
+      "length": 3,
+      "value": "[]"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Commons\/Core\/Helpers\/NPError.swift",
@@ -29803,6 +29943,650 @@
       "offset": 5887,
       "length": 5,
       "value": "false"
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 157,
+      "length": 42,
+      "value": "\"paymentFavouriteScreenChangeMethodButton\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 235,
+      "length": 33,
+      "value": "\"paymentFavouriteScreenPayButton\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 304,
+      "length": 53,
+      "value": "\"paymentFavouriteScreenAutopaymentFavouriteCheckmark\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 398,
+      "length": 49,
+      "value": "\"paymentFavouriteScreenAutopaymentFavouriteLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 487,
+      "length": 46,
+      "value": "\"paymentFavouriteScreenCardNameFavouriteLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 575,
+      "length": 48,
+      "value": "\"paymentFavouriteScreenCardNumberFavouriteLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 665,
+      "length": 48,
+      "value": "\"paymentFavouriteScreenCardTypeFavouriteSubIcon\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 752,
+      "length": 45,
+      "value": "\"paymentFavouriteScreenCardTypeFavouriteIcon\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 836,
+      "length": 36,
+      "value": "\"paymentFavouriteScreenCancelButton\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 951,
+      "length": 33,
+      "value": "\"paymentScreenManualMethodButton\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 1020,
+      "length": 24,
+      "value": "\"paymentScreenPayButton\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 1080,
+      "length": 24,
+      "value": "\"paymentScreenCheckmark\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 1149,
+      "length": 33,
+      "value": "\"paymentScreenFavouriteCheckmark\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 1223,
+      "length": 29,
+      "value": "\"paymentScreenFavouriteLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 1292,
+      "length": 28,
+      "value": "\"paymentScreenCardNameLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 1362,
+      "length": 30,
+      "value": "\"paymentScreenCardNumberLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 1431,
+      "length": 27,
+      "value": "\"paymentScreenCardTypeIcon\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 1500,
+      "length": 30,
+      "value": "\"paymentScreenCardTypeSubIcon\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 1569,
+      "length": 27,
+      "value": "\"paymentScreenCancelButton\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 1671,
+      "length": 30,
+      "value": "\"paymentManualScreenPayButton\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 1744,
+      "length": 36,
+      "value": "\"paymentManualScreenPrivcyCheckmark\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 1819,
+      "length": 33,
+      "value": "\"paymentManualScreenPrivacyLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 1898,
+      "length": 40,
+      "value": "\"paymentManualScreenCardNumberTextField\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 1985,
+      "length": 41,
+      "value": "\"paymentManualScreencardNumberErrorLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 2068,
+      "length": 36,
+      "value": "\"paymentManualScreenCardTypeSubIcon\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 2154,
+      "length": 44,
+      "value": "\"paymentManualScreenCardExpirationTextField\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 2249,
+      "length": 45,
+      "value": "\"paymentManualScreenCardExpirationErrorLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 2337,
+      "length": 34,
+      "value": "\"paymentManualScreenCardTextField\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 2415,
+      "length": 38,
+      "value": "\"paymentManualScreenCardCvvErrorLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 2506,
+      "length": 47,
+      "value": "\"paymentManualScreenCardExpirationWarningLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 2590,
+      "length": 31,
+      "value": "\"paymentManualScreenBackButton\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 2660,
+      "length": 33,
+      "value": "\"paymentManualScreenCancelButton\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 2823,
+      "length": 24,
+      "value": "\"walletScreenNewsButton\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 2891,
+      "length": 31,
+      "value": "\"walletScreenAutopaymentButton\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 2971,
+      "length": 36,
+      "value": "\"walletScreenAutopaymentStatusLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 3049,
+      "length": 29,
+      "value": "\"walletScreenFavouriteButton\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 3125,
+      "length": 34,
+      "value": "\"walletScreenFavouriteStatusLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 3201,
+      "length": 29,
+      "value": "\"walletScreenCardTypeSubIcon\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 3269,
+      "length": 26,
+      "value": "\"walletScreenCardTypeIcon\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 3335,
+      "length": 27,
+      "value": "\"walletScreenCardNameLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 3404,
+      "length": 29,
+      "value": "\"walletScreenCardNumberLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 3484,
+      "length": 38,
+      "value": "\"walletScreenCardAutoWriteStatusLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 3573,
+      "length": 38,
+      "value": "\"walletScreenCardFavouriteStatusLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 3651,
+      "length": 27,
+      "value": "\"walletScreenAddCardButton\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 3759,
+      "length": 35,
+      "value": "\"walletAutopaymentScreenInfoButton\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 3834,
+      "length": 38,
+      "value": "\"walletAutopaymentScreenConfirmSwitch\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 3909,
+      "length": 35,
+      "value": "\"walletAutopaymentScreenSaveButton\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 3983,
+      "length": 37,
+      "value": "\"walletAutopaymentScreenCancelButton\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 4062,
+      "length": 40,
+      "value": "\"walletAutopaymentScreenCardTypeSubIcon\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 4145,
+      "length": 41,
+      "value": "\"walletAutopaymentScreenCardWarningLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 4225,
+      "length": 37,
+      "value": "\"walletAutopaymentScreenCardTypeIcon\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 4302,
+      "length": 38,
+      "value": "\"walletAutopaymentScreenCardNameLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 4382,
+      "length": 40,
+      "value": "\"walletAutopaymentScreenCardNumberLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 4458,
+      "length": 38,
+      "value": "\"walletAutopaymentScreenCardCheckmark\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 4576,
+      "length": 34,
+      "value": "\"walletFavouritesScreenInfoButton\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 4650,
+      "length": 37,
+      "value": "\"walletFavouritesScreenConfirmSwitch\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 4724,
+      "length": 34,
+      "value": "\"walletFavouritesScreenSaveButton\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 4797,
+      "length": 36,
+      "value": "\"walletFavouritesScreenDeleteButton\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 4872,
+      "length": 36,
+      "value": "\"walletFavouritesScreenCancelButton\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 4950,
+      "length": 39,
+      "value": "\"walletFavouritesScreenCardTypeSubIcon\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 5032,
+      "length": 40,
+      "value": "\"walletFavouritesScreenCardWarningLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 5111,
+      "length": 36,
+      "value": "\"walletFavouritesScreenCardTypeIcon\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 5187,
+      "length": 37,
+      "value": "\"walletFavouritesScreenCardNameLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 5266,
+      "length": 39,
+      "value": "\"walletFavouritesScreenCardNumberLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 5341,
+      "length": 37,
+      "value": "\"walletFavouritesScreenCardCheckmark\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 5417,
+      "length": 42,
+      "value": "\"walletFavouritesScreenManualMethodButton\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 5535,
+      "length": 29,
+      "value": "\"walletManualScreenPayButton\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 5607,
+      "length": 35,
+      "value": "\"walletManualScreenPrivcyCheckmark\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 5681,
+      "length": 32,
+      "value": "\"walletManualScreenPrivacyLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 5759,
+      "length": 39,
+      "value": "\"walletManualScreenCardNumberTextField\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 5845,
+      "length": 40,
+      "value": "\"walletManualScreencardNumberErrorLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 5927,
+      "length": 35,
+      "value": "\"walletManualScreenCardTypeSubIcon\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 6012,
+      "length": 43,
+      "value": "\"walletManualScreenCardExpirationTextField\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 6106,
+      "length": 44,
+      "value": "\"walletManualScreenCardExpirationErrorLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 6203,
+      "length": 46,
+      "value": "\"walletManualScreenCardExpirationWarningLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 6286,
+      "length": 30,
+      "value": "\"walletManualScreenBackButton\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 6355,
+      "length": 32,
+      "value": "\"walletManualScreenCancelButton\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 6523,
+      "length": 30,
+      "value": "\"payoutScreenOrderNumberLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 6590,
+      "length": 35,
+      "value": "\"walletAutopaymentScreenSaveButton\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 6667,
+      "length": 40,
+      "value": "\"walletAutopaymentScreenCardTypeSubIcon\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 6746,
+      "length": 26,
+      "value": "\"payoutScreenCardTypeIcon\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 6812,
+      "length": 27,
+      "value": "\"payoutScreenCardNameLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 6881,
+      "length": 29,
+      "value": "\"payoutScreenCardNumberLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 6946,
+      "length": 27,
+      "value": "\"payoutScreenCardCheckmark\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 7012,
+      "length": 26,
+      "value": "\"payoutScreenManualButton\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 7120,
+      "length": 30,
+      "value": "\"payoutScreenOrderNumberLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 7187,
+      "length": 35,
+      "value": "\"walletAutopaymentScreenSaveButton\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 7265,
+      "length": 35,
+      "value": "\"walletManualScreenPrivcyCheckmark\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 7339,
+      "length": 32,
+      "value": "\"walletManualScreenPrivacyLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 7417,
+      "length": 39,
+      "value": "\"walletManualScreenCardNumberTextField\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 7503,
+      "length": 40,
+      "value": "\"walletManualScreencardNumberErrorLabel\""
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/AccessibilityIdConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 7585,
+      "length": 35,
+      "value": "\"walletManualScreenCardTypeSubIcon\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Components\/Helpers\/View+CornerRadius.swift",
@@ -30304,42 +31088,42 @@
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/PaymentSheet\/ViewControllers\/ManualInputViewController.swift",
       "kind": "BooleanLiteral",
-      "offset": 725,
+      "offset": 781,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/PaymentSheet\/ViewControllers\/ManualInputViewController.swift",
       "kind": "BooleanLiteral",
-      "offset": 870,
+      "offset": 926,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/PaymentSheet\/ViewControllers\/PaymentSheetViewController.swift",
       "kind": "Array",
-      "offset": 324,
+      "offset": 380,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/PaymentSheet\/ViewControllers\/PaymentSheetViewController.swift",
       "kind": "StringLiteral",
-      "offset": 584,
+      "offset": 753,
       "length": 27,
       "value": "\"ManualInputViewController\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/PaymentSheet\/ViewControllers\/PaymentSheetViewController.swift",
       "kind": "StringLiteral",
-      "offset": 685,
+      "offset": 854,
       "length": 31,
       "value": "\"PaymentSheetCardTableViewCell\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/PaymentSheet\/ViewControllers\/PaymentSheetViewController.swift",
       "kind": "StringLiteral",
-      "offset": 752,
+      "offset": 921,
       "length": 39,
       "value": "\"PaymentSheetApplyPayCardTableViewCell\""
     },
@@ -30402,21 +31186,21 @@
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Payout\/ViewControllers\/PayoutSheetViewController.swift",
       "kind": "StringLiteral",
-      "offset": 1129,
+      "offset": 1218,
       "length": 33,
       "value": "\"PayoutManualInputViewController\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Payout\/ViewControllers\/PayoutSheetViewController.swift",
       "kind": "StringLiteral",
-      "offset": 1243,
+      "offset": 1332,
       "length": 32,
       "value": "\"PayoutManualInputTableViewCell\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Payout\/ViewControllers\/PayoutSheetViewController.swift",
       "kind": "StringLiteral",
-      "offset": 1306,
+      "offset": 1395,
       "length": 30,
       "value": "\"PayoutSheetCardTableViewCell\""
     },
@@ -30472,119 +31256,119 @@
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletAutoPaymentViewController.swift",
       "kind": "Array",
-      "offset": 1010,
+      "offset": 1055,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletAutoPaymentViewController.swift",
       "kind": "BooleanLiteral",
-      "offset": 1187,
+      "offset": 1336,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletAutoPaymentViewController.swift",
       "kind": "BooleanLiteral",
-      "offset": 1095,
+      "offset": 1244,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletAutoPaymentViewController.swift",
       "kind": "StringLiteral",
-      "offset": 1269,
+      "offset": 1418,
       "length": 36,
       "value": "\"WalletSheetCardHeaderTableViewCell\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletAutoPaymentViewController.swift",
       "kind": "StringLiteral",
-      "offset": 1336,
+      "offset": 1485,
       "length": 36,
       "value": "\"WalletAutoPaymentCardTableViewCell\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletAutoPaymentViewController.swift",
       "kind": "StringLiteral",
-      "offset": 1409,
+      "offset": 1558,
       "length": 42,
       "value": "\"WalletAutoPaymentCardFooterTableViewCell\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletAutoPaymentViewController.swift",
       "kind": "StringLiteral",
-      "offset": 1485,
+      "offset": 1634,
       "length": 28,
       "value": "\"WalletWarningTableViewCell\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletAutoPaymentViewController.swift",
       "kind": "IntegerLiteral",
-      "offset": 1557,
+      "offset": 1706,
       "length": 2,
       "value": "12"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletAutoPaymentViewController.swift",
       "kind": "IntegerLiteral",
-      "offset": 1607,
+      "offset": 1756,
       "length": 2,
       "value": "49"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletAutoPaymentViewController.swift",
       "kind": "FloatLiteral",
-      "offset": 1657,
+      "offset": 1806,
       "length": 4,
       "value": "0.25"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletFavouriteSelectionViewController.swift",
       "kind": "Array",
-      "offset": 1008,
+      "offset": 1053,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletFavouriteSelectionViewController.swift",
       "kind": "BooleanLiteral",
-      "offset": 1196,
+      "offset": 1241,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletFavouriteSelectionViewController.swift",
       "kind": "BooleanLiteral",
-      "offset": 1092,
+      "offset": 1137,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletFavouriteSelectionViewController.swift",
       "kind": "StringLiteral",
-      "offset": 1289,
+      "offset": 1438,
       "length": 33,
       "value": "\"WalletManualInputViewController\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletFavouriteSelectionViewController.swift",
       "kind": "StringLiteral",
-      "offset": 1402,
+      "offset": 1551,
       "length": 36,
       "value": "\"WalletSheetCardHeaderTableViewCell\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletFavouriteSelectionViewController.swift",
       "kind": "StringLiteral",
-      "offset": 1469,
+      "offset": 1618,
       "length": 34,
       "value": "\"WalletFavouriteCardTableViewCell\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletFavouriteSelectionViewController.swift",
       "kind": "StringLiteral",
-      "offset": 1539,
+      "offset": 1688,
       "length": 33,
       "value": "\"WalletApplyPayCardTableViewCell\""
     },
@@ -30745,77 +31529,77 @@
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletSheetViewController.swift",
       "kind": "IntegerLiteral",
-      "offset": 2077,
+      "offset": 2159,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletSheetViewController.swift",
       "kind": "StringLiteral",
-      "offset": 2103,
+      "offset": 2185,
       "length": 17,
       "value": "\"novaPayNewsIcon\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletSheetViewController.swift",
       "kind": "StringLiteral",
-      "offset": 2151,
+      "offset": 2233,
       "length": 25,
       "value": "\"pay_with_nova_pay_title\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletSheetViewController.swift",
       "kind": "IntegerLiteral",
-      "offset": 2341,
+      "offset": 2423,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletSheetViewController.swift",
       "kind": "StringLiteral",
-      "offset": 2367,
+      "offset": 2449,
       "length": 21,
       "value": "\"favouriteMethodIcon\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletSheetViewController.swift",
       "kind": "StringLiteral",
-      "offset": 2419,
+      "offset": 2501,
       "length": 28,
       "value": "\"add_favourite_method_title\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletSheetViewController.swift",
       "kind": "StringLiteral",
-      "offset": 2481,
+      "offset": 2563,
       "length": 18,
       "value": "\"pay_faster_title\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletSheetViewController.swift",
       "kind": "IntegerLiteral",
-      "offset": 2636,
+      "offset": 2718,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletSheetViewController.swift",
       "kind": "StringLiteral",
-      "offset": 2662,
+      "offset": 2744,
       "length": 19,
       "value": "\"autoPaymentMethod\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletSheetViewController.swift",
       "kind": "StringLiteral",
-      "offset": 2712,
+      "offset": 2794,
       "length": 23,
       "value": "\"add_autopayment_title\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletSheetViewController.swift",
       "kind": "StringLiteral",
-      "offset": 2769,
+      "offset": 2851,
       "length": 25,
       "value": "\"add_autopayment_details\""
     },
