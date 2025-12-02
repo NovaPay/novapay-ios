@@ -143,6 +143,8 @@ public struct NPWalletSessionItem : Swift.Codable, Swift.Sendable {
   public var favourite_method: Swift.String?
   public var without_confirmation: Swift.Bool?
   public let promotion_url: Swift.String?
+  public let terms_url: Swift.String?
+  public let rules_url: Swift.String?
   public var cards: [NovaPaySDKFramework.NPWalletCardItem]?
   #if compiler(>=5.3) && $NonescapableTypes
   public var favouriteCard: NovaPaySDKFramework.NPWalletCardItem? {
@@ -404,6 +406,8 @@ public struct NPWalletItem : Swift.Codable, Swift.Sendable {
   public let without_confirmation: Swift.Bool?
   public let favourite_method: Swift.String?
   public let cards: [NovaPaySDKFramework.NPCardItem]
+  public let terms_url: Swift.String?
+  public let rules_url: Swift.String?
   public func hasCard(with id: Swift.Int) -> Swift.Bool
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
@@ -770,6 +774,7 @@ public enum NPFeaturesImages : Swift.String, Swift.CaseIterable {
   case checmark_green_icon_selected
   case warningCrossIcon
   case warningExclamationMarkIcon
+  case close_icon
   #if compiler(>=5.3) && $NonescapableTypes
   public func makeImage() -> UIKit.UIImage?
   #endif
