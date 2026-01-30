@@ -5674,6 +5674,152 @@
       },
       {
         "kind": "TypeDecl",
+        "name": "APIClientProtocol",
+        "printedName": "APIClientProtocol",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "getSessionStatus",
+            "printedName": "getSessionStatus(sessionId:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "NovaPaySDKFramework.NPSessionStatusItem?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NPSessionStatusItem",
+                    "printedName": "NovaPaySDKFramework.NPSessionStatusItem",
+                    "usr": "s:19NovaPaySDKFramework19NPSessionStatusItemV"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:19NovaPaySDKFramework17APIClientProtocolP16getSessionStatus9sessionIdAA09NPSessionH4ItemVSgSS_tYaKF",
+            "mangledName": "$s19NovaPaySDKFramework17APIClientProtocolP16getSessionStatus9sessionIdAA09NPSessionH4ItemVSgSS_tYaKF",
+            "moduleName": "NovaPaySDKFramework",
+            "genericSig": "<τ_0_0 where τ_0_0 : NovaPaySDKFramework.APIClientProtocol>",
+            "sugared_genericSig": "<Self where Self : NovaPaySDKFramework.APIClientProtocol>",
+            "protocolReq": true,
+            "throwing": true,
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "pay",
+            "printedName": "pay(sessionId:type:isFavourite:withoutConfirmation:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "NovaPaySDKFramework.NPPayResponse?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NPPayResponse",
+                    "printedName": "NovaPaySDKFramework.NPPayResponse",
+                    "usr": "s:19NovaPaySDKFramework13NPPayResponseV"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "NPPayInstrumentType",
+                "printedName": "NovaPaySDKFramework.NPPayInstrumentType",
+                "usr": "s:19NovaPaySDKFramework19NPPayInstrumentTypeO"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.Bool?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:19NovaPaySDKFramework17APIClientProtocolP3pay9sessionId4type11isFavourite19withoutConfirmationAA13NPPayResponseVSgSS_AA0N14InstrumentTypeOS2bSgtYaKF",
+            "mangledName": "$s19NovaPaySDKFramework17APIClientProtocolP3pay9sessionId4type11isFavourite19withoutConfirmationAA13NPPayResponseVSgSS_AA0N14InstrumentTypeOS2bSgtYaKF",
+            "moduleName": "NovaPaySDKFramework",
+            "genericSig": "<τ_0_0 where τ_0_0 : NovaPaySDKFramework.APIClientProtocol>",
+            "sugared_genericSig": "<Self where Self : NovaPaySDKFramework.APIClientProtocol>",
+            "protocolReq": true,
+            "throwing": true,
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Protocol",
+        "usr": "s:19NovaPaySDKFramework17APIClientProtocolP",
+        "mangledName": "$s19NovaPaySDKFramework17APIClientProtocolP",
+        "moduleName": "NovaPaySDKFramework",
+        "genericSig": "<τ_0_0 : Swift.Sendable>",
+        "sugared_genericSig": "<Self : Swift.Sendable>",
+        "declAttributes": [
+          "AccessControl"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SendableMetatype",
+            "printedName": "SendableMetatype",
+            "usr": "s:s16SendableMetatypeP",
+            "mangledName": "$ss16SendableMetatypeP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
         "name": "NPAPIClient",
         "printedName": "NPAPIClient",
         "children": [
@@ -5698,8 +5844,7 @@
               "HasInitialValue",
               "Final",
               "HasStorage",
-              "AccessControl",
-              "Nonisolated"
+              "AccessControl"
             ],
             "isLet": true,
             "hasStorage": true,
@@ -6393,6 +6538,27 @@
             "printedName": "Escapable",
             "usr": "s:s9EscapableP",
             "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "APIClientProtocol",
+            "printedName": "APIClientProtocol",
+            "usr": "s:19NovaPaySDKFramework17APIClientProtocolP",
+            "mangledName": "$s19NovaPaySDKFramework17APIClientProtocolP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SendableMetatype",
+            "printedName": "SendableMetatype",
+            "usr": "s:s16SendableMetatypeP",
+            "mangledName": "$ss16SendableMetatypeP"
           }
         ]
       },
@@ -8895,6 +9061,20 @@
             "printedName": "Escapable",
             "usr": "s:s9EscapableP",
             "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SendableMetatype",
+            "printedName": "SendableMetatype",
+            "usr": "s:s16SendableMetatypeP",
+            "mangledName": "$ss16SendableMetatypeP"
           }
         ]
       },
@@ -11902,18 +12082,33 @@
           {
             "kind": "Constructor",
             "name": "init",
-            "printedName": "init()",
+            "printedName": "init(apiClient:)",
             "children": [
               {
                 "kind": "TypeNominal",
                 "name": "NPSessionStatusService",
                 "printedName": "NovaPaySDKFramework.NPSessionStatusService",
                 "usr": "s:19NovaPaySDKFramework22NPSessionStatusServiceC"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "(any NovaPaySDKFramework.APIClientProtocol)?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "APIClientProtocol",
+                    "printedName": "any NovaPaySDKFramework.APIClientProtocol",
+                    "usr": "s:19NovaPaySDKFramework17APIClientProtocolP"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
               }
             ],
             "declKind": "Constructor",
-            "usr": "s:19NovaPaySDKFramework22NPSessionStatusServiceCACycfc",
-            "mangledName": "$s19NovaPaySDKFramework22NPSessionStatusServiceCACycfc",
+            "usr": "s:19NovaPaySDKFramework22NPSessionStatusServiceC9apiClientAcA17APIClientProtocol_pSg_tcfc",
+            "mangledName": "$s19NovaPaySDKFramework22NPSessionStatusServiceC9apiClientAcA17APIClientProtocol_pSg_tcfc",
             "moduleName": "NovaPaySDKFramework",
             "declAttributes": [
               "AccessControl"
@@ -20990,6 +21185,13 @@
       },
       {
         "kind": "Import",
+        "name": "SafariServices",
+        "printedName": "SafariServices",
+        "declKind": "Import",
+        "moduleName": "NovaPaySDKFramework"
+      },
+      {
+        "kind": "Import",
         "name": "UIKit",
         "printedName": "UIKit",
         "declKind": "Import",
@@ -21919,6 +22121,13 @@
         "kind": "Import",
         "name": "UIKit",
         "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "NovaPaySDKFramework"
+      },
+      {
+        "kind": "Import",
+        "name": "SafariServices",
+        "printedName": "SafariServices",
         "declKind": "Import",
         "moduleName": "NovaPaySDKFramework"
       },
@@ -23265,6 +23474,57 @@
               "Required"
             ],
             "init_kind": "Designated"
+          },
+          {
+            "kind": "Function",
+            "name": "textView",
+            "printedName": "textView(_:shouldInteractWith:in:interaction:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "UITextView",
+                "printedName": "UIKit.UITextView",
+                "usr": "c:objc(cs)UITextView"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "URL",
+                "printedName": "Foundation.URL",
+                "usr": "s:10Foundation3URLV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "_NSRange",
+                "printedName": "Foundation._NSRange",
+                "usr": "c:@S@_NSRange"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "UITextItemInteraction",
+                "printedName": "UIKit.UITextItemInteraction",
+                "usr": "c:@E@UITextItemInteraction"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@CM@NovaPaySDKFramework@objc(cs)ManualInputViewController(im)textView:shouldInteractWithURL:inRange:interaction:",
+            "mangledName": "$s19NovaPaySDKFramework25ManualInputViewControllerC04textF0_18shouldInteractWith2in11interactionSbSo06UITextF0C_10Foundation3URLVSo8_NSRangeVSo0N15ItemInteractionVtF",
+            "moduleName": "NovaPaySDKFramework",
+            "objc_name": "textView:shouldInteractWithURL:inRange:interaction:",
+            "declAttributes": [
+              "Final",
+              "ObjC",
+              "Preconcurrency",
+              "Custom",
+              "AccessControl"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
           },
           {
             "kind": "Function",
@@ -25266,6 +25526,57 @@
           },
           {
             "kind": "Function",
+            "name": "textView",
+            "printedName": "textView(_:shouldInteractWith:in:interaction:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "UITextView",
+                "printedName": "UIKit.UITextView",
+                "usr": "c:objc(cs)UITextView"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "URL",
+                "printedName": "Foundation.URL",
+                "usr": "s:10Foundation3URLV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "_NSRange",
+                "printedName": "Foundation._NSRange",
+                "usr": "c:@S@_NSRange"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "UITextItemInteraction",
+                "printedName": "UIKit.UITextItemInteraction",
+                "usr": "c:@E@UITextItemInteraction"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@CM@NovaPaySDKFramework@objc(cs)PayoutManualInputViewController(im)textView:shouldInteractWithURL:inRange:interaction:",
+            "mangledName": "$s19NovaPaySDKFramework31PayoutManualInputViewControllerC04textG0_18shouldInteractWith2in11interactionSbSo06UITextG0C_10Foundation3URLVSo8_NSRangeVSo0O15ItemInteractionVtF",
+            "moduleName": "NovaPaySDKFramework",
+            "objc_name": "textView:shouldInteractWithURL:inRange:interaction:",
+            "declAttributes": [
+              "Final",
+              "ObjC",
+              "Preconcurrency",
+              "Custom",
+              "AccessControl"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
             "name": "traitCollectionDidChange",
             "printedName": "traitCollectionDidChange(_:)",
             "children": [
@@ -27186,6 +27497,57 @@
               "Required"
             ],
             "init_kind": "Designated"
+          },
+          {
+            "kind": "Function",
+            "name": "textView",
+            "printedName": "textView(_:shouldInteractWith:in:interaction:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "UITextView",
+                "printedName": "UIKit.UITextView",
+                "usr": "c:objc(cs)UITextView"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "URL",
+                "printedName": "Foundation.URL",
+                "usr": "s:10Foundation3URLV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "_NSRange",
+                "printedName": "Foundation._NSRange",
+                "usr": "c:@S@_NSRange"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "UITextItemInteraction",
+                "printedName": "UIKit.UITextItemInteraction",
+                "usr": "c:@E@UITextItemInteraction"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@CM@NovaPaySDKFramework@objc(cs)WalletManualInputViewController(im)textView:shouldInteractWithURL:inRange:interaction:",
+            "mangledName": "$s19NovaPaySDKFramework31WalletManualInputViewControllerC04textG0_18shouldInteractWith2in11interactionSbSo06UITextG0C_10Foundation3URLVSo8_NSRangeVSo0O15ItemInteractionVtF",
+            "moduleName": "NovaPaySDKFramework",
+            "objc_name": "textView:shouldInteractWithURL:inRange:interaction:",
+            "declAttributes": [
+              "Final",
+              "ObjC",
+              "Preconcurrency",
+              "Custom",
+              "AccessControl"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
           },
           {
             "kind": "Function",
@@ -29937,42 +30299,42 @@
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Commons\/Core\/Models\/API\/NPAPIClient.swift",
       "kind": "Dictionary",
-      "offset": 372,
+      "offset": 718,
       "length": 3,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Commons\/Core\/Models\/API\/NPAPIClient.swift",
       "kind": "BooleanLiteral",
-      "offset": 3313,
+      "offset": 3636,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Commons\/Core\/Models\/API\/NPAPIClient.swift",
       "kind": "BooleanLiteral",
-      "offset": 3353,
+      "offset": 3676,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Commons\/Core\/Models\/API\/NPAPIClient.swift",
       "kind": "BooleanLiteral",
-      "offset": 13294,
+      "offset": 13614,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Commons\/Core\/Models\/API\/NPAPIClient.swift",
       "kind": "BooleanLiteral",
-      "offset": 13911,
+      "offset": 14231,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Commons\/Core\/Models\/API\/NPPayInstrumentType.swift",
       "kind": "BooleanLiteral",
-      "offset": 268,
+      "offset": 278,
       "length": 5,
       "value": "false"
     },
@@ -31085,35 +31447,35 @@
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/PaymentSheet\/Helpers\/PaymentAgreementTextViewHelper.swift",
       "kind": "StringLiteral",
-      "offset": 121,
+      "offset": 143,
       "length": 58,
       "value": "\"https:\/\/novapay.ua\/oferta-perekaz-v-dodatku-nova-poshta\/\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/PaymentSheet\/Helpers\/PaymentAgreementTextViewHelper.swift",
       "kind": "StringLiteral",
-      "offset": 260,
+      "offset": 282,
       "length": 30,
       "value": "\"payment_agrees_warning_title\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/PaymentSheet\/Helpers\/PaymentAgreementTextViewHelper.swift",
       "kind": "IntegerLiteral",
-      "offset": 414,
+      "offset": 436,
       "length": 2,
       "value": "12"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/PaymentSheet\/Helpers\/PaymentAgreementTextViewHelper.swift",
       "kind": "BooleanLiteral",
-      "offset": 456,
+      "offset": 478,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/PaymentSheet\/Helpers\/PaymentService.swift",
       "kind": "BooleanLiteral",
-      "offset": 656,
+      "offset": 648,
       "length": 5,
       "value": "false"
     },
@@ -31484,105 +31846,119 @@
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletAutoPaymentViewController.swift",
       "kind": "Array",
-      "offset": 1003,
+      "offset": 1072,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletAutoPaymentViewController.swift",
       "kind": "BooleanLiteral",
-      "offset": 1192,
+      "offset": 1227,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletAutoPaymentViewController.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1373,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletAutoPaymentViewController.swift",
       "kind": "StringLiteral",
-      "offset": 1332,
+      "offset": 1513,
       "length": 36,
       "value": "\"WalletSheetCardHeaderTableViewCell\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletAutoPaymentViewController.swift",
       "kind": "StringLiteral",
-      "offset": 1399,
+      "offset": 1580,
       "length": 36,
       "value": "\"WalletAutoPaymentCardTableViewCell\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletAutoPaymentViewController.swift",
       "kind": "StringLiteral",
-      "offset": 1472,
+      "offset": 1653,
       "length": 42,
       "value": "\"WalletAutoPaymentCardFooterTableViewCell\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletAutoPaymentViewController.swift",
       "kind": "StringLiteral",
-      "offset": 1548,
+      "offset": 1729,
       "length": 28,
       "value": "\"WalletWarningTableViewCell\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletAutoPaymentViewController.swift",
       "kind": "IntegerLiteral",
-      "offset": 1620,
+      "offset": 1801,
       "length": 2,
       "value": "12"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletAutoPaymentViewController.swift",
       "kind": "IntegerLiteral",
-      "offset": 1670,
+      "offset": 1851,
       "length": 2,
       "value": "49"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletAutoPaymentViewController.swift",
       "kind": "FloatLiteral",
-      "offset": 1720,
+      "offset": 1901,
       "length": 4,
       "value": "0.25"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletFavouriteSelectionViewController.swift",
       "kind": "Array",
-      "offset": 1202,
+      "offset": 1323,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletFavouriteSelectionViewController.swift",
       "kind": "BooleanLiteral",
-      "offset": 1286,
+      "offset": 1478,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletFavouriteSelectionViewController.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1519,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletFavouriteSelectionViewController.swift",
       "kind": "StringLiteral",
-      "offset": 1533,
+      "offset": 1766,
       "length": 33,
       "value": "\"WalletManualInputViewController\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletFavouriteSelectionViewController.swift",
       "kind": "StringLiteral",
-      "offset": 1646,
+      "offset": 1879,
       "length": 36,
       "value": "\"WalletSheetCardHeaderTableViewCell\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletFavouriteSelectionViewController.swift",
       "kind": "StringLiteral",
-      "offset": 1713,
+      "offset": 1946,
       "length": 34,
       "value": "\"WalletFavouriteCardTableViewCell\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletFavouriteSelectionViewController.swift",
       "kind": "StringLiteral",
-      "offset": 1783,
+      "offset": 2016,
       "length": 33,
       "value": "\"WalletApplyPayCardTableViewCell\""
     },
