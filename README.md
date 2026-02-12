@@ -100,9 +100,6 @@ class PaymentViewController: UIViewController {
                     merchantIdentifier: merchantIdentifier,
                     environment: .dev, // Optional
                     language: .uk, // Optional
-                    paymentSheetStatusCallback: { [weak self] status in
-                        self?.handlePaymentSheetStatus(status)
-                    }
                 )
 
                 // Enable the button when payment sheet is ready
@@ -124,8 +121,10 @@ class PaymentViewController: UIViewController {
         // Present the payment sheet
         paymentSheet.present(
             from: self,
-            paymentSheetStatusCallback: { [weak self] status in
+            paymentSheet.present { [weak self] status in
                 self?.handlePaymentSheetStatus(status)
+            } on3DsRequired: { [weak self] in
+                paymentSheet.show3DsScreen()
             }
         )
     }
@@ -143,7 +142,7 @@ class PaymentViewController: UIViewController {
         }
     }
     
-    private func handlePaymentSheetStatus(_ status: PaymentSheetStatus) {
+    private func handlePaymentSheetStatus(_ status: PaymentSheetResult) {
         switch status {
         case .canceled:
             print("Payment was canceled by user")
@@ -195,7 +194,8 @@ struct PaymentView: View {
                 if let paymentSheet = paymentModel.paymentSheet {
                     PaymentSheet.PaymentButton(
                         paymentSheet: paymentSheet,
-                        paymentSheetStatusCallback: paymentModel.handlePaymentSheetStatus
+                        paymentSheetStatus: paymentModel.handlePaymentSheetStatus,
+                        on3DsRequired: paymentModel.handleOn3DsRequired
                     ) {
                         Text("Pay")
                             .padding()
@@ -212,7 +212,8 @@ struct PaymentView: View {
                         .paymentSheet(
                             isPresented: $paymentModel.isPresentedPaymentSheet,
                             paymentSheet: paymentSheet,
-                            paymentSheetStatusCallback: paymentModel.handlePaymentSheetStatus
+                            paymentSheetStatus: paymentModel.handlePaymentSheetStatus,
+                            on3DsRequired: paymentModel.handleOn3DsRequired
                         )
                 }
             }
@@ -266,8 +267,7 @@ class PaymentModel: ObservableObject {
                 let sheet = try await PaymentSheet(
                     sessionId: sessionId,
                     merchantIdentifier: "Your merchantIdentifier",
-                    environment: .dev,
-                    paymentSheetStatusCallback: handlePaymentSheetStatus
+                    environment: .dev
                 )
 
                 await MainActor.run {
@@ -298,6 +298,10 @@ class PaymentModel: ObservableObject {
                 print("Completed!")
                 dismissPaymentSheet()
         }
+    }
+    
+    func handleOn3DsRequired() {
+        print("handleOn3DsRequired did press")
     }
 
     func handleError(error: Error) {
@@ -347,9 +351,11 @@ enum NPSessionStatusType {
 #### Payment Sheet Status Types
 
 ```swift
-@frozen public enum PaymentSheetStatus {
+@frozen public enum PaymentSheetResult {
     case undefined // Payment sheet was closed with undefined status
     case canceled  // User canceled the payment
+    case failed(String)
+    case completed(NPSessionStatusType?)
 }
 ```
 
