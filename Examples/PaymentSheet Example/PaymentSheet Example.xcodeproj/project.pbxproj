@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		20F87A2F2E965B5A009ABE71 /* NovaPaySDKPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 20F87A2E2E965B5A009ABE71 /* NovaPaySDKPackage */; };
+		20766E2F2F3DDD2D00E55818 /* NovaPaySDKPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 20766E2E2F3DDD2D00E55818 /* NovaPaySDKPackage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,7 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				20F87A2F2E965B5A009ABE71 /* NovaPaySDKPackage in Frameworks */,
+				20766E2F2F3DDD2D00E55818 /* NovaPaySDKPackage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,7 +125,7 @@
 			);
 			name = "PaymentSheet Example";
 			packageProductDependencies = (
-				20F87A2E2E965B5A009ABE71 /* NovaPaySDKPackage */,
+				20766E2E2F3DDD2D00E55818 /* NovaPaySDKPackage */,
 			);
 			productName = "PaymentSheet Example";
 			productReference = 200BBEFF2D5F760C0078FD49 /* PaymentSheet Example.app */;
@@ -211,7 +211,7 @@
 			mainGroup = 200BBEF62D5F760C0078FD49;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				20F87A2D2E965B5A009ABE71 /* XCRemoteSwiftPackageReference "novapay-ios" */,
+				20766DFC2F3DDC8300E55818 /* XCRemoteSwiftPackageReference "novapay-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 200BBF002D5F760C0078FD49 /* Products */;
@@ -622,20 +622,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		20F87A2D2E965B5A009ABE71 /* XCRemoteSwiftPackageReference "novapay-ios" */ = {
+		20766DFC2F3DDC8300E55818 /* XCRemoteSwiftPackageReference "novapay-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/NovaPay/novapay-ios";
 			requirement = {
-				kind = exactVersion;
-				version = 1.3.21;
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.30;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		20F87A2E2E965B5A009ABE71 /* NovaPaySDKPackage */ = {
+		20766E2E2F3DDD2D00E55818 /* NovaPaySDKPackage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 20F87A2D2E965B5A009ABE71 /* XCRemoteSwiftPackageReference "novapay-ios" */;
+			package = 20766DFC2F3DDC8300E55818 /* XCRemoteSwiftPackageReference "novapay-ios" */;
 			productName = NovaPaySDKPackage;
 		};
 /* End XCSwiftPackageProductDependency section */
