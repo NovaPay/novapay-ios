@@ -1,0 +1,10 @@
+{
+    "id": "c03a1269-cece-4284-8f8e-89e9242a700a",
+    "phone": "+380111111111",
+    "isClientVerified": true,
+    "orderNumber": "BFEED6E8-EEAB-4667-9AD5-AD8DC82919D3",
+    "wallet": {
+        "id": 936,
+        "cards": []
+    }
+}
