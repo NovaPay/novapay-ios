@@ -117,16 +117,12 @@ class PaymentViewController: UIViewController {
             print("Payment sheet not initialized")
             return
         }
-        
         // Present the payment sheet
-        paymentSheet.present(
-            from: self,
-            paymentSheet.present { [weak self] status in
-                self?.handlePaymentSheetStatus(status)
-            } on3DsRequired: { [weak self] in
-                paymentSheet.show3DsScreen()
-            }
-        )
+        paymentSheet.present { [weak self] status in
+            self?.handlePaymentSheetStatus(status)
+        } on3DsRequired: { [weak self] in
+            paymentSheet.show3DsScreen()
+        }
     }
 
     // MARK: - Callbacks
