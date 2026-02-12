@@ -23,11 +23,10 @@ struct ExamplePaymentSheetSwiftUIView: View {
                 }
             } else if viewModel.isPresentedWallet {
                 if let walletSheet = viewModel.walletSheet {
-                    LoadingView()
+                    ExamplePaymentSheetSwiftUIView()
                         .walletSheet(
                             isPresented: $viewModel.isPresentedWallet,
-                            walletSheet: walletSheet,
-                            walletSheetStatusHandler: viewModel.walletStatusHandler
+                            walletSheet: walletSheet
                         )
                 } else {
                     LoadingView()
@@ -102,10 +101,12 @@ struct ExamplePaymentSheetSwiftUIView: View {
                 .onChange(of: selectedEnvironment) { _, newValue in
                     // Configure the NPAPIClient with the selected environment
                     NPAPIClient.shared.configure(with: newValue)
+                    viewModel.apiService.configure(with: selectedEnvironment)
                 }
                 .onAppear {
                     // Trigger initial configuration
                     NPAPIClient.shared.configure(with: selectedEnvironment)
+                    viewModel.apiService.configure(with: selectedEnvironment)
                 }
             } else {
                 // Fallback on earlier versions

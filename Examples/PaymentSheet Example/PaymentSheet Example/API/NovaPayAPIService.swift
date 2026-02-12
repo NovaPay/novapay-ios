@@ -1,14 +1,39 @@
 import Foundation
 import NovaPaySDKFramework
 
+enum NovaPayAPIEnvironmentType: CaseIterable {
+    case dev
+    case staging
+    
+    var baseURL: String {
+        switch self {
+        case .dev:
+            return "https://int-api-qecom.novapay.ua"
+        case .staging:
+            return "https://int-api-qecom.novapay.ua"
+        }
+    }
+}
+
 // MARK: - API Service
 class NovaPayAPIService {
     static let shared = NovaPayAPIService()
 
-    private let baseURL = "https://a2-sdk-internal-api.novapay.ua"
+    private var baseURL = NovaPayAPIEnvironmentType.dev.baseURL
     private let token = "lolkekcheburek"
     
     private init() {}
+    
+    @MainActor public func configure(with environment: NPEnvironmentType = .dev) {
+        switch environment {
+        case .dev:
+            baseURL = NovaPayAPIEnvironmentType.dev.baseURL
+        case .staging:
+            baseURL = NovaPayAPIEnvironmentType.staging.baseURL
+        default:
+            baseURL = NovaPayAPIEnvironmentType.dev.baseURL
+        }
+    }
     
     // Fetch waybills from API
     func fetchWaybills(phoneNumber: String) async throws -> [WaybillsResponse] {
@@ -50,7 +75,7 @@ class NovaPayAPIService {
     // Monitor session status
     func startPolling(sessionId: String, completion: @escaping @Sendable (PaymentSheetResult) -> Void) async throws {
         let sessionService = NPSessionStatusService()
-        await try sessionService.startPolling(sessionId: sessionId, completion: completion)
+        try await sessionService.startPolling(sessionId: sessionId, completion: completion)
     }
 
     func stopPolling() async {

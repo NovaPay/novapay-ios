@@ -14,7 +14,7 @@ class PaymentViewModel: ObservableObject {
     @Published var waybills: [WaybillsResponse] = []
 
     private var sessionId: String?
-    private let apiService = NovaPayAPIService.shared
+    public let apiService = NovaPayAPIService.shared
     
     // Fetch waybills
     func fetchWaybills(phoneNumber: String) {
@@ -73,8 +73,7 @@ class PaymentViewModel: ObservableObject {
         self.isPresentedWallet = true
         do {
             let walletSheet = try await WalletSheet(
-                token: token,
-                walletSheetStatusHandler: walletStatusHandler
+                token: token
             )
             self.walletSheet = walletSheet
             isPresentedWallet = true
@@ -85,33 +84,6 @@ class PaymentViewModel: ObservableObject {
         }
     }
 
-    // Wallet status handler
-    func walletStatusHandler(result: WalletSheetResult) {
-        switch result {
-        case .canceled:
-            isPresentedWallet = false
-            self.walletSheet = nil
-            print("Canceled!")
-        case .undefined:
-            isPresentedWallet = false
-            self.walletSheet = nil
-        case .failed(let error):
-            isPresentedWallet = false
-            self.walletSheet?.dismiss(completion: {
-                self.walletSheet = nil
-                self.showError(error)
-            })
-        case .removeCard:
-            break
-        case .favouriteCardChanged:
-            break
-        case .mainCardChanged:
-            break
-        case .addCard:
-            break
-        }
-    }
-    
     // Show payout sheet
     
     func initializePayout(
@@ -130,7 +102,6 @@ class PaymentViewModel: ObservableObject {
             }
         }
     }
-    
     
     func showPayoutSheet(sessionId: String) async {
         self.isPresentedPayout = true
