@@ -199,6 +199,12 @@ public actor NSAddCardStatusService {
     get
   }
 }
+public struct NPAmountItem : Swift.Codable, Swift.Sendable {
+  public let `default`: Swift.Double?
+  public let novapay: Swift.Double?
+  public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+}
 public protocol APIClientProtocol : Swift.Sendable {
   #if compiler(>=5.3) && $NonescapableTypes
   func getSessionStatus(sessionId: Swift.String) async throws -> NovaPaySDKFramework.NPSessionStatusItem?
@@ -365,16 +371,25 @@ public struct NPPaymentSessionItem : Swift.Codable, Swift.Sendable {
   public let session_id: Swift.String?
   public let phone: Swift.String?
   public let amount: Swift.Double?
+  public let amounts: NovaPaySDKFramework.NPAmountItem?
   public let products: [NovaPaySDKFramework.NPProductItem]?
   public let wallet: NovaPaySDKFramework.NPWalletItem?
+  public let tariffs_promotion_text: Swift.String?
+  public let tariffs_promotion_text_short: Swift.String?
   #if compiler(>=5.3) && $NonescapableTypes
   public var favouriteCard: NovaPaySDKFramework.NPCardItem? {
     get
   }
   #endif
+  public var isAvailablePromotions: Swift.Bool {
+    get
+  }
   public func isApplePayFavourite() -> Swift.Bool
   public func hasFavourite() -> Swift.Bool
   public func isPaymentWithoutConfirmation() -> Swift.Bool
+  #if compiler(>=5.3) && $NonescapableTypes
+  public func generateDiscountLabelText() -> Swift.String?
+  #endif
   public init(from decoder: any Swift.Decoder) throws
   public func encode(to encoder: any Swift.Encoder) throws
 }
@@ -468,7 +483,7 @@ public struct CurrencyAmount {
   public init(value: Swift.Double, currencyCode: Swift.String? = nil)
   #endif
   #if compiler(>=5.3) && $NonescapableTypes
-  public func formattedString() -> Swift.String?
+  public func formattedString(currencySymbolOverride: Swift.String? = nil) -> Swift.String?
   #endif
 }
 extension NovaPaySDKFramework.CurrencyAmount {
