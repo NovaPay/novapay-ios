@@ -1,0 +1,192 @@
+{
+  "sessions": [
+    {
+      "session_id": "ee5384c9-3e90-4c03-a1a1-b88226c89797",
+      "phone": "+380111111111",
+      "client_verified": true,
+      "amount": "2020.25",
+      "amounts": {
+        "default": "2020.25",
+        "novapay": null
+      },
+      "products": [
+        {
+          "price": "2020.25",
+          "prices": {
+            "default": "2020.25",
+            "novapay": "2020.25"
+          },
+          "description": "ЕН 1776935667454",
+          "type": "primary"
+        },
+        {
+          "price": "20.10",
+          "prices": {
+            "default": "20.10",
+            "novapay": "20.10"
+          },
+          "description": "Послуги доставки",
+          "type": "secondary"
+        },
+        {
+          "price": "2 000.15",
+          "prices": {
+            "default": "2 000.15",
+            "novapay": "2 000.15"
+          },
+          "description": "Послуги доставки",
+          "type": "secondary"
+        }
+      ]
+    },
+    {
+      "session_id": "3fb74eef-7d31-44d6-8f93-f995979fd8b5",
+      "phone": "+380111111111",
+      "client_verified": true,
+      "amount": "2020.25",
+      "amounts": {
+        "default": "2020.25",
+        "novapay": null
+      },
+      "products": [
+        {
+          "price": "2020.25",
+          "prices": {
+            "default": "2020.25",
+            "novapay": "2020.25"
+          },
+          "description": "ЕН 1776935667530",
+          "type": "primary"
+        },
+        {
+          "price": "20.10",
+          "prices": {
+            "default": "20.10",
+            "novapay": "20.10"
+          },
+          "description": "Послуги доставки",
+          "type": "secondary"
+        },
+        {
+          "price": "2 000.15",
+          "prices": {
+            "default": "2 000.15",
+            "novapay": "2 000.15"
+          },
+          "description": "Послуги доставки",
+          "type": "secondary"
+        }
+      ]
+    },
+    {
+      "session_id": "9568830a-e0da-406c-b23f-e6caf96c6456",
+      "phone": "+380111111111",
+      "client_verified": true,
+      "amount": "2020.25",
+      "amounts": {
+        "default": "2020.25",
+        "novapay": null
+      },
+      "products": [
+        {
+          "price": "2020.25",
+          "prices": {
+            "default": "2020.25",
+            "novapay": "2020.25"
+          },
+          "description": "ЕН 1776935667678",
+          "type": "primary"
+        },
+        {
+          "price": "20.10",
+          "prices": {
+            "default": "20.10",
+            "novapay": "20.10"
+          },
+          "description": "Послуги доставки",
+          "type": "secondary"
+        },
+        {
+          "price": "2 000.15",
+          "prices": {
+            "default": "2 000.15",
+            "novapay": "2 000.15"
+          },
+          "description": "Послуги доставки",
+          "type": "secondary"
+        }
+      ]
+    }
+  ],
+  "tariffs_promotion_text": "Плати картками NovaPay вигідніше:\n-50% комісії за післяплату",
+  "tariffs_promotion_text_short": "Плати картками NovaPay за післяплату -50% комісії",
+  "wallet": {
+    "id": 936,
+    "favourite_method": "4",
+    "without_confirmation": false,
+    "cards": [
+      {
+        "id": 24531,
+        "name": "Картка NovaPay",
+        "type": "novapay",
+        "main": false,
+        "verified": true,
+        "mit_without_confirmation": false,
+        "pan_mask": "5175 47 •••• 10",
+        "updated_at": null
+      },
+      {
+        "id": 4994,
+        "name": "Кредитка NovaPay",
+        "type": "novapay_credit",
+        "main": true,
+        "verified": true,
+        "mit_without_confirmation": false,
+        "pan_mask": "5175 47 •••• 55",
+        "updated_at": null
+      },
+      {
+        "id": 1010,
+        "name": "test",
+        "type": "external",
+        "main": false,
+        "verified": true,
+        "mit_without_confirmation": false,
+        "pan_mask": "4627 05 •••• 94",
+        "updated_at": null
+      },
+      {
+        "id": 5716,
+        "name": "ttttt",
+        "type": "external",
+        "main": false,
+        "verified": true,
+        "mit_without_confirmation": false,
+        "pan_mask": "4731 21 •••• 69",
+        "updated_at": null
+      },
+      {
+        "id": 6830,
+        "name": "yttt",
+        "type": "external",
+        "main": false,
+        "verified": true,
+        "mit_without_confirmation": false,
+        "pan_mask": "4508 75 •••• 19",
+        "updated_at": null
+      },
+      {
+        "id": 4,
+        "name": "3DS",
+        "type": "external",
+        "main": false,
+        "verified": true,
+        "mit_without_confirmation": false,
+        "pan_mask": "5269 61 •••• 56",
+        "updated_at": null
+      }
+    ],
+    "terms_url": "https://novapay.ua/oferta-perekaz-v-dodatku-nova-poshta/",
+    "rules_url": "https://novapay.ua/documents/pravila-nadannya-platizhnikh-poslug/"
+  }
+}
