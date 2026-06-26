@@ -157,6 +157,7 @@ public struct NPWalletSessionItem : Swift.Codable, Swift.Sendable {
   public let promotion_url: Swift.String?
   public let terms_url: Swift.String?
   public let rules_url: Swift.String?
+  public let tariffs_promotion_text: Swift.String?
   public let mit_agreement: NovaPaySDKFramework.NPWalletMitAgreementItem?
   public let mit_agreement_url: Swift.String?
   public let mit_agreement_preview_url: Swift.String?
