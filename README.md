@@ -585,7 +585,10 @@ class WalletViewController: UIViewController {
         
         // Present the wallet sheet
         walletSheet.present(
-            from: self
+            from: self,
+            walletSheetStatus: { [weak self] result in
+                self?.handleWalletSheetStatus(result)
+            }
         )
     }
 
@@ -645,7 +648,8 @@ struct WalletView: View {
                     EmptyView()
                         .walletSheet(
                             isPresented: $walletModel.isPresentedWalletSheet,
-                            walletSheet: walletSheet
+                            walletSheet: walletSheet,
+                            walletSheetStatus: walletModel.handleWalletSheetStatus
                         )
                 }
             }
@@ -714,7 +718,7 @@ class WalletModel: ObservableObject {
         case .canceled:
             dismissWalletSheet()
             print("Wallet management canceled!")
-        case .failed(let errorMessage):
+        case .failed(let failedType, let errorMessage):
             showError(message: errorMessage)
             dismissWalletSheet()
         case .undefined:
@@ -736,7 +740,6 @@ class WalletModel: ObservableObject {
     }
     
     private func dismissWalletSheet() {
-        walletSheet?.dismiss()
         isPresentedWalletSheet = false
     }
     
