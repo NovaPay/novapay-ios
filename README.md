@@ -586,7 +586,7 @@ class WalletViewController: UIViewController {
         // Present the wallet sheet
         walletSheet.present(
             from: self,
-            onDispose: { [weak self] in
+            onDismiss: { [weak self] in
                 print("Wallet sheet was dismissed")
             }
         )
@@ -649,7 +649,7 @@ struct WalletView: View {
                         .walletSheet(
                             isPresented: $walletModel.isPresentedWalletSheet,
                             walletSheet: walletSheet,
-                            onDispose: walletModel.onDispose
+                            onDismiss: walletModel.onDismiss
                         )
                 }
             }
@@ -703,7 +703,7 @@ class WalletModel: ObservableObject {
         }
     }
     
-    func onDispose() {
+    func onDismiss() {
         print("Wallet sheet was dismissed")
         isPresentedWalletSheet = false
     }
