@@ -586,8 +586,8 @@ class WalletViewController: UIViewController {
         // Present the wallet sheet
         walletSheet.present(
             from: self,
-            walletSheetStatus: { [weak self] result in
-                self?.handleWalletSheetStatus(result)
+            onDispose: { [weak self] in
+                print("Wallet sheet was dismissed")
             }
         )
     }
@@ -649,7 +649,7 @@ struct WalletView: View {
                         .walletSheet(
                             isPresented: $walletModel.isPresentedWalletSheet,
                             walletSheet: walletSheet,
-                            walletSheetStatus: walletModel.handleWalletSheetStatus
+                            onDispose: walletModel.onDispose
                         )
                 }
             }
@@ -703,28 +703,9 @@ class WalletModel: ObservableObject {
         }
     }
     
-    func handleWalletSheetStatus(_ result: WalletSheetResult) {
-        switch result {
-        case .addCard(let card):
-            print("Card added: \(card)")
-            dismissWalletSheet()
-        case .removeCard:
-            print("Card removed")
-            dismissWalletSheet()
-        case .favouriteCardChanged(let cardId, let isFavourite):
-            print("Favourite card changed - ID: \(cardId ?? -1), isFavourite: \(isFavourite ?? false)")
-        case .mainCardChanged(let cardId, let isMain):
-            print("Main card changed - ID: \(cardId ?? -1), isMain: \(isMain ?? false)")
-        case .canceled:
-            dismissWalletSheet()
-            print("Wallet management canceled!")
-        case .failed(let failedType, let errorMessage):
-            showError(message: errorMessage)
-            dismissWalletSheet()
-        case .undefined:
-            dismissWalletSheet()
-            print("Wallet status undefined!")
-        }
+    func onDispose() {
+        print("Wallet sheet was dismissed")
+        isPresentedWalletSheet = false
     }
     
     func handleSessionStatus(_ status: NPSessionStatusType) {
@@ -738,11 +719,7 @@ class WalletModel: ObservableObject {
             break
         }
     }
-    
-    private func dismissWalletSheet() {
-        isPresentedWalletSheet = false
-    }
-    
+
     func showError(message: String) {
         errorMessage = message
         showError = true
