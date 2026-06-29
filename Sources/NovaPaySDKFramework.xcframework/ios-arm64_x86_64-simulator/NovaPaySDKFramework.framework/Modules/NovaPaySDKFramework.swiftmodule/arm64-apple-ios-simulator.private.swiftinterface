@@ -977,18 +977,27 @@ extension NovaPaySDKFramework.WalletRemoveCardAlertViewController {
   @_Concurrency.MainActor @preconcurrency @objc override final public func traitCollectionDidChange(_ previousTraitCollection: UIKit.UITraitCollection?)
 }
 extension SwiftUICore.View {
-  @_Concurrency.MainActor @preconcurrency public func walletSheet(isPresented: SwiftUICore.Binding<Swift.Bool>, walletSheet: NovaPaySDKFramework.WalletSheet) -> some SwiftUICore.View
+  @_Concurrency.MainActor @preconcurrency public func walletSheet(isPresented: SwiftUICore.Binding<Swift.Bool>, walletSheet: NovaPaySDKFramework.WalletSheet, onDismiss: (() -> Swift.Void)? = nil) -> some SwiftUICore.View
   
+}
+public enum WalletSheetFailedType {
+  case general
+  case addCard
+  public static func == (a: NovaPaySDKFramework.WalletSheetFailedType, b: NovaPaySDKFramework.WalletSheetFailedType) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
 }
 @_Concurrency.MainActor public class WalletSheet {
   @_Concurrency.MainActor public init(token: Swift.String) async throws
-  @_Concurrency.MainActor public func present(from presentingViewController: UIKit.UIViewController)
+  @_Concurrency.MainActor public func present(from presentingViewController: UIKit.UIViewController, onDismiss: (() -> Swift.Void)? = nil)
   @_Concurrency.MainActor public func dismiss(animated: Swift.Bool = true, completion: (() -> Swift.Void)? = nil)
   @objc deinit
 }
 extension NovaPaySDKFramework.WalletSheet {
   @_Concurrency.MainActor @preconcurrency public struct PaymentButton<Content> : SwiftUICore.View where Content : SwiftUICore.View {
-    @_Concurrency.MainActor @preconcurrency public init(walletSheet: NovaPaySDKFramework.WalletSheet, @SwiftUICore.ViewBuilder content: () -> Content)
+    @_Concurrency.MainActor @preconcurrency public init(walletSheet: NovaPaySDKFramework.WalletSheet, onDismiss: (() -> Swift.Void)? = nil, @SwiftUICore.ViewBuilder content: () -> Content)
     @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
       get
     }
@@ -1051,5 +1060,7 @@ extension NovaPaySDKFramework.WalletPaymentType : Swift.Equatable {}
 extension NovaPaySDKFramework.WalletPaymentType : Swift.Hashable {}
 extension NovaPaySDKFramework.WalletManualInputType : Swift.Equatable {}
 extension NovaPaySDKFramework.WalletManualInputType : Swift.Hashable {}
+extension NovaPaySDKFramework.WalletSheetFailedType : Swift.Equatable {}
+extension NovaPaySDKFramework.WalletSheetFailedType : Swift.Hashable {}
 extension NovaPaySDKFramework.WalletSheet : Swift.Sendable {}
 extension NovaPaySDKFramework.WalletSheet.PaymentButton : Swift.Sendable {}

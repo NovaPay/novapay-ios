@@ -31007,6 +31007,220 @@
       },
       {
         "kind": "TypeDecl",
+        "name": "WalletSheetFailedType",
+        "printedName": "WalletSheetFailedType",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "general",
+            "printedName": "general",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(NovaPaySDKFramework.WalletSheetFailedType.Type) -> NovaPaySDKFramework.WalletSheetFailedType",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "WalletSheetFailedType",
+                    "printedName": "NovaPaySDKFramework.WalletSheetFailedType",
+                    "usr": "s:19NovaPaySDKFramework21WalletSheetFailedTypeO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "NovaPaySDKFramework.WalletSheetFailedType.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "WalletSheetFailedType",
+                        "printedName": "NovaPaySDKFramework.WalletSheetFailedType",
+                        "usr": "s:19NovaPaySDKFramework21WalletSheetFailedTypeO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:19NovaPaySDKFramework21WalletSheetFailedTypeO7generalyA2CmF",
+            "mangledName": "$s19NovaPaySDKFramework21WalletSheetFailedTypeO7generalyA2CmF",
+            "moduleName": "NovaPaySDKFramework"
+          },
+          {
+            "kind": "Var",
+            "name": "addCard",
+            "printedName": "addCard",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(NovaPaySDKFramework.WalletSheetFailedType.Type) -> NovaPaySDKFramework.WalletSheetFailedType",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "WalletSheetFailedType",
+                    "printedName": "NovaPaySDKFramework.WalletSheetFailedType",
+                    "usr": "s:19NovaPaySDKFramework21WalletSheetFailedTypeO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "NovaPaySDKFramework.WalletSheetFailedType.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "WalletSheetFailedType",
+                        "printedName": "NovaPaySDKFramework.WalletSheetFailedType",
+                        "usr": "s:19NovaPaySDKFramework21WalletSheetFailedTypeO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:19NovaPaySDKFramework21WalletSheetFailedTypeO7addCardyA2CmF",
+            "mangledName": "$s19NovaPaySDKFramework21WalletSheetFailedTypeO7addCardyA2CmF",
+            "moduleName": "NovaPaySDKFramework"
+          },
+          {
+            "kind": "Function",
+            "name": "==",
+            "printedName": "==(_:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "WalletSheetFailedType",
+                "printedName": "NovaPaySDKFramework.WalletSheetFailedType",
+                "usr": "s:19NovaPaySDKFramework21WalletSheetFailedTypeO"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "WalletSheetFailedType",
+                "printedName": "NovaPaySDKFramework.WalletSheetFailedType",
+                "usr": "s:19NovaPaySDKFramework21WalletSheetFailedTypeO"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:19NovaPaySDKFramework21WalletSheetFailedTypeO2eeoiySbAC_ACtFZ",
+            "mangledName": "$s19NovaPaySDKFramework21WalletSheetFailedTypeO2eeoiySbAC_ACtFZ",
+            "moduleName": "NovaPaySDKFramework",
+            "static": true,
+            "implicit": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Var",
+            "name": "hashValue",
+            "printedName": "hashValue",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:19NovaPaySDKFramework21WalletSheetFailedTypeO9hashValueSivp",
+            "mangledName": "$s19NovaPaySDKFramework21WalletSheetFailedTypeO9hashValueSivp",
+            "moduleName": "NovaPaySDKFramework",
+            "implicit": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:19NovaPaySDKFramework21WalletSheetFailedTypeO9hashValueSivg",
+                "mangledName": "$s19NovaPaySDKFramework21WalletSheetFailedTypeO9hashValueSivg",
+                "moduleName": "NovaPaySDKFramework",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Function",
+            "name": "hash",
+            "printedName": "hash(into:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Hasher",
+                "printedName": "Swift.Hasher",
+                "paramValueOwnership": "InOut",
+                "usr": "s:s6HasherV"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:19NovaPaySDKFramework21WalletSheetFailedTypeO4hash4intoys6HasherVz_tF",
+            "mangledName": "$s19NovaPaySDKFramework21WalletSheetFailedTypeO4hash4intoys6HasherVz_tF",
+            "moduleName": "NovaPaySDKFramework",
+            "implicit": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Enum",
+        "usr": "s:19NovaPaySDKFramework21WalletSheetFailedTypeO",
+        "mangledName": "$s19NovaPaySDKFramework21WalletSheetFailedTypeO",
+        "moduleName": "NovaPaySDKFramework",
+        "declAttributes": [
+          "AccessControl"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
         "name": "WalletSheet",
         "printedName": "WalletSheet",
         "children": [
@@ -31042,7 +31256,7 @@
           {
             "kind": "Function",
             "name": "present",
-            "printedName": "present(from:)",
+            "printedName": "present(from:onDismiss:)",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -31054,11 +31268,37 @@
                 "name": "UIViewController",
                 "printedName": "UIKit.UIViewController",
                 "usr": "c:objc(cs)UIViewController"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "(() -> ())?",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "() -> ()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      }
+                    ]
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
               }
             ],
             "declKind": "Func",
-            "usr": "s:19NovaPaySDKFramework11WalletSheetC7present4fromySo16UIViewControllerC_tF",
-            "mangledName": "$s19NovaPaySDKFramework11WalletSheetC7present4fromySo16UIViewControllerC_tF",
+            "usr": "s:19NovaPaySDKFramework11WalletSheetC7present4from9onDismissySo16UIViewControllerC_yycSgtF",
+            "mangledName": "$s19NovaPaySDKFramework11WalletSheetC7present4from9onDismissySo16UIViewControllerC_yycSgtF",
             "moduleName": "NovaPaySDKFramework",
             "declAttributes": [
               "Custom",
@@ -31129,7 +31369,7 @@
               {
                 "kind": "Constructor",
                 "name": "init",
-                "printedName": "init(walletSheet:content:)",
+                "printedName": "init(walletSheet:onDismiss:content:)",
                 "children": [
                   {
                     "kind": "TypeNominal",
@@ -31149,6 +31389,32 @@
                     "name": "WalletSheet",
                     "printedName": "NovaPaySDKFramework.WalletSheet",
                     "usr": "s:19NovaPaySDKFramework11WalletSheetC"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "(() -> ())?",
+                    "children": [
+                      {
+                        "kind": "TypeFunc",
+                        "name": "Function",
+                        "printedName": "() -> ()",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Void",
+                            "printedName": "()"
+                          },
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Void",
+                            "printedName": "()"
+                          }
+                        ]
+                      }
+                    ],
+                    "hasDefaultArg": true,
+                    "usr": "s:Sq"
                   },
                   {
                     "kind": "TypeFunc",
@@ -31172,8 +31438,8 @@
                   }
                 ],
                 "declKind": "Constructor",
-                "usr": "s:19NovaPaySDKFramework11WalletSheetC13PaymentButtonV06walletE07contentAEy_xGAC_xyXEtcfc",
-                "mangledName": "$s19NovaPaySDKFramework11WalletSheetC13PaymentButtonV06walletE07contentAEy_xGAC_xyXEtcfc",
+                "usr": "s:19NovaPaySDKFramework11WalletSheetC13PaymentButtonV06walletE09onDismiss7contentAEy_xGAC_yycSgxyXEtcfc",
+                "mangledName": "$s19NovaPaySDKFramework11WalletSheetC13PaymentButtonV06walletE09onDismiss7contentAEy_xGAC_yycSgxyXEtcfc",
                 "moduleName": "NovaPaySDKFramework",
                 "genericSig": "<τ_0_0 where τ_0_0 : SwiftUI.View>",
                 "sugared_genericSig": "<Content where Content : SwiftUI.View>",
@@ -32855,7 +33121,7 @@
           {
             "kind": "Function",
             "name": "walletSheet",
-            "printedName": "walletSheet(isPresented:walletSheet:)",
+            "printedName": "walletSheet(isPresented:walletSheet:onDismiss:)",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -32889,11 +33155,37 @@
                 "name": "WalletSheet",
                 "printedName": "NovaPaySDKFramework.WalletSheet",
                 "usr": "s:19NovaPaySDKFramework11WalletSheetC"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "(() -> ())?",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "() -> ()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      }
+                    ]
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
               }
             ],
             "declKind": "Func",
-            "usr": "s:7SwiftUI4ViewP19NovaPaySDKFrameworkE11walletSheet11isPresentedAEQrAA7BindingVySbG_AD06WalletH0CtF",
-            "mangledName": "$s7SwiftUI4ViewP19NovaPaySDKFrameworkE11walletSheet11isPresentedAEQrAA7BindingVySbG_AD06WalletH0CtF",
+            "usr": "s:7SwiftUI4ViewP19NovaPaySDKFrameworkE11walletSheet11isPresentedAE9onDismissQrAA7BindingVySbG_AD06WalletH0CyycSgtF",
+            "mangledName": "$s7SwiftUI4ViewP19NovaPaySDKFrameworkE11walletSheet11isPresentedAE9onDismissQrAA7BindingVySbG_AD06WalletH0CyycSgtF",
             "moduleName": "NovaPaySDKFramework",
             "genericSig": "<τ_0_0 where τ_0_0 : SwiftUI.View>",
             "sugared_genericSig": "<Self where Self : SwiftUI.View>",
@@ -35489,84 +35781,84 @@
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletSheetViewController.swift",
       "kind": "Array",
-      "offset": 1803,
+      "offset": 1842,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletSheetViewController.swift",
       "kind": "IntegerLiteral",
-      "offset": 2159,
+      "offset": 2198,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletSheetViewController.swift",
       "kind": "StringLiteral",
-      "offset": 2185,
+      "offset": 2224,
       "length": 17,
       "value": "\"novaPayNewsIcon\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletSheetViewController.swift",
       "kind": "StringLiteral",
-      "offset": 2266,
+      "offset": 2305,
       "length": 25,
       "value": "\"pay_with_nova_pay_title\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletSheetViewController.swift",
       "kind": "IntegerLiteral",
-      "offset": 2456,
+      "offset": 2495,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletSheetViewController.swift",
       "kind": "StringLiteral",
-      "offset": 2482,
+      "offset": 2521,
       "length": 21,
       "value": "\"favouriteMethodIcon\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletSheetViewController.swift",
       "kind": "StringLiteral",
-      "offset": 2534,
+      "offset": 2573,
       "length": 28,
       "value": "\"add_favourite_method_title\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletSheetViewController.swift",
       "kind": "StringLiteral",
-      "offset": 2596,
+      "offset": 2635,
       "length": 18,
       "value": "\"pay_faster_title\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletSheetViewController.swift",
       "kind": "IntegerLiteral",
-      "offset": 2751,
+      "offset": 2790,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletSheetViewController.swift",
       "kind": "StringLiteral",
-      "offset": 2777,
+      "offset": 2816,
       "length": 19,
       "value": "\"autoPaymentMethod\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletSheetViewController.swift",
       "kind": "StringLiteral",
-      "offset": 2827,
+      "offset": 2866,
       "length": 23,
       "value": "\"add_autopayment_title\""
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/ViewControllers\/WalletSheetViewController.swift",
       "kind": "StringLiteral",
-      "offset": 2884,
+      "offset": 2923,
       "length": 25,
       "value": "\"add_autopayment_details\""
     },
@@ -35587,14 +35879,14 @@
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/WalletSheet.swift",
       "kind": "BooleanLiteral",
-      "offset": 2759,
+      "offset": 2844,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Users\/macnovapay\/builds\/wrFcx5dUS\/0\/ecommerce\/ios-sdk\/Sources\/Features\/Wallet\/WalletSheet.swift",
       "kind": "BooleanLiteral",
-      "offset": 3563,
+      "offset": 3763,
       "length": 5,
       "value": "false"
     },
