@@ -10,7 +10,7 @@
 		</data>
 		<key>Assets.car</key>
 		<data>
-		V0nzfkqPKFM9M2f/UarHeJ7S60M=
+		T4zPVJhsgPiu8cf5aLdK9wdpsyA=
 		</data>
 		<key>CreditCardView.nib</key>
 		<data>
@@ -50,7 +50,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		0w1dXpmDGyhIVD4pyr1BS7ZO2WQ=
+		avAez2/QREA8VZgQplOVKZt8+Qk=
 		</data>
 		<key>Inter-Medium.ttf</key>
 		<data>
@@ -70,19 +70,19 @@
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		a4IBlsObTs9rqLQhReECGO9UxvQ=
+		9ciHxLK2LUkSaLXLaGwwksFklzw=
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		4C7V3rAgBsYXUnzLh9HCsg/ynRA=
+		rinL2YggpEgYhJ1B4H+6e7ZVPGA=
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		+dDUPgWVCTi9lrFFeKCv88L0g+M=
+		yjVoFiNHNo1rJh61NeJOfKB4DBY=
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		1krKBQ+suNfV7VMF2mapFXoSf6c=
+		JzmScxab/QgfE87n2BBMcLmWd68=
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -90,19 +90,19 @@
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		neTGl+ClVcST/B2bwd7z2gL5eWk=
+		+bI+cikz8vRuWCkOLvT5rhqMGxM=
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		pnGy4+wWr1rKe7BtTwTIQIEu+hg=
+		weNdIHuoHWgq5uYiylQJQ/Rcz1I=
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		3owDbJIg6q0x2yV4agWyWVSPu/o=
+		ch65dt7W+3uKK2K/PEJV48V3Pvk=
 		</data>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		ke0KiXBpGBJYzK/GjMQaBnw0aQU=
+		dflVRBA11WxFCLAKFQguT+xgZNY=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -311,7 +311,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			KMUFIu2lzbfypNIuaAv372sjt5+5MhRkhaGPH9wsRJA=
+			T+7NyJYpEg9Mt7wnatQRL7t/DGen0OIv3z2GmSEkKvQ=
 			</data>
 		</dict>
 		<key>CreditCardView.nib</key>
@@ -409,28 +409,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			9IXf3vkWqdl6pr5yCHCvTjj5R0JZGA18YVdnNm+YOYo=
+			LEtSzKsio5DeAi7np8xTsqMi+6au0PVO3cL2/BnxZnE=
 			</data>
 		</dict>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			a7XM1pG/8d5TIIZbyTI3toMCnpi9StuH79+HyTp/Rbs=
+			ndpFn0YRpRuTXJQZOgEazfQunMn8CCoyzmzODfdE0g4=
 			</data>
 		</dict>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			CQzRwp+T1nnUaue3r9vs1GRITiIoCtoHkcqb7TwHvdM=
+			YYg29A2by4MDiYY+Rx7+IaOIstu35krbT6SGN+nM9o0=
 			</data>
 		</dict>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			p0qOsOb9mBe0FvDRlKI0Y29iG6i63A7aZrFhNKekpS8=
+			cWYamTPLsZyKZbJ60lFg6ZKoQXGzNnpVCaBZ6ob0SBg=
 			</data>
 		</dict>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
@@ -444,28 +444,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			SlAk4AtA6dkGoxww7sOubB6xC6qtoNmMcr53fp2MfoQ=
+			IO3FOqa/45kc1GjPtRK0HsTeb0xaKKVnlK3gFvd5hyQ=
 			</data>
 		</dict>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Z7rrwr8l/5MDGbO+6NG9C71BE6bqQzxkFGKKI7m6XTU=
+			comIjzGEXOmtsbFTNxXmJn6XB3EN2ymDW6b8kuamNc4=
 			</data>
 		</dict>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			4NKOOEZ8SOHPIQlXjyeco+jYKoRiNIqWt4/PPfMuyC8=
+			Q+63BOFwFQ0mpny9NCkgwBLtYLppIq+CmoHIkSQUS1c=
 			</data>
 		</dict>
 		<key>Modules/NovaPaySDKFramework.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			s2OUMQxWmFt6Y5RxXnEtq5ggCGEYeD5MEEqEMqssVcc=
+			BQyLGYD944vGD/6XDTTTHXVNn3iMA7OdJJ+1Cm1BoI8=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
