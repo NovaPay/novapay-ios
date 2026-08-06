@@ -425,6 +425,13 @@ public struct NPWalletItem : Swift.Codable, Swift.Sendable {
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
+public enum NPSessionStatusError : Swift.Error, Foundation.LocalizedError {
+  case terminalFailure(status: NovaPaySDKFramework.NPSessionStatusType, reason: Swift.String)
+  case timeout
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
 public actor NPSessionStatusService {
   public init(apiClient: (any NovaPaySDKFramework.APIClientProtocol)? = nil)
   public func startPolling(sessionId: Swift.String, completion: @escaping @_Concurrency.MainActor @Sendable (NovaPaySDKFramework.PaymentSheetResult) -> Swift.Void) async throws
@@ -435,6 +442,9 @@ public actor NPSessionStatusService {
   @_semantics("defaultActor") nonisolated final public var unownedExecutor: _Concurrency.UnownedSerialExecutor {
     get
   }
+}
+extension NovaPaySDKFramework.NPSessionStatusService {
+  public func waitForMainApplePayResolution(sessionId: Swift.String) async throws -> NovaPaySDKFramework.NPSessionStatusType
 }
 public struct CurrencyAmount {
   public init(value: Swift.Double, currencyCode: Swift.String? = nil)
@@ -461,6 +471,7 @@ public enum CardBrand {
   case undefined
   case visa
   case mastercard
+  case prostir
   public static func == (a: NovaPaySDKFramework.CardBrand, b: NovaPaySDKFramework.CardBrand) -> Swift.Bool
   public func hash(into hasher: inout Swift.Hasher)
   public var hashValue: Swift.Int {
@@ -740,15 +751,19 @@ public enum NPColors {
 }
 extension Swift.String {
   public func isMasterCard() -> Swift.Bool
+  public func isProstirCard() -> Swift.Bool
   public func isVisa() -> Swift.Bool
 }
 public enum NPFeaturesImages : Swift.String, Swift.CaseIterable {
   case mastercard_placeholder_icon
   case visa_placeholder_icon
+  case prostir_placeholder_icon
   case mastercard_logo
   case visa_logo
+  case prostir_logo
   case logo_mastercard
   case logo_visa
+  case logo_prostir
   case novaPayMasterCardCredit
   case novaPayMasterCardDebit
   case novaPayVisaCredit
@@ -917,16 +932,6 @@ extension NovaPaySDKFramework.PayoutSheet {
 public struct PayoutSheetConfiguration {
   public static func registerFonts()
 }
-public enum WalletPaymentType {
-  case undefined
-  case visa
-  case mastercard
-  public static func == (a: NovaPaySDKFramework.WalletPaymentType, b: NovaPaySDKFramework.WalletPaymentType) -> Swift.Bool
-  public func hash(into hasher: inout Swift.Hasher)
-  public var hashValue: Swift.Int {
-    get
-  }
-}
 public struct WalletPaymentCard {
 }
 extension NovaPaySDKFramework.WalletPaymentCard {
@@ -1056,8 +1061,6 @@ extension NovaPaySDKFramework.PayoutManualInputType : Swift.Hashable {}
 extension NovaPaySDKFramework.PayoutSheetResult : Swift.Sendable {}
 extension NovaPaySDKFramework.PayoutSheet : Swift.Sendable {}
 extension NovaPaySDKFramework.PayoutSheet.PaymentButton : Swift.Sendable {}
-extension NovaPaySDKFramework.WalletPaymentType : Swift.Equatable {}
-extension NovaPaySDKFramework.WalletPaymentType : Swift.Hashable {}
 extension NovaPaySDKFramework.WalletManualInputType : Swift.Equatable {}
 extension NovaPaySDKFramework.WalletManualInputType : Swift.Hashable {}
 extension NovaPaySDKFramework.WalletSheetFailedType : Swift.Equatable {}
