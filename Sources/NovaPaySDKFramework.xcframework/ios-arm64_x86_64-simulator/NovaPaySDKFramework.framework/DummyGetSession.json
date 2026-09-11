@@ -2,6 +2,7 @@
     "session_id": "3423da4a-81ef-45e5-b6ab-887a053e88ff",
     "phone": "+380665771712",
     "amount": "1893.66",
+    "payer_taxpayer_id_required": true,
     "products": [
         {
             "price": "1893.66",

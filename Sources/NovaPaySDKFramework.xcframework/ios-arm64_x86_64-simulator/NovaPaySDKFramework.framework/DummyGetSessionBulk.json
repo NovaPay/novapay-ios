@@ -5,6 +5,7 @@
       "phone": "+380111111111",
       "client_verified": true,
       "amount": "2020.25",
+      "payer_taxpayer_id_required": true,
       "amounts": {
         "default": "2020.25",
         "novapay": null
@@ -43,6 +44,7 @@
       "session_id": "3fb74eef-7d31-44d6-8f93-f995979fd8b5",
       "phone": "+380111111111",
       "client_verified": true,
+      "payer_taxpayer_id_required": true,
       "amount": "2020.25",
       "amounts": {
         "default": "2020.25",
@@ -82,6 +84,7 @@
       "session_id": "9568830a-e0da-406c-b23f-e6caf96c6456",
       "phone": "+380111111111",
       "client_verified": true,
+      "payer_taxpayer_id_required": true,
       "amount": "2020.25",
       "amounts": {
         "default": "2020.25",

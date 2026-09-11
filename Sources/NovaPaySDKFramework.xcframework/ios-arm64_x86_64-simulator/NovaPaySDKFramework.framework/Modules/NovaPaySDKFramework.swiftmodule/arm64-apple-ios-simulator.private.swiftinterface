@@ -194,7 +194,7 @@ public struct NPAmountItem : Swift.Codable, Swift.Sendable {
 }
 public protocol APIClientProtocol : Swift.Sendable {
   func getSessionStatus(sessionId: Swift.String) async throws -> NovaPaySDKFramework.NPSessionStatusItem?
-  func pay(sessionId: Swift.String, type: NovaPaySDKFramework.NPPayInstrumentType, isFavourite: Swift.Bool, withoutConfirmation: Swift.Bool?) async throws -> NovaPaySDKFramework.NPPayResponse?
+  func pay(sessionId: Swift.String, type: NovaPaySDKFramework.NPPayInstrumentType, isFavourite: Swift.Bool, withoutConfirmation: Swift.Bool?, taxpayerId: Swift.String?) async throws -> NovaPaySDKFramework.NPPayResponse?
 }
 @_hasMissingDesignatedInitializers public class NPAPIClient : NovaPaySDKFramework.APIClientProtocol, @unchecked Swift.Sendable {
   public static let shared: NovaPaySDKFramework.NPAPIClient
@@ -202,7 +202,7 @@ public protocol APIClientProtocol : Swift.Sendable {
   public func getSession(sessionId: Swift.String) async throws -> NovaPaySDKFramework.NPPaymentSessionItem?
   public func getSessionBulk(sessionIds: [Swift.String]) async throws -> NovaPaySDKFramework.NPPaymentSessionBulkItem?
   public func getCardArtImage(walletId: Swift.Int, cardId: Swift.Int) async throws -> NovaPaySDKFramework.NPCardArtItem?
-  public func pay(sessionId: Swift.String, type: NovaPaySDKFramework.NPPayInstrumentType, isFavourite: Swift.Bool, withoutConfirmation: Swift.Bool?) async throws -> NovaPaySDKFramework.NPPayResponse?
+  public func pay(sessionId: Swift.String, type: NovaPaySDKFramework.NPPayInstrumentType, isFavourite: Swift.Bool, withoutConfirmation: Swift.Bool?, taxpayerId: Swift.String?) async throws -> NovaPaySDKFramework.NPPayResponse?
   public func getSessionStatus(sessionId: Swift.String) async throws -> NovaPaySDKFramework.NPSessionStatusItem?
   @objc deinit
 }
@@ -320,7 +320,7 @@ public enum NPPayInstrumentType : Swift.Sendable {
   case oneTimeCard(pan: Swift.String, expire: Swift.String, cvv: Swift.String)
   case walletCard(walletCardId: Swift.Int, walletPhone: Swift.String?)
   case applePay(appleData: Foundation.Data?, useRecurring: Swift.Bool, recurringSessionId: Swift.String?, currentSessionId: Swift.String)
-  public func httpBody(isFavourite: Swift.Bool = false, withoutConfirmation: Swift.Bool?) throws -> Foundation.Data?
+  public func httpBody(isFavourite: Swift.Bool = false, withoutConfirmation: Swift.Bool?, taxpayerId: Swift.String? = nil) throws -> Foundation.Data?
 }
 public struct NPPaymentSessionBulkItem : Swift.Codable, Swift.Sendable {
   public let sessions: [NovaPaySDKFramework.NPPaymentSessionItem]?
@@ -331,6 +331,9 @@ public struct NPPaymentSessionBulkItem : Swift.Codable, Swift.Sendable {
     get
   }
   public func isApplePayFavourite() -> Swift.Bool
+  public var isPayerTaxpayerIdRequired: Swift.Bool {
+    get
+  }
   public var isAvailablePromotions: Swift.Bool {
     get
   }
@@ -343,6 +346,7 @@ public struct NPPaymentSessionBulkItem : Swift.Codable, Swift.Sendable {
 public struct NPPaymentSessionItem : Swift.Codable, Swift.Sendable {
   public let session_id: Swift.String?
   public let express_waybill: Swift.String?
+  public let payer_taxpayer_id_required: Swift.Bool?
   public let phone: Swift.String?
   public let amount: Swift.Double?
   public let amounts: NovaPaySDKFramework.NPAmountItem?
@@ -357,7 +361,7 @@ public struct NPPaymentSessionItem : Swift.Codable, Swift.Sendable {
 public struct NPPayResponse : Swift.Codable, Swift.Sendable {
   public let session_id: Swift.String?
   public let status: NovaPaySDKFramework.NPSessionStatusType?
-  public let redirect_url: Swift.String?
+  public var redirect_url: Swift.String?
   public let reason: Swift.String?
   public let code: Swift.String?
   public func encode(to encoder: any Swift.Encoder) throws
@@ -443,9 +447,6 @@ public actor NPSessionStatusService {
     get
   }
 }
-extension NovaPaySDKFramework.NPSessionStatusService {
-  public func waitForMainApplePayResolution(sessionId: Swift.String) async throws -> NovaPaySDKFramework.NPSessionStatusType
-}
 public struct CurrencyAmount {
   public init(value: Swift.Double, currencyCode: Swift.String? = nil)
   public func formattedString(currencySymbolOverride: Swift.String? = nil) -> Swift.String?
@@ -462,8 +463,12 @@ extension NovaPaySDKFramework.CurrencyAmount {
   public var walletSession: NovaPaySDKFramework.NPWalletSessionItem?
   public var payoutSession: NovaPaySDKFramework.NPPayoutSessionItem?
   public var allSessionIds: [Swift.String]?
+  public var taxpayerId: Swift.String?
   public var merchantIdentifier: Swift.String?
   nonisolated(unsafe) public static let shared: NovaPaySDKFramework.NPSessionClient
+  public var isPayerTaxpayerIdRequired: Swift.Bool {
+    get
+  }
   public func removeWalletCard(id: Swift.Int)
   public func inserWalletCardManually(card: NovaPaySDKFramework.NPWalletCardItem)
   public func updateMainStatus(_ cardId: Swift.Int?, _ mitWithoutConfirmation: Swift.Bool?)
@@ -507,10 +512,15 @@ extension UIKit.UITextView {
   @_Concurrency.MainActor @preconcurrency public func addHyperLinksToText(originalText: Swift.String, hyperLinks: [Swift.String : Swift.String], font: UIKit.UIFont, linkFont: UIKit.UIFont? = nil, textColor: UIKit.UIColor, linkColor: UIKit.UIColor, underlineLink: Swift.Bool = false)
 }
 @objc public protocol CreditCardFieldServiceDelegate {
-  @objc func cardNumberValidated(cardNumber: Swift.String)
+  @objc optional func cardNumberValidated(cardNumber: Swift.String)
   @objc optional func cardExpiryValidated(cardExpiry: Swift.String)
   @objc optional func cardCVVValidated(cvv: Swift.String)
   @objc optional func cardNameValidated(name: Swift.String)
+  @objc optional func taxIDValidated(taxID: Swift.String)
+  @objc optional func nonResidentTaxIDValidated(nonResidentTaxID: Swift.String)
+  @objc optional func biometricIDValidated(biometricID: Swift.String)
+  @objc optional func passportNumberValidated(passportNumber: Swift.String)
+  @objc optional func passportSeriesValidated(passportSeries: Swift.String)
 }
 @objc @_inheritsConvenienceInitializers @IBDesignable @_Concurrency.MainActor @preconcurrency open class CreditCardInputTextfield : UIKit.UITextField {
   @objc @_Concurrency.MainActor @preconcurrency open var isLTRLanguage: Swift.Bool {
@@ -671,6 +681,75 @@ extension UIKit.UITextView {
 extension NovaPaySDKFramework.CreditCardView : UIKit.UITextFieldDelegate {
   @_Concurrency.MainActor @preconcurrency @objc dynamic public func textField(_ textField: UIKit.UITextField, shouldChangeCharactersIn range: Foundation.NSRange, replacementString string: Swift.String) -> Swift.Bool
 }
+public enum PassportDocumentType : Swift.Int, Swift.CaseIterable {
+  case biometric
+  case regular
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [NovaPaySDKFramework.PassportDocumentType]
+  public typealias RawValue = Swift.Int
+  nonisolated public static var allCases: [NovaPaySDKFramework.PassportDocumentType] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum PaymentWarningTab : Swift.Int, Swift.CaseIterable {
+  case taxID
+  case nonResident
+  case noTaxID
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [NovaPaySDKFramework.PaymentWarningTab]
+  public typealias RawValue = Swift.Int
+  nonisolated public static var allCases: [NovaPaySDKFramework.PaymentWarningTab] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @IBDesignable @_Concurrency.MainActor @preconcurrency public class PaymentWarningCardView : UIKit.UIView {
+  @objc @IBOutlet @_Concurrency.MainActor @preconcurrency weak public var taxIDTextField: NovaPaySDKFramework.CreditCardInputTextfield!
+  @objc @IBOutlet @_Concurrency.MainActor @preconcurrency weak public var nonResidentCodeTextField: NovaPaySDKFramework.CreditCardInputTextfield!
+  @objc @IBOutlet @_Concurrency.MainActor @preconcurrency weak public var biometricIDTextField: NovaPaySDKFramework.CreditCardInputTextfield!
+  @objc @IBOutlet @_Concurrency.MainActor @preconcurrency weak public var passportNumberTextField: NovaPaySDKFramework.CreditCardInputTextfield!
+  @objc @IBOutlet @_Concurrency.MainActor @preconcurrency weak public var passportSeriesTextField: NovaPaySDKFramework.CreditCardInputTextfield!
+  @_Concurrency.MainActor @preconcurrency public var selectedDocumentType: NovaPaySDKFramework.PassportDocumentType {
+    get
+  }
+  @_Concurrency.MainActor @preconcurrency public var onDocumentTypeChanged: ((NovaPaySDKFramework.PassportDocumentType) -> Swift.Void)?
+  @_Concurrency.MainActor @preconcurrency weak public var delegate: (any NovaPaySDKFramework.CreditCardFieldServiceDelegate)? {
+    get
+    set
+  }
+  @_Concurrency.MainActor @preconcurrency public var onTabChanged: ((NovaPaySDKFramework.PaymentWarningTab) -> Swift.Void)?
+  @_Concurrency.MainActor @preconcurrency public var value: Swift.String {
+    get
+  }
+  @_Concurrency.MainActor @preconcurrency public var succeedMessage: Swift.String {
+    get
+  }
+  @_Concurrency.MainActor @preconcurrency public var activeTextFields: [NovaPaySDKFramework.CreditCardInputTextfield] {
+    get
+  }
+  @_Concurrency.MainActor @preconcurrency public var selectedTab: NovaPaySDKFramework.PaymentWarningTab {
+    get
+  }
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  @_Concurrency.MainActor @preconcurrency public func select(documentType: NovaPaySDKFramework.PassportDocumentType)
+  @_Concurrency.MainActor @preconcurrency public func select(tab: NovaPaySDKFramework.PaymentWarningTab)
+  @_Concurrency.MainActor @preconcurrency public func clearErrors()
+  @_Concurrency.MainActor @preconcurrency @objc public func textFieldDidEndEditing(_ textField: UIKit.UITextField)
+  @_Concurrency.MainActor @preconcurrency public func isValid() -> Swift.Bool
+  @discardableResult
+  @_Concurrency.MainActor @preconcurrency public func validateAndShowErrors() -> Swift.Bool
+  @_Concurrency.MainActor @preconcurrency public func hasEmptyField() -> Swift.Bool
+  @objc deinit
+}
+extension NovaPaySDKFramework.PaymentWarningCardView : UIKit.UITextFieldDelegate {
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public func textField(_ textField: UIKit.UITextField, shouldChangeCharactersIn range: Foundation.NSRange, replacementString string: Swift.String) -> Swift.Bool
+}
 @objc @_inheritsConvenienceInitializers @IBDesignable @_Concurrency.MainActor @preconcurrency public class PayoutCreditCardView : UIKit.UIView {
   @objc @IBOutlet @_Concurrency.MainActor @preconcurrency weak public var cardNumberTextField: NovaPaySDKFramework.CreditCardInputTextfield!
   @_Concurrency.MainActor @preconcurrency public var delegate: (any NovaPaySDKFramework.CreditCardFieldServiceDelegate)? {
@@ -777,6 +856,10 @@ public enum NPFeaturesImages : Swift.String, Swift.CaseIterable {
   case warningCrossIcon
   case warningExclamationMarkIcon
   case close_icon
+  case radio_selected
+  case radio_unselected
+  case right_arrow_icon
+  case right_arrow_disabled_icon
   public func makeImage() -> UIKit.UIImage?
   public init?(rawValue: Swift.String)
   public typealias AllCases = [NovaPaySDKFramework.NPFeaturesImages]
@@ -795,6 +878,23 @@ extension Swift.String {
   public func formattedExpire() -> Swift.String
   public func formattedPan() -> Swift.String
 }
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor @preconcurrency final public class PaymentSheetWarningInputViewController : UIKit.UIViewController {
+  @_Concurrency.MainActor @preconcurrency final public var isPaymentWithoutConfirmation: Swift.Bool
+  @_Concurrency.MainActor @preconcurrency final public var paymentSheetStatus: ((Swift.String?, Swift.String?, NovaPaySDKFramework.PaymentSheetResult) -> Swift.Void)?
+  @_Concurrency.MainActor @preconcurrency @objc override final public func viewDidLoad()
+  @_Concurrency.MainActor @preconcurrency @objc override final public func viewWillAppear(_ animated: Swift.Bool)
+  @_Concurrency.MainActor @preconcurrency @objc override final public func viewDidAppear(_ animated: Swift.Bool)
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+extension NovaPaySDKFramework.PaymentSheetWarningInputViewController : @preconcurrency NovaPaySDKFramework.CreditCardFieldServiceDelegate {
+  @_Concurrency.MainActor @preconcurrency @objc final public func taxIDValidated(taxID: Swift.String)
+  @_Concurrency.MainActor @preconcurrency @objc final public func nonResidentTaxIDValidated(nonResidentTaxID: Swift.String)
+  @_Concurrency.MainActor @preconcurrency @objc final public func biometricIDValidated(biometricID: Swift.String)
+  @_Concurrency.MainActor @preconcurrency @objc final public func passportNumberValidated(passportNumber: Swift.String)
+  @_Concurrency.MainActor @preconcurrency @objc final public func passportSeriesValidated(passportSeries: Swift.String)
+}
 @objc @_inheritsConvenienceInitializers @_Concurrency.MainActor @preconcurrency final public class BottomSheetViewController : UIKit.UIViewController {
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
@@ -803,6 +903,7 @@ extension Swift.String {
 @objc @_inheritsConvenienceInitializers @_Concurrency.MainActor @preconcurrency final public class Confirm3dsViewController : UIKit.UIViewController {
   @_Concurrency.MainActor @preconcurrency final public var completionHandler: ((NovaPaySDKFramework.NPSessionStatusType) -> Swift.Void)?
   @_Concurrency.MainActor @preconcurrency @objc override final public func viewDidLoad()
+  @_Concurrency.MainActor @preconcurrency @objc override final public func viewWillAppear(_ animated: Swift.Bool)
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
   @objc deinit
@@ -1046,6 +1147,12 @@ extension NovaPaySDKFramework.CardBrand : Swift.Hashable {}
 extension NovaPaySDKFramework.NovaPayCardType : Swift.Equatable {}
 extension NovaPaySDKFramework.NovaPayCardType : Swift.Hashable {}
 extension NovaPaySDKFramework.NovaPayCardType : Swift.RawRepresentable {}
+extension NovaPaySDKFramework.PassportDocumentType : Swift.Equatable {}
+extension NovaPaySDKFramework.PassportDocumentType : Swift.Hashable {}
+extension NovaPaySDKFramework.PassportDocumentType : Swift.RawRepresentable {}
+extension NovaPaySDKFramework.PaymentWarningTab : Swift.Equatable {}
+extension NovaPaySDKFramework.PaymentWarningTab : Swift.Hashable {}
+extension NovaPaySDKFramework.PaymentWarningTab : Swift.RawRepresentable {}
 extension NovaPaySDKFramework.FontError : Swift.Equatable {}
 extension NovaPaySDKFramework.FontError : Swift.Hashable {}
 extension NovaPaySDKFramework.NPFeaturesImages : Swift.Equatable {}
