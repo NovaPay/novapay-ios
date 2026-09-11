@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialize SDK
         NPAPIClient.shared.configure(
             environment: .dev, // Options: dev, staging, production . By default dev
-            languageType: .uk, Options: uk, en . By default uk
+            languageType: .uk // Options: uk, en . By default uk
         )
 
         return true
@@ -59,7 +59,7 @@ class PaymentViewController: UIViewController {
     
     // MARK: - Properties
     private var paymentSheet: PaymentSheet?
-    private var sessionIds: [String] = []
+    private let sessionIds: [String]
     private let merchantIdentifier: String
     private let payButton = UIButton()
     
@@ -71,6 +71,7 @@ class PaymentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        setupPaymentSheet()
     }
     
     // MARK: - UI Setup
@@ -83,57 +84,30 @@ class PaymentViewController: UIViewController {
         payButton.setTitleColor(.white, for: .normal)
         payButton.layer.cornerRadius = 8
         payButton.addTarget(self, action: #selector(payButtonTapped), for: .touchUpInside)
-        payButton.isEnabled = false
-        payButton.setTitle("Loading...", for: .normal)
     }
     
     // MARK: - Payment Setup
-    func initializePayment(
-        waybills: [WaybillsResponse],
-        environment: NPEnvironmentType
-    ) {
-        var sessionsIds: [String] = []
+    private func setupPaymentSheet() {
+        // Disable the button until payment sheet is ready
+        payButton.isEnabled = false
+        payButton.setTitle("Loading...", for: .normal)
 
         Task {
             do {
-                for waybill in waybills {
-                    let paymentRequest = PaymentInitRequest.convert(from: waybill)
-                    let response = try await apiService.initializePayment(paymentRequest: paymentRequest)
-                    sessionsIds.append(response.session_id)
-                }
-
-                await preparePaymentSheet(
-                    sessionIds: sessionsIds,
-                    environment: environment
+                // Initialize the payment sheet
+                self.paymentSheet = try await PaymentSheet(
+                    sessionIds: sessionIds,
+                    merchantIdentifier: merchantIdentifier,
+                    environment: .dev, // Optional
+                    language: .uk // Optional
                 )
+
+                // Enable the button when payment sheet is ready
+                self.payButton.isEnabled = true
+                self.payButton.setTitle("Pay Now", for: .normal)
             } catch {
                 self.handleError(error)
             }
-        }
-    }
-
-    func preparePaymentSheet(
-        sessionIds: [String],
-        environment: NPEnvironmentType
-    ) async {
-        if sessionIds.isEmpty {
-            return
-        }
-
-        self.sessionIds = sessionIds
-
-        do {
-            // Initialize the payment sheet
-            self.paymentSheet = try await PaymentSheet(
-                sessionIds: sessionIds,
-                merchantIdentifier: merchantIdentifier
-            )
-
-            // Enable the button when payment sheet is ready
-            self.payButton.isEnabled = true
-            self.payButton.setTitle("Pay Now", for: .normal)
-        } catch {
-            self.handleError(error)
         }
     }
     
@@ -143,52 +117,46 @@ class PaymentViewController: UIViewController {
             print("Payment sheet not initialized")
             return
         }
-
+        
         // Present the payment sheet
         paymentSheet.present(
             from: self,
-            paymentSheetStatus: handlePaymentSheetStatus,
-            on3DsRequired: handleOn3DsRequired
+            paymentSheetStatus: { [weak self] sessionId, orderNumber, result in
+                self?.handlePaymentSheetStatus(result)
+            },
+            on3DsRequired: { [weak self] in
+                self?.handleOn3DsRequired()
+            }
         )
     }
 
     // MARK: - Callbacks
-    private func handlePaymentSheetStatus(
-        sessionId: String?,
-        orderNumber: String?,
-        result: PaymentSheetResult
-    ) {
+    private func handleSessionStatus(_ status: NPSessionStatusType) {
+        switch status {
+        case .holded:
+            showAlert(title: "Payment Successful", message: "Your payment was processed successfully.")
+        case .failed:
+            showAlert(title: "Payment Failed", message: "There was an issue processing your payment.")
+        // Add other cases as needed based on your NPSessionStatusType enum
+        default:
+            break
+        }
+    }
+    
+    private func handlePaymentSheetStatus(_ result: PaymentSheetResult) {
         switch result {
         case .canceled:
-            dismissSheetAndFinish()
-            print("Canceled!")
+            print("Payment was canceled by user")
         case .undefined:
-            dismissSheetAndFinish()
-            print("Undefined!")
-        case .failed(let errorMessage):
-            errorHandler(errorMessage: errorMessage)
-        case .completed:
-            print("Completed!")
-            dismissSheetAndFinish()
+            print("Payment status is undefined")
+        // Add other cases as needed
+        default:
+            break
         }
     }
     
     private func handleOn3DsRequired() {
         paymentSheet?.show3DsScreen()
-    }
-
-    private func dismissSheetAndFinish(completion: @escaping () -> Void = {}) {
-        paymentSheet?.dismiss(animated: true) {
-            DispatchQueue.main.async {
-                completion()
-            }
-        }
-    }
-
-    private func errorHandler(errorMessage: String) {
-        dismissSheetAndFinish {
-            self.showAlert(title: "Payment Failed", message: errorMessage)
-        }
     }
     
     private func handleError(_ error: Error) {
@@ -213,6 +181,7 @@ import NovaPaySDKFramework
 
 struct PaymentView: View {
     @StateObject private var paymentModel = PaymentModel()
+    @State private var showPaymentSheet = false
     
     var body: some View {
         VStack {
@@ -221,10 +190,7 @@ struct PaymentView: View {
             } else {
                 // Standard button approach
                 Button("Pay with Standard Button") {
-                    paymentModel.initializePayment(
-                        waybills: paymentModel.waybills,
-                        environment: .dev
-                    )
+                    paymentModel.fetchSessionIdAndInitializePayment()
                 }
                 .padding()
                 .background(Color.blue)
@@ -235,7 +201,7 @@ struct PaymentView: View {
                 if let paymentSheet = paymentModel.paymentSheet {
                     PaymentSheet.PaymentButton(
                         paymentSheet: paymentSheet,
-                        paymentSheetStatus: paymentModel.onDispose,
+                        paymentSheetStatus: paymentModel.handlePaymentSheetStatus,
                         on3DsRequired: paymentModel.handleOn3DsRequired
                     ) {
                         Text("Pay")
@@ -253,14 +219,14 @@ struct PaymentView: View {
                         .paymentSheet(
                             isPresented: $paymentModel.isPresentedPaymentSheet,
                             paymentSheet: paymentSheet,
-                            paymentSheetStatus: paymentModel.onDispose,
+                            paymentSheetStatus: paymentModel.handlePaymentSheetStatus,
                             on3DsRequired: paymentModel.handleOn3DsRequired
                         )
                 }
             }
         }
         .padding()
-        .alert(isPresented: $paymentModel.showErrorAlert) {
+        .alert(isPresented: $paymentModel.showError) {
             Alert(
                 title: Text("Error"),
                 message: Text(paymentModel.errorMessage ?? "An unknown error occurred"),
@@ -274,145 +240,103 @@ class PaymentModel: ObservableObject {
     @Published var paymentSheet: PaymentSheet?
     @Published var isPresentedPaymentSheet = false
     @Published var isLoading = false
-    @Published var showErrorAlert = false
+    @Published var showError = false
     @Published var errorMessage: String?
-
-    var sessionIds: [String]?
-    var waybills: [WaybillsResponse] = []
     
-    func initializePayment(
-        waybills: [WaybillsResponse],
-        environment: NPEnvironmentType
-    ) {
+    private var sessionIds: [String]?
+    
+    func fetchSessionIdAndInitializePayment() {
         isLoading = true
-        showErrorAlert = false
-        var sessionsIds: [String] = []
-
+        
+        // Call your backend to get a session ID
+        getSessionId { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let sessionId):
+                self.preparePaymentSheet(sessionIds: [sessionId])
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    self.showError(message: error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    private func getSessionId(completion: @escaping (Result<String, Error>) -> Void) {
+        // Implement your API call to get session ID from your backend
+        // For example purposes, we're returning a mock result
+        completion(.success("mock_session_id"))
+    }
+    
+    func preparePaymentSheet(sessionIds: [String]) {
         Task {
             do {
-                for waybill in waybills {
-                    let paymentRequest = PaymentInitRequest.convert(from: waybill)
-                    let response = try await apiService.initializePayment(paymentRequest: paymentRequest)
-                    sessionsIds.append(response.session_id)
-                }
-
-                await preparePaymentSheet(
-                    sessionIds: sessionsIds,
-                    environment: environment
+                let sheet = try await PaymentSheet(
+                    sessionIds: sessionIds,
+                    merchantIdentifier: "Your merchantIdentifier",
+                    environment: .dev
                 )
+
+                await MainActor.run {
+                    self.sessionIds = sessionIds
+                    self.paymentSheet = sheet
+                    self.isPresentedPaymentSheet = true
+                    self.isLoading = false
+                }
             } catch {
-                showError(error.localizedDescription)
+                await MainActor.run {
+                    self.isLoading = false
+                    self.showError(message: error.localizedDescription)
+                }
             }
         }
     }
     
-    func preparePaymentSheet(
-        sessionIds: [String],
-        environment: NPEnvironmentType
-    ) async {
-        if sessionIds.isEmpty {
-            return
-        }
-
-        self.sessionIds = sessionIds
-
-        do {
-            let paymentSheet = try await PaymentSheet(
-                sessionIds: sessionIds,
-                merchantIdentifier: "merchant.ua.novapay.novapaymobile"
-            )
-
-            await MainActor.run {
-                self.paymentSheet = paymentSheet
-                self.isPresentedPaymentSheet = true
-                self.isLoading = false
-            }
-        } catch {
-            await MainActor.run {
-                self.isLoading = false
-                self.showError(error.localizedDescription)
-            }
-        }
-    }
-    
-    func onDispose(
-        sessionId: String?,
-        orderNumber: String?,
-        result: PaymentSheetResult
-    ) {
+    func handlePaymentSheetStatus(sessionId: String?, orderNumber: String?, result: PaymentSheetResult) {
         switch result {
-        case .canceled:
-            finishPaymentSheet()
-            print("Canceled!")
-        case .undefined:
-            self.paymentSheet?.dismiss()
-            finishPaymentSheet()
-        case .failed(let errorMessage):
-            errorHandler(errorMessage: errorMessage)
-        case .completed:
-            print("Completed!")
-            self.paymentSheet?.dismiss()
-            finishPaymentSheet()
+            case .canceled:
+                dismissPaymentSheet()
+                print("Canceled!")
+            case .undefined:
+                dismissPaymentSheet()
+                print("Undefined!")
+            case .failed(let errorMessage):
+                showError(message: errorMessage)
+            case .completed:
+                print("Completed!")
+                dismissPaymentSheet()
         }
     }
-    
+
+    // Called by the SDK when the payment requires 3DS verification
     func handleOn3DsRequired() {
         paymentSheet?.show3DsScreen()
     }
+
+    func handleError(error: Error) {
+        showError(message: error.localizedDescription)
+        dismissPaymentSheet()
+    }
     
-    func dismissSheetAndFinish(completion: @escaping () -> Void = {}) {
-        self.paymentSheet?.dismiss(animated: true) {
-            DispatchQueue.main.async {
-                self.finishPaymentSheet()
-                completion()
-            }
-        }
-    }
-
-    func errorHandler(errorMessage: String) {
-        dismissSheetAndFinish {
-            self.showError(errorMessage)
-        }
-    }
-
-    // Close payment sheet
-    private func finishPaymentSheet() {
+    private func dismissPaymentSheet() {
+        paymentSheet?.dismiss()
         isPresentedPaymentSheet = false
     }
     
-    func showError(_ message: String) {
+    func showError(message: String) {
         errorMessage = message
-        showErrorAlert = true
-        isLoading = false
+        showError = true
     }
     
-    // Poll for payment status
     func startPolling() {
         guard let sessionId = sessionIds?.first else { return }
+        
         let sessionService = NPSessionStatusService()
         Task {
             try await sessionService.startPolling(sessionId: sessionId) { result in
-                switch result {
-                case .failed(let error):
-                    print("Error: \(error)")
-                case .completed(let status):
-                    switch status {
-                    case .preprocessing:
-                        print("preprocessing")
-                    case .processing:
-                        print("processing")
-                    case .holded:
-                        print("holded")
-                    case .voided:
-                        print("voided")
-                    case .failed:
-                        print("failed")
-                    default:
-                        break
-                    }
-                default:
-                    break
-                }
+                // Handle polling results
             }
         }
     }
@@ -438,10 +362,10 @@ enum NPSessionStatusType {
 
 ```swift
 @frozen public enum PaymentSheetResult {
-    case undefined // Payment sheet was closed with undefined status
-    case canceled  // User canceled the payment
-    case failed(String)
-    case completed(NPSessionStatusType?)
+    case undefined                       // Payment sheet was closed with undefined status
+    case canceled                        // User canceled the payment
+    case failed(String)                  // Payment failed with a reason
+    case completed(NPSessionStatusType?) // Session reported its status
 }
 ```
 
@@ -450,29 +374,33 @@ Polling for Payment Status
 For payments that require additional processing time, you can implement polling:
 
 ```swift
-func startPolling() {
-    guard let sessionId = sessionIds?.first else { return }
+func startPolling(sessionId: String) {
     let sessionService = NPSessionStatusService()
     Task {
         try await sessionService.startPolling(sessionId: sessionId) { result in
             switch result {
-            case .failed(let error):
-                print("Error: \(error)")
             case .completed(let status):
+                guard let status = status else { return }
+                
+                // Handle different status types
                 switch status {
-                case .preprocessing:
-                    print("preprocessing")
-                case .processing:
-                    print("processing")
-                case .holded:
-                    print("holded")
-                case .voided:
-                    print("voided")
-                case .failed:
-                    print("failed")
-                default:
+                case .paid:
+                    // Payment successful
+                    Task {
+                        await sessionService.stopPolling()
+                    }
+                case .processing, .preprocessing, .holded, .voided:
+                    // Handle other statuses
+                    break
+                @unknown default:
                     break
                 }
+                
+            case .failed(let reason):
+                // Payment failed
+                // Show error message to user
+                print("Polling error: \(reason)")
+                
             default:
                 break
             }
@@ -497,6 +425,21 @@ NovaPay.getSession(sessionId: "your_session_id") { result in
     case .success(let status):
         print("Session status: \(status)")
     case .failure(let error):
+        print("Error: \(error)")
+    }
+}
+```
+
+Load several sessions at once. `PaymentSheet` uses this call internally for the identifiers it is created with:
+
+```swift
+Task {
+    do {
+        let bulk = try await NPAPIClient.shared.getSessionBulk(
+            sessionIds: ["your_session_id_1", "your_session_id_2"]
+        )
+        print("Sessions: \(String(describing: bulk))")
+    } catch {
         print("Error: \(error)")
     }
 }
@@ -585,10 +528,7 @@ class WalletViewController: UIViewController {
         
         // Present the wallet sheet
         walletSheet.present(
-            from: self,
-            onDismiss: { [weak self] in
-                print("Wallet sheet was dismissed")
-            }
+            from: self
         )
     }
 
@@ -648,8 +588,7 @@ struct WalletView: View {
                     EmptyView()
                         .walletSheet(
                             isPresented: $walletModel.isPresentedWalletSheet,
-                            walletSheet: walletSheet,
-                            onDismiss: walletModel.onDismiss
+                            walletSheet: walletSheet
                         )
                 }
             }
@@ -703,9 +642,28 @@ class WalletModel: ObservableObject {
         }
     }
     
-    func onDismiss() {
-        print("Wallet sheet was dismissed")
-        isPresentedWalletSheet = false
+    func handleWalletSheetStatus(_ result: WalletSheetResult) {
+        switch result {
+        case .addCard(let card):
+            print("Card added: \(card)")
+            dismissWalletSheet()
+        case .removeCard:
+            print("Card removed")
+            dismissWalletSheet()
+        case .favouriteCardChanged(let cardId, let isFavourite):
+            print("Favourite card changed - ID: \(cardId ?? -1), isFavourite: \(isFavourite ?? false)")
+        case .mainCardChanged(let cardId, let isMain):
+            print("Main card changed - ID: \(cardId ?? -1), isMain: \(isMain ?? false)")
+        case .canceled:
+            dismissWalletSheet()
+            print("Wallet management canceled!")
+        case .failed(let errorMessage):
+            showError(message: errorMessage)
+            dismissWalletSheet()
+        case .undefined:
+            dismissWalletSheet()
+            print("Wallet status undefined!")
+        }
     }
     
     func handleSessionStatus(_ status: NPSessionStatusType) {
@@ -719,7 +677,12 @@ class WalletModel: ObservableObject {
             break
         }
     }
-
+    
+    private func dismissWalletSheet() {
+        walletSheet?.dismiss()
+        isPresentedWalletSheet = false
+    }
+    
     func showError(message: String) {
         errorMessage = message
         showError = true
