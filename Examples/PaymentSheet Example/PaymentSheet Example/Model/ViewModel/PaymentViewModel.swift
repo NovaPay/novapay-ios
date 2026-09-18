@@ -13,9 +13,34 @@ class PaymentViewModel: ObservableObject {
     @Published var showErrorAlert: Bool = false
     @Published var waybills: [WaybillsResponse] = []
 
-    private var sessionId: String?
+    private var sessionIds: [String]?
     public let apiService = NovaPayAPIService.shared
-    
+
+    init() {
+        NPAPIClient.shared.configure(with: selectedEnvironment)
+        apiService.configure(with: selectedAPIServiceEnvironment)
+    }
+
+    @Published var selectedEnvironment: NPEnvironmentType = {
+        let saved = UserDefaults.standard.string(forKey: "savedEnvironment") ?? ""
+        return NPEnvironmentType(identifier: saved) ?? .dev
+    }() {
+        didSet {
+            UserDefaults.standard.set(selectedEnvironment.identifier, forKey: "savedEnvironment")
+            NPAPIClient.shared.configure(with: selectedEnvironment)
+        }
+    }
+
+    @Published var selectedAPIServiceEnvironment: NovaPayAPIEnvironmentType = {
+        let saved = UserDefaults.standard.string(forKey: "savedAPIServiceEnvironment") ?? ""
+        return NovaPayAPIEnvironmentType(identifier: saved) ?? .dev
+    }() {
+        didSet {
+            UserDefaults.standard.set(selectedAPIServiceEnvironment.identifier, forKey: "savedAPIServiceEnvironment")
+            apiService.configure(with: selectedAPIServiceEnvironment)
+        }
+    }
+
     // Fetch waybills
     func fetchWaybills(phoneNumber: String) {
         isLoading = true
@@ -30,20 +55,44 @@ class PaymentViewModel: ObservableObject {
             }
         }
     }
-    
+
     // Initialize payment
     func initializePayment(
         waybill: WaybillsResponse,
         environment: NPEnvironmentType
     ) {
         isLoading = true
-        
+
         Task {
             do {
                 let paymentRequest = PaymentInitRequest.convert(from: waybill)
                 let response = try await apiService.initializePayment(paymentRequest: paymentRequest)
                 await preparePaymentSheet(
-                    sessionId: response.session_id,
+                    sessionIds: [response.session_id],
+                    environment: environment)
+            } catch {
+                showError(error.localizedDescription)
+            }
+        }
+    }
+
+    // Initialize payment
+    func initializePayment(
+        waybills: [WaybillsResponse],
+        environment: NPEnvironmentType
+    ) {
+        isLoading = true
+        showErrorAlert = false
+        var sessionsIds: [String] = []
+        Task {
+            do {
+                for waybill in waybills {
+                    let paymentRequest = PaymentInitRequest.convert(from: waybill)
+                    let response = try await apiService.initializePayment(paymentRequest: paymentRequest)
+                    sessionsIds.append(response.session_id)
+                }
+                await preparePaymentSheet(
+                    sessionIds: sessionsIds,
                     environment: environment)
             } catch {
                 showError(error.localizedDescription)
@@ -67,7 +116,7 @@ class PaymentViewModel: ObservableObject {
             }
         }
     }
-    
+
     // Show wallet sheet
     func showWalletSheet(token: String) async {
         self.isPresentedWallet = true
@@ -78,14 +127,16 @@ class PaymentViewModel: ObservableObject {
             self.walletSheet = walletSheet
             isPresentedWallet = true
             isLoading = false
+            
         } catch {
             isLoading = false
+            self.isPresentedWallet = false
             showError(error.localizedDescription)
         }
     }
 
     // Show payout sheet
-    
+
     func initializePayout(
         phone: String
     ) {
@@ -102,7 +153,7 @@ class PaymentViewModel: ObservableObject {
             }
         }
     }
-    
+
     func showPayoutSheet(sessionId: String) async {
         self.isPresentedPayout = true
         do {
@@ -115,6 +166,7 @@ class PaymentViewModel: ObservableObject {
             isLoading = false
         } catch {
             isLoading = false
+            self.isPresentedPayout = false
             showError(error.localizedDescription)
         }
     }
@@ -142,20 +194,18 @@ class PaymentViewModel: ObservableObject {
         }
     }
 
-
     // Prepare payment sheet
     func preparePaymentSheet(
-        sessionId: String,
+        sessionIds: [String],
         environment: NPEnvironmentType
     ) async {
-        if sessionId.isEmpty {
+        if sessionIds.isEmpty {
             return
         }
-        
-        self.sessionId = sessionId
+        self.sessionIds = sessionIds
         do {
             let paymentSheet = try await PaymentSheet(
-                sessionId: sessionId,
+                sessionIds: sessionIds,
                 merchantIdentifier: "merchant.ua.novapay.novapaymobile"
             )
             self.paymentSheet = paymentSheet
@@ -166,31 +216,53 @@ class PaymentViewModel: ObservableObject {
             showError(error.localizedDescription)
         }
     }
-    
+
     // Payment sheet status handler
-    func onDispose(result: PaymentSheetResult) {
+    func onDispose(sessionId: String?, orderNumber: String?, result: PaymentSheetResult) {
         switch result {
             case .canceled:
                 finishPaymentSheet()
                 print("Canceled!")
             case .undefined:
                 self.paymentSheet?.dismiss()
-            finishPaymentSheet()
+                finishPaymentSheet()
             case .failed(let errorMessage):
                 errorHandler(errorMessage: errorMessage)
             case .completed:
                 print("Completed!")
-                self.paymentSheet?.dismiss()
                 finishPaymentSheet()
         }
     }
 
+    // Wallet sheet status handler
+    func onDispose() {
+        print("Canceled!")
+        isPresentedWallet = false
+        showError("Canceled!")
+    }
+
+    private func dismissWalletSheet() {
+        isPresentedWallet = false
+    }
+
+    func handleOn3DsRequired() {
+        paymentSheet?.show3DsScreen()
+    }
+
+    func dismissSheetAndFinish(completion: @escaping () -> Void = {}) {
+        self.paymentSheet?.dismiss(animated: true) {
+            DispatchQueue.main.async {
+                self.finishPaymentSheet()
+                completion()
+            }
+        }
+    }
+
     func errorHandler(errorMessage: String) {
-        self.paymentSheet?.dismiss()
         finishPaymentSheet()
         self.showError(errorMessage)
     }
-    
+
     // Close payment sheet
     private func finishPaymentSheet() {
         isPresentedPaymentSheet = false
@@ -198,7 +270,7 @@ class PaymentViewModel: ObservableObject {
     
     // Poll for payment status
     func startPolling() {
-        guard let sessionId = sessionId else { return }
+        guard let sessionId = sessionIds?.first else { return }
         let sessionService = NPSessionStatusService()
         Task {
             try await sessionService.startPolling(sessionId: sessionId) { result in
@@ -226,10 +298,13 @@ class PaymentViewModel: ObservableObject {
             }
         }
     }
-    
+
     // Error handling
     @MainActor
     func showError(_ message: String) {
+        if (showErrorAlert == true) {
+            return
+        }
         self.isLoading = false
         self.errorMessage = message
         self.showErrorAlert = true

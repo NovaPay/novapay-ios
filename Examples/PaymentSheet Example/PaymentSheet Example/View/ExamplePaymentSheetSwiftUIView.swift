@@ -6,8 +6,25 @@ struct ExamplePaymentSheetSwiftUIView: View {
     @StateObject var viewModel = PaymentViewModel()
     @State private var phoneNumber: String = UserDefaults.standard.string(forKey: "savedPhoneNumber") ?? "+380"
     @Environment(\.colorScheme) var colorScheme
-    @State private var selectedEnvironment: NPEnvironmentType = .dev
+    @State private var enabledWaybills: [String: Bool] = [:]
+    @State private var clientURL = NPEnvironmentType.dev.apiBaseURL
+    @State private var serviceURL = NovaPayAPIEnvironmentType.dev.baseURL
+    @State private var customURL = ""
+    private var clientURLBinding: Binding<String> {
+        Binding(
+            get: { viewModel.selectedEnvironment.apiBaseURL },
+            set: { viewModel.selectedEnvironment = .custom($0) }
+        )
+    }
 
+    private var serviceURLBinding: Binding<String> {
+        Binding(
+            get: { viewModel.selectedAPIServiceEnvironment.baseURL },
+            set: { viewModel.selectedAPIServiceEnvironment = .custom($0) }
+        )
+    }
+
+    
     var body: some View {
         VStack {
             if viewModel.isPresentedPaymentSheet {
@@ -16,7 +33,8 @@ struct ExamplePaymentSheetSwiftUIView: View {
                         .paymentSheet(
                             isPresented: $viewModel.isPresentedPaymentSheet,
                             paymentSheet: paymentSheet,
-                            paymentSheetStatus: viewModel.onDispose
+                            paymentSheetStatus: viewModel.onDispose,
+                            on3DsRequired: viewModel.handleOn3DsRequired
                         )
                 } else {
                     LoadingView()
@@ -26,7 +44,8 @@ struct ExamplePaymentSheetSwiftUIView: View {
                     ExamplePaymentSheetSwiftUIView()
                         .walletSheet(
                             isPresented: $viewModel.isPresentedWallet,
-                            walletSheet: walletSheet
+                            walletSheet: walletSheet,
+                            onDismiss: viewModel.onDispose
                         )
                 } else {
                     LoadingView()
@@ -63,55 +82,47 @@ struct ExamplePaymentSheetSwiftUIView: View {
     // Content view
     private var contentView: some View {
         VStack {
-            // Environment Selection
-            environmentSelector
+            environmentSelectors
                 .padding(.horizontal, 30)
                 .padding(.top, 20)
-            
-            // Phone number input field
+
             phoneNumberField
-            
-            // Action Buttons
             actionButtons
-            
-            // Waybills List
+
             if !viewModel.waybills.isEmpty {
                 waybillsList
             }
-            
+
             Spacer()
         }
     }
     
-    // Environment selection view
-    private var environmentSelector: some View {
-        VStack(alignment: .leading) {
-            Text("Environment:")
-                .font(.headline)
-                .padding(.bottom, 5)
-            
-            if #available(iOS 17.0, *) {
-                RadioButtonGroup(
-                    selectedId: $selectedEnvironment,
-                    options: [
-                        RadioOption(id: .dev, label: "Development"),
-                        RadioOption(id: .staging, label: "Staging")
-                    ]
-                )
-                .onChange(of: selectedEnvironment) { _, newValue in
-                    // Configure the NPAPIClient with the selected environment
-                    NPAPIClient.shared.configure(with: newValue)
-                    viewModel.apiService.configure(with: selectedEnvironment)
+    private var environmentSelectors: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            HStack {
+                Text("Environments")
+                    .font(.headline)
+                
+                Spacer()
+                
+                Button("Reset") {
+                    viewModel.selectedEnvironment = .dev
+                    viewModel.selectedAPIServiceEnvironment = .dev
                 }
-                .onAppear {
-                    // Trigger initial configuration
-                    NPAPIClient.shared.configure(with: selectedEnvironment)
-                    viewModel.apiService.configure(with: selectedEnvironment)
-                }
-            } else {
-                // Fallback on earlier versions
+                .font(.subheadline)
             }
+            
+            EnvironmentRow(title: "Pay-frontend", url: clientURLBinding)
+            EnvironmentRow(title: "Internal", url: serviceURLBinding)
         }
+    }
+
+    private func resetEnvironments() {
+        clientURL = NPEnvironmentType.dev.apiBaseURL
+        serviceURL = NovaPayAPIEnvironmentType.dev.baseURL
+
+        viewModel.selectedEnvironment = .dev
+        viewModel.selectedAPIServiceEnvironment = .dev
     }
 
     // Phone number input field
@@ -172,17 +183,27 @@ struct ExamplePaymentSheetSwiftUIView: View {
             .cornerRadius(8)
         }
     }
-    
+
     // Waybills list
     private var waybillsList: some View {
         List {
             ForEach(viewModel.waybills, id: \.id) { waybill in
-                WaybillRowView(waybill: waybill)
+                WaybillRowView(waybill: waybill,
+                               isEnabled: Binding(
+                                get: { enabledWaybills[waybill.id.uuidString] ?? true },
+                                set: { enabledWaybills[waybill.id.uuidString] = $0 }
+                               )
+                )
                     .onTapGesture {
-                        viewModel.initializePayment(
-                            waybill: waybill,
-                            environment: selectedEnvironment
-                        )
+                          let activeWaybills = viewModel.waybills.filter {
+                              enabledWaybills[$0.id.uuidString] ?? true
+                          }
+                          guard !activeWaybills.isEmpty else { return }
+                          
+                          viewModel.initializePayment(
+                              waybills: activeWaybills,
+                              environment: viewModel.selectedEnvironment
+                          )
                     }
             }
         }
@@ -190,20 +211,50 @@ struct ExamplePaymentSheetSwiftUIView: View {
     }
 }
 
+// MARK: - Environment Row
+
+struct EnvironmentRow: View {
+    let title: String
+
+    @Binding
+    var url: String
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(title)
+                .font(.headline)
+
+            TextField("URL", text: $url)
+                .font(.subheadline)
+#if os(iOS)
+                .textInputAutocapitalization(.never)
+#endif
+                .autocorrectionDisabled()
+                .textFieldStyle(.roundedBorder)
+        }
+    }
+}
+
 // MARK: - Waybill Row View
 struct WaybillRowView: View {
     let waybill: WaybillsResponse
+    @Binding var isEnabled: Bool
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text("\(waybill.delivery_metadata.express_waybill)")
-                .font(.headline)
-            Text("Total Amount: \(String(format: "%.2f", waybill.totalAmount()))")
-                .font(.subheadline)
-                .foregroundColor(.gray)
-        }
-        .padding(.vertical, 8)
-    }
+         HStack {
+             VStack(alignment: .leading, spacing: 4) {
+                 Text("\(waybill.delivery_metadata.express_waybill)")
+                     .font(.headline)
+                 Text("Total Amount: \(String(format: "%.2f", waybill.totalAmount()))")
+                     .font(.subheadline)
+                     .foregroundColor(.gray)
+             }
+             Spacer()
+             Toggle("", isOn: $isEnabled)
+                 .labelsHidden()
+         }
+         .padding(.vertical, 8)
+     }
 }
 
 // MARK: - Loading View
@@ -214,58 +265,5 @@ struct LoadingView: View {
         } else {
             Text("Loading...")
         }
-    }
-}
-
-// MARK: - Radio Button Components
-struct RadioOption<T: Hashable>: Identifiable {
-    let id: T
-    let label: String
-}
-
-struct RadioButtonGroup<T: Hashable>: View {
-    @Binding var selectedId: T
-    let options: [RadioOption<T>]
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            ForEach(options, id: \.id) { option in
-                RadioButton(
-                    label: option.label,
-                    isSelected: selectedId == option.id,
-                    action: { selectedId = option.id }
-                )
-            }
-        }
-    }
-}
-
-struct RadioButton: View {
-    let label: String
-    let isSelected: Bool
-    let action: () -> Void
-    
-    var body: some View {
-        Button(action: action) {
-            HStack(spacing: 10) {
-                ZStack {
-                    Circle()
-                        .stroke(Color.blue, lineWidth: 2)
-                        .frame(width: 20, height: 20)
-                    
-                    if isSelected {
-                        Circle()
-                            .fill(Color.blue)
-                            .frame(width: 12, height: 12)
-                    }
-                }
-                
-                Text(label)
-                    .foregroundColor(.primary)
-                
-                Spacer()
-            }
-        }
-        .buttonStyle(PlainButtonStyle())
     }
 }

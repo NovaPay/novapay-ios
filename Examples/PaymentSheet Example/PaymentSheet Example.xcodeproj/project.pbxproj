@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		20766E2F2F3DDD2D00E55818 /* NovaPaySDKPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 20766E2E2F3DDD2D00E55818 /* NovaPaySDKPackage */; };
+		20E34D10305BEA3D00CFF004 /* NovaPaySDKPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 20E34D0F305BEA3D00CFF004 /* NovaPaySDKPackage */; };
+		20E34D13305BEAD000CFF004 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 20E34D12305BEAD000CFF004 /* Sentry */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,6 +27,19 @@
 			remoteInfo = "PaymentSheet Example";
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		208E59BC2DA7E1820050D96C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		200BBEFF2D5F760C0078FD49 /* PaymentSheet Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PaymentSheet Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,7 +70,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				20766E2F2F3DDD2D00E55818 /* NovaPaySDKPackage in Frameworks */,
+				20E34D10305BEA3D00CFF004 /* NovaPaySDKPackage in Frameworks */,
+				20E34D13305BEAD000CFF004 /* Sentry in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,7 +98,6 @@
 				200BBF012D5F760C0078FD49 /* PaymentSheet Example */,
 				200BBF132D5F760F0078FD49 /* PaymentSheet ExampleTests */,
 				200BBF1D2D5F760F0078FD49 /* PaymentSheet ExampleUITests */,
-				208E56892DA65CC80050D96C /* Frameworks */,
 				200BBF002D5F760C0078FD49 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -98,13 +112,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		208E56892DA65CC80050D96C /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -115,6 +122,7 @@
 				200BBEFB2D5F760C0078FD49 /* Sources */,
 				200BBEFC2D5F760C0078FD49 /* Frameworks */,
 				200BBEFD2D5F760C0078FD49 /* Resources */,
+				208E59BC2DA7E1820050D96C /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -125,7 +133,8 @@
 			);
 			name = "PaymentSheet Example";
 			packageProductDependencies = (
-				20766E2E2F3DDD2D00E55818 /* NovaPaySDKPackage */,
+				20E34D0F305BEA3D00CFF004 /* NovaPaySDKPackage */,
+				20E34D12305BEAD000CFF004 /* Sentry */,
 			);
 			productName = "PaymentSheet Example";
 			productReference = 200BBEFF2D5F760C0078FD49 /* PaymentSheet Example.app */;
@@ -204,14 +213,14 @@
 			developmentRegion = uk;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
 				uk,
 			);
 			mainGroup = 200BBEF62D5F760C0078FD49;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				20766DFC2F3DDC8300E55818 /* XCRemoteSwiftPackageReference "novapay-ios" */,
+				20E34D0E305BEA3D00CFF004 /* XCRemoteSwiftPackageReference "novapay-ios" */,
+				20E34D11305BEAD000CFF004 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 200BBF002D5F760C0078FD49 /* Products */;
@@ -410,16 +419,15 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "PaymentSheet Example/PaymentSheet_Example.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 0.2.74;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 0.3.1115;
 				DEVELOPMENT_ASSET_PATHS = "\"PaymentSheet Example/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = XW5CHAGH2W;
+				DEVELOPMENT_TEAM = XW5CHAGH2W;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "PaymentSheet-Example-Info.plist";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -434,11 +442,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 2;
+				MARKETING_VERSION = 5;
 				PRODUCT_BUNDLE_IDENTIFIER = ua.novapay.sdk.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ua.novapay.sdk.example;
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -456,13 +463,14 @@
 				CODE_SIGN_ENTITLEMENTS = "PaymentSheet Example/PaymentSheet_Example.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.2.74;
+				CURRENT_PROJECT_VERSION = 0.3.1115;
 				DEVELOPMENT_ASSET_PATHS = "\"PaymentSheet Example/Preview Content\"";
 				DEVELOPMENT_TEAM = XW5CHAGH2W;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "PaymentSheet-Example-Info.plist";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -477,7 +485,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 2;
+				MARKETING_VERSION = 5;
 				PRODUCT_BUNDLE_IDENTIFIER = ua.novapay.sdk.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -622,21 +630,34 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		20766DFC2F3DDC8300E55818 /* XCRemoteSwiftPackageReference "novapay-ios" */ = {
+		20E34D0E305BEA3D00CFF004 /* XCRemoteSwiftPackageReference "novapay-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/NovaPay/novapay-ios";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.3.30;
+				kind = exactVersion;
+				version = 1.3.42;
+			};
+		};
+		20E34D11305BEAD000CFF004 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa";
+			requirement = {
+				kind = exactVersion;
+				version = 8.56.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		20766E2E2F3DDD2D00E55818 /* NovaPaySDKPackage */ = {
+		20E34D0F305BEA3D00CFF004 /* NovaPaySDKPackage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 20766DFC2F3DDC8300E55818 /* XCRemoteSwiftPackageReference "novapay-ios" */;
+			package = 20E34D0E305BEA3D00CFF004 /* XCRemoteSwiftPackageReference "novapay-ios" */;
 			productName = NovaPaySDKPackage;
+		};
+		20E34D12305BEAD000CFF004 /* Sentry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 20E34D11305BEAD000CFF004 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

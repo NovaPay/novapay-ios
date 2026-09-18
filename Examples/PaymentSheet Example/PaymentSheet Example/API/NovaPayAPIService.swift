@@ -1,16 +1,38 @@
 import Foundation
 import NovaPaySDKFramework
 
-enum NovaPayAPIEnvironmentType: CaseIterable {
+enum NovaPayAPIEnvironmentType: Hashable {
     case dev
     case staging
-    
+    case custom(String)
+
     var baseURL: String {
         switch self {
-        case .dev:
+        case .dev, .staging:
             return "https://int-api-qecom.novapay.ua"
-        case .staging:
-            return "https://int-api-qecom.novapay.ua"
+        case .custom(let url):
+            return url
+        }
+    }
+
+    var identifier: String {
+        switch self {
+        case .dev: return "dev"
+        case .staging: return "staging"
+        case .custom(let url): return "custom(\(url))"
+        }
+    }
+
+    init?(identifier: String) {
+        switch identifier {
+        case "dev": self = .dev
+        case "staging": self = .staging
+        default:
+            if identifier.hasPrefix("custom("), identifier.hasSuffix(")") {
+                self = .custom(String(identifier.dropFirst(7).dropLast()))
+            } else {
+                return nil
+            }
         }
     }
 }
@@ -24,23 +46,16 @@ class NovaPayAPIService {
     
     private init() {}
     
-    @MainActor public func configure(with environment: NPEnvironmentType = .dev) {
-        switch environment {
-        case .dev:
-            baseURL = NovaPayAPIEnvironmentType.dev.baseURL
-        case .staging:
-            baseURL = NovaPayAPIEnvironmentType.staging.baseURL
-        default:
-            baseURL = NovaPayAPIEnvironmentType.dev.baseURL
-        }
+    @MainActor public func configure(with environment: NovaPayAPIEnvironmentType = .dev) {
+        baseURL = environment.baseURL
     }
-    
+
     // Fetch waybills from API
     func fetchWaybills(phoneNumber: String) async throws -> [WaybillsResponse] {
         guard let encodedPhone = phoneNumber.addingPercentEncoding(withAllowedCharacters: .allowedCharacters) else {
             throw APIError.invalidPhoneFormat
         }
-        
+
         guard let url = URL(string: "\(baseURL)/v1/express-waybills?phone=\(encodedPhone)") else {
             throw APIError.invalidURL
         }
