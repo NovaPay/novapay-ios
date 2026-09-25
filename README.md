@@ -13,9 +13,9 @@ A powerful and secure payment processing SDK for iOS applications that enables s
 
 ### Manual Integration
 
-1. Clone the repository
-2. Add `NovaPaySDKFramework.xcodeproj` to your project
-3. In your target's Build Phases, add the framework to "Link Binary With Libraries"
+1. Obtain `NovaPaySDKFramework.xcframework`
+2. Drag it into your Xcode project
+3. In your target's General > Frameworks, Libraries, and Embedded Content, set it to **Embed & Sign**
 4. Import the framework in your Swift files:
 ```swift
 import NovaPaySDK
@@ -889,8 +889,8 @@ class PayoutViewController: UIViewController {
 
 The SDK includes a complete example project in the `Examples/PaymentSheet Example` directory. To run the example:
 
-1. Open `NovaPaySDKFramework.xcodeproj`
-2. Select the "PaymentSheet Example" target
+1. Open `Examples/PaymentSheet Example/PaymentSheet Example.xcodeproj`
+2. Select the "PaymentSheet Example" scheme
 3. Run the project
 
 The example demonstrates:
@@ -902,9 +902,9 @@ The example demonstrates:
 
 ## ⚙️ Requirements
 
-- iOS 13.0+
-- Xcode 12.0+
-- Swift 5.0+
+- iOS 15.0+
+- Xcode 16.0+
+- Swift 6.0 toolchain (`swift-tools-version: 6.0`)
 - Internet permission in Info.plist:
     ```xml
     <key>NSAppTransportSecurity</key>

@@ -183,10 +183,8 @@ class PaymentViewModel: ObservableObject {
             self.payoutSheet = nil
         case .failed(let error):
             isPresentedPayout = false
-            self.paymentSheet?.dismiss(completion: {
-                self.payoutSheet = nil
-                self.showError(error)
-            })
+            self.payoutSheet = nil
+            showError(error)
         case .success:
             isPresentedPayout = false
             self.payoutSheet = nil
@@ -234,15 +232,14 @@ class PaymentViewModel: ObservableObject {
         }
     }
 
-    // Wallet sheet status handler
-    func onDispose() {
-        print("Canceled!")
-        isPresentedWallet = false
-        showError("Canceled!")
+    // Wallet sheet dismiss handler (regular close, not an error)
+    func onWalletDismiss() {
+        dismissWalletSheet()
     }
 
     private func dismissWalletSheet() {
         isPresentedWallet = false
+        walletSheet = nil
     }
 
     func handleOn3DsRequired() {
