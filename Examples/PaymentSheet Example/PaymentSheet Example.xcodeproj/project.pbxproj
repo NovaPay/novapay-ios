@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		20E34D10305BEA3D00CFF004 /* NovaPaySDKPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 20E34D0F305BEA3D00CFF004 /* NovaPaySDKPackage */; };
-		20E34D13305BEAD000CFF004 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 20E34D12305BEAD000CFF004 /* Sentry */; };
+		2013AB65306A66BD00A425CC /* NovaPaySDKPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 2013AB64306A66BD00A425CC /* NovaPaySDKPackage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,8 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				20E34D10305BEA3D00CFF004 /* NovaPaySDKPackage in Frameworks */,
-				20E34D13305BEAD000CFF004 /* Sentry in Frameworks */,
+				2013AB65306A66BD00A425CC /* NovaPaySDKPackage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,8 +131,7 @@
 			);
 			name = "PaymentSheet Example";
 			packageProductDependencies = (
-				20E34D0F305BEA3D00CFF004 /* NovaPaySDKPackage */,
-				20E34D12305BEAD000CFF004 /* Sentry */,
+				2013AB64306A66BD00A425CC /* NovaPaySDKPackage */,
 			);
 			productName = "PaymentSheet Example";
 			productReference = 200BBEFF2D5F760C0078FD49 /* PaymentSheet Example.app */;
@@ -219,8 +216,7 @@
 			mainGroup = 200BBEF62D5F760C0078FD49;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				20E34D0E305BEA3D00CFF004 /* XCRemoteSwiftPackageReference "novapay-ios" */,
-				20E34D11305BEAD000CFF004 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
+				2013AB63306A66BD00A425CC /* XCRemoteSwiftPackageReference "novapay-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 200BBF002D5F760C0078FD49 /* Products */;
@@ -630,34 +626,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		20E34D0E305BEA3D00CFF004 /* XCRemoteSwiftPackageReference "novapay-ios" */ = {
+		2013AB63306A66BD00A425CC /* XCRemoteSwiftPackageReference "novapay-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/NovaPay/novapay-ios";
 			requirement = {
 				kind = exactVersion;
-				version = 1.3.42;
-			};
-		};
-		20E34D11305BEAD000CFF004 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/getsentry/sentry-cocoa";
-			requirement = {
-				kind = exactVersion;
-				version = 8.56.0;
+				version = 1.3.44;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		20E34D0F305BEA3D00CFF004 /* NovaPaySDKPackage */ = {
+		2013AB64306A66BD00A425CC /* NovaPaySDKPackage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 20E34D0E305BEA3D00CFF004 /* XCRemoteSwiftPackageReference "novapay-ios" */;
+			package = 2013AB63306A66BD00A425CC /* XCRemoteSwiftPackageReference "novapay-ios" */;
 			productName = NovaPaySDKPackage;
-		};
-		20E34D12305BEAD000CFF004 /* Sentry */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 20E34D11305BEAD000CFF004 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
-			productName = Sentry;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
