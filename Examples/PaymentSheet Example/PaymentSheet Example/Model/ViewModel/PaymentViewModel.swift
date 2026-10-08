@@ -183,8 +183,10 @@ class PaymentViewModel: ObservableObject {
             self.payoutSheet = nil
         case .failed(let error):
             isPresentedPayout = false
-            self.payoutSheet = nil
-            showError(error)
+            self.paymentSheet?.dismiss(completion: {
+                self.payoutSheet = nil
+                self.showError(error)
+            })
         case .success:
             isPresentedPayout = false
             self.payoutSheet = nil
@@ -232,14 +234,15 @@ class PaymentViewModel: ObservableObject {
         }
     }
 
-    // Wallet sheet dismiss handler (regular close, not an error)
-    func onWalletDismiss() {
-        dismissWalletSheet()
+    // Wallet sheet status handler
+    func onDispose() {
+        print("Canceled!")
+        isPresentedWallet = false
+        showError("Canceled!")
     }
 
     private func dismissWalletSheet() {
         isPresentedWallet = false
-        walletSheet = nil
     }
 
     func handleOn3DsRequired() {
@@ -270,28 +273,32 @@ class PaymentViewModel: ObservableObject {
         guard let sessionId = sessionIds?.first else { return }
         let sessionService = NPSessionStatusService()
         Task {
-            try await sessionService.startPolling(sessionId: sessionId) { result in
-                switch result {
-                case .failed(let error):
-                    print("Error: \(error)")
-                case .completed(let status):
-                    switch status {
-                    case .preprocessing:
-                        print("preprocessing")
-                    case .processing:
-                        print("processing")
-                    case .holded:
-                        print("holded")
-                    case .voided:
-                        print("voided")
-                    case .failed:
-                        print("failed")
+            do {
+                try await sessionService.startPolling(sessionId: sessionId) { result in
+                    switch result {
+                    case .failed(let error):
+                        print("Error: \(error)")
+                    case .completed(let status):
+                        switch status {
+                        case .preprocessing:
+                            print("preprocessing")
+                        case .processing:
+                            print("processing")
+                        case .holded:
+                            print("holded")
+                        case .voided:
+                            print("voided")
+                        case .failed:
+                            print("failed")
+                        default:
+                            break
+                        }
                     default:
                         break
                     }
-                default:
-                    break
                 }
+            } catch {
+                print("Polling failed: \(error)")
             }
         }
     }

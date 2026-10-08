@@ -4,7 +4,7 @@ import NovaPaySDKFramework
 // MARK: - Main Payment View
 struct ExamplePaymentSheetSwiftUIView: View {
     @StateObject var viewModel = PaymentViewModel()
-    @AppStorage("savedPhoneNumber") private var phoneNumber: String = "+380"
+    @State private var phoneNumber: String = UserDefaults.standard.string(forKey: "savedPhoneNumber") ?? "+380"
     @Environment(\.colorScheme) var colorScheme
     @State private var enabledWaybills: [String: Bool] = [:]
     @State private var clientURL = NPEnvironmentType.dev.apiBaseURL
@@ -41,11 +41,11 @@ struct ExamplePaymentSheetSwiftUIView: View {
                 }
             } else if viewModel.isPresentedWallet {
                 if let walletSheet = viewModel.walletSheet {
-                    LoadingView()
+                    ExamplePaymentSheetSwiftUIView()
                         .walletSheet(
                             isPresented: $viewModel.isPresentedWallet,
                             walletSheet: walletSheet,
-                            onDismiss: viewModel.onWalletDismiss
+                            onDismiss: viewModel.onDispose
                         )
                 } else {
                     LoadingView()
@@ -128,11 +128,17 @@ struct ExamplePaymentSheetSwiftUIView: View {
     // Phone number input field
     private var phoneNumberField: some View {
         VStack {
-            // Persisted via @AppStorage — no onChange needed, works on iOS 15+
-            TextField("Phone Number", text: $phoneNumber)
-                .keyboardType(.phonePad)
-                .padding(.horizontal, 30)
-                .padding(.top, 20)
+            if #available(iOS 17.0, *) {
+                TextField("Phone Number", text: $phoneNumber)
+                    .padding(.horizontal, 30)
+                    .padding(.top, 20)
+                    .onChange(of: phoneNumber) { _, newValue in
+                        // Save phone number whenever it changes
+                        UserDefaults.standard.set(newValue, forKey: "savedPhoneNumber")
+                    }
+            } else {
+                // Fallback on earlier versions
+            }
             
             Divider()
                 .padding(.horizontal, 30)
