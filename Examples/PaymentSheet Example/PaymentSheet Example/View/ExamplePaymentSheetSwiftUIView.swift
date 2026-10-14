@@ -1,30 +1,14 @@
 import SwiftUI
 import NovaPaySDKFramework
 
-// MARK: - Main Payment View
 struct ExamplePaymentSheetSwiftUIView: View {
     @StateObject var viewModel = PaymentViewModel()
-    @AppStorage("savedPhoneNumber") private var phoneNumber: String = "+380"
+    @State private var phoneNumber: String = UserDefaults.standard.string(forKey: "savedPhoneNumber") ?? "+380"
     @Environment(\.colorScheme) var colorScheme
     @State private var enabledWaybills: [String: Bool] = [:]
-    @State private var clientURL = NPEnvironmentType.dev.apiBaseURL
-    @State private var serviceURL = NovaPayAPIEnvironmentType.dev.baseURL
-    @State private var customURL = ""
-    private var clientURLBinding: Binding<String> {
-        Binding(
-            get: { viewModel.selectedEnvironment.apiBaseURL },
-            set: { viewModel.selectedEnvironment = .custom($0) }
-        )
-    }
+    @State private var clientURL: String = ""
+    @State private var serviceURL: String = ""
 
-    private var serviceURLBinding: Binding<String> {
-        Binding(
-            get: { viewModel.selectedAPIServiceEnvironment.baseURL },
-            set: { viewModel.selectedAPIServiceEnvironment = .custom($0) }
-        )
-    }
-
-    
     var body: some View {
         VStack {
             if viewModel.isPresentedPaymentSheet {
@@ -45,7 +29,7 @@ struct ExamplePaymentSheetSwiftUIView: View {
                         .walletSheet(
                             isPresented: $viewModel.isPresentedWallet,
                             walletSheet: walletSheet,
-                            onDismiss: viewModel.onWalletDismiss
+                            onDismiss: viewModel.onDisposeWallet
                         )
                 } else {
                     LoadingView()
@@ -56,7 +40,7 @@ struct ExamplePaymentSheetSwiftUIView: View {
                         .payoutSheet(
                             isPresented: $viewModel.isPresentedPayout,
                             payoutSheet: payoutSheet,
-                            payoutSheetStatusHandler: viewModel.payoutStatusHandler
+                            payoutSheetStatusHandler: viewModel.onDisposePayout
                         )
                 } else {
                     LoadingView()
@@ -64,12 +48,12 @@ struct ExamplePaymentSheetSwiftUIView: View {
             } else if viewModel.isLoading {
                 LoadingView()
             } else {
-                // Content Layout
                 contentView
                     .padding()
             }
         }
         .background(colorScheme == .dark ? Color.black : Color.white)
+        .onAppear(perform: syncEnvironmentFields)
         .alert(isPresented: $viewModel.showErrorAlert) {
             Alert(
                 title: Text("Error"),
@@ -78,8 +62,7 @@ struct ExamplePaymentSheetSwiftUIView: View {
             )
         }
     }
-    
-    // Content view
+
     private var contentView: some View {
         VStack {
             environmentSelectors
@@ -96,54 +79,94 @@ struct ExamplePaymentSheetSwiftUIView: View {
             Spacer()
         }
     }
-    
+
     private var environmentSelectors: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
                 Text("Environments")
                     .font(.headline)
-                
+
                 Spacer()
-                
-                Button("Reset") {
-                    viewModel.selectedEnvironment = .dev
-                    viewModel.selectedAPIServiceEnvironment = .dev
-                }
-                .font(.subheadline)
+
+                Button("Reset", action: resetEnvironments)
+                    .font(.subheadline)
             }
-            
-            EnvironmentRow(title: "Pay-frontend", url: clientURLBinding)
-            EnvironmentRow(title: "Internal", url: serviceURLBinding)
+
+            EnvironmentRow(title: "Pay-frontend", url: $clientURL, onApply: applyClientURL)
+            EnvironmentRow(title: "Internal", url: $serviceURL, onApply: applyServiceURL)
+        }
+    }
+
+    private func syncEnvironmentFields() {
+        clientURL = viewModel.selectedEnvironment.apiBaseURL
+        serviceURL = viewModel.selectedAPIServiceEnvironment.baseURL
+    }
+
+    private func applyClientURL() {
+        viewModel.selectEnvironment(clientEnvironment(for: clientURL))
+        clientURL = viewModel.selectedEnvironment.apiBaseURL
+    }
+
+    private func applyServiceURL() {
+        viewModel.selectAPIServiceEnvironment(serviceEnvironment(for: serviceURL))
+        serviceURL = viewModel.selectedAPIServiceEnvironment.baseURL
+    }
+
+    private func clientEnvironment(for urlString: String) -> NPEnvironmentType {
+        switch urlString {
+        case NPEnvironmentType.prod.apiBaseURL:
+            return .prod
+        case NPEnvironmentType.staging.apiBaseURL:
+            return .staging
+        default:
+            return .development(urlString)
+        }
+    }
+
+    private func serviceEnvironment(for urlString: String) -> NovaPayAPIEnvironmentType {
+        switch urlString {
+        case NovaPayAPIEnvironmentType.staging.baseURL:
+            return .staging
+        default:
+            return .development(urlString)
         }
     }
 
     private func resetEnvironments() {
-        clientURL = NPEnvironmentType.dev.apiBaseURL
-        serviceURL = NovaPayAPIEnvironmentType.dev.baseURL
-
-        viewModel.selectedEnvironment = .dev
-        viewModel.selectedAPIServiceEnvironment = .dev
+        viewModel.selectEnvironment(.staging)
+        viewModel.selectAPIServiceEnvironment(.staging)
+        syncEnvironmentFields()
     }
 
-    // Phone number input field
     private var phoneNumberField: some View {
         VStack {
-            // Persisted via @AppStorage — no onChange needed, works on iOS 15+
-            TextField("Phone Number", text: $phoneNumber)
-                .keyboardType(.phonePad)
+            phoneTextField
                 .padding(.horizontal, 30)
                 .padding(.top, 20)
-            
+
             Divider()
                 .padding(.horizontal, 30)
                 .padding(.bottom, 10)
         }
     }
-    
-    // Action buttons
+
+    @ViewBuilder
+    private var phoneTextField: some View {
+        if #available(iOS 17.0, *) {
+            TextField("Phone Number", text: $phoneNumber)
+                .onChange(of: phoneNumber) { _, newValue in
+                    UserDefaults.standard.set(newValue, forKey: "savedPhoneNumber")
+                }
+        } else {
+            TextField("Phone Number", text: $phoneNumber)
+                .onChange(of: phoneNumber) { newValue in
+                    UserDefaults.standard.set(newValue, forKey: "savedPhoneNumber")
+                }
+        }
+    }
+
     private var actionButtons: some View {
         VStack(spacing: 20) {
-            // Button to fetch waybills
             Button {
                 viewModel.fetchWaybills(phoneNumber: phoneNumber)
             } label: {
@@ -153,8 +176,7 @@ struct ExamplePaymentSheetSwiftUIView: View {
             }
             .background(.blue)
             .cornerRadius(8)
-            
-            // Button to show wallet
+
             Button {
                 viewModel.initializeWallet(phone: phoneNumber)
             } label: {
@@ -164,8 +186,7 @@ struct ExamplePaymentSheetSwiftUIView: View {
             }
             .background(.blue)
             .cornerRadius(8)
-            
-            // Button to show payout
+
             Button {
                 viewModel.initializePayout(phone: phoneNumber)
             } label: {
@@ -178,27 +199,23 @@ struct ExamplePaymentSheetSwiftUIView: View {
         }
     }
 
-    // Waybills list
     private var waybillsList: some View {
         List {
             ForEach(viewModel.waybills, id: \.id) { waybill in
-                WaybillRowView(waybill: waybill,
-                               isEnabled: Binding(
-                                get: { enabledWaybills[waybill.id.uuidString] ?? true },
-                                set: { enabledWaybills[waybill.id.uuidString] = $0 }
-                               )
+                WaybillRowView(
+                    waybill: waybill,
+                    isEnabled: Binding(
+                        get: { enabledWaybills[waybill.id.uuidString] ?? true },
+                        set: { enabledWaybills[waybill.id.uuidString] = $0 }
+                    )
                 )
-                    .onTapGesture {
-                          let activeWaybills = viewModel.waybills.filter {
-                              enabledWaybills[$0.id.uuidString] ?? true
-                          }
-                          guard !activeWaybills.isEmpty else { return }
-                          
-                          viewModel.initializePayment(
-                              waybills: activeWaybills,
-                              environment: viewModel.selectedEnvironment
-                          )
+                .onTapGesture {
+                    let activeWaybills = viewModel.waybills.filter {
+                        enabledWaybills[$0.id.uuidString] ?? true
                     }
+                    guard !activeWaybills.isEmpty else { return }
+                    viewModel.initializePayment(waybills: activeWaybills)
+                }
             }
         }
         .listStyle(PlainListStyle())
@@ -213,51 +230,58 @@ struct EnvironmentRow: View {
     @Binding
     var url: String
 
+    let onApply: () -> Void
+
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(title)
                 .font(.headline)
 
-            TextField("URL", text: $url)
-                .font(.subheadline)
+            HStack(spacing: 8) {
+                TextField("URL", text: $url)
+                    .font(.subheadline)
 #if os(iOS)
-                .textInputAutocapitalization(.never)
+                    .textInputAutocapitalization(.never)
+                    .keyboardType(.URL)
 #endif
-                .autocorrectionDisabled()
-                .textFieldStyle(.roundedBorder)
+                    .autocorrectionDisabled()
+                    .textFieldStyle(.roundedBorder)
+                    .onSubmit(onApply)
+
+                Button("Apply", action: onApply)
+                    .font(.subheadline)
+            }
         }
     }
 }
 
 // MARK: - Waybill Row View
+
 struct WaybillRowView: View {
     let waybill: WaybillsResponse
     @Binding var isEnabled: Bool
-    
+
     var body: some View {
-         HStack {
-             VStack(alignment: .leading, spacing: 4) {
-                 Text("\(waybill.delivery_metadata.express_waybill)")
-                     .font(.headline)
-                 Text("Total Amount: \(String(format: "%.2f", waybill.totalAmount()))")
-                     .font(.subheadline)
-                     .foregroundColor(.gray)
-             }
-             Spacer()
-             Toggle("", isOn: $isEnabled)
-                 .labelsHidden()
-         }
-         .padding(.vertical, 8)
-     }
+        HStack {
+            VStack(alignment: .leading, spacing: 4) {
+                Text("\(waybill.delivery_metadata.express_waybill)")
+                    .font(.headline)
+                Text("Total Amount: \(String(format: "%.2f", waybill.totalAmount()))")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+            }
+            Spacer()
+            Toggle("", isOn: $isEnabled)
+                .labelsHidden()
+        }
+        .padding(.vertical, 8)
+    }
 }
 
 // MARK: - Loading View
+
 struct LoadingView: View {
     var body: some View {
-        if #available(iOS 14.0, *) {
-            ProgressView()
-        } else {
-            Text("Loading...")
-        }
+        ProgressView()
     }
 }

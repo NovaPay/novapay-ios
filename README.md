@@ -18,7 +18,7 @@ A powerful and secure payment processing SDK for iOS applications that enables s
 3. In your target's General > Frameworks, Libraries, and Embedded Content, set it to **Embed & Sign**
 4. Import the framework in your Swift files:
 ```swift
-import NovaPaySDK
+import NovaPaySDKFramework
 ```
 
 ## 🚀 Getting Started
@@ -28,17 +28,22 @@ import NovaPaySDK
 Initialize the SDK in your `AppDelegate` or `SceneDelegate`:
 
 ```swift
-import NovaPaySDK
+import NovaPaySDKFramework
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         // Initialize SDK
-        NPAPIClient.shared.configure(
-            environment: .dev, // Options: dev, staging, production . By default dev
-            languageType: .uk // Options: uk, en . By default uk
-        )
+        do {
+            try NPAPIClient.shared.configure(
+                with: .staging, // Options: .prod, .staging, .development(url) . By default .staging
+                languageType: .uk // Options: uk, en . By default uk
+            )
+        } catch {
+            // NPConfigurationError — the environment was left unchanged
+            print("Failed to configure SDK: \(error)")
+        }
 
         return true
     }
@@ -98,7 +103,7 @@ class PaymentViewController: UIViewController {
                 self.paymentSheet = try await PaymentSheet(
                     sessionIds: sessionIds,
                     merchantIdentifier: merchantIdentifier,
-                    environment: .dev, // Optional
+                    environment: .staging, // Optional
                     language: .uk // Optional
                 )
 
@@ -276,7 +281,7 @@ class PaymentModel: ObservableObject {
                 let sheet = try await PaymentSheet(
                     sessionIds: sessionIds,
                     merchantIdentifier: "Your merchantIdentifier",
-                    environment: .dev
+                    environment: .staging
                 )
 
                 await MainActor.run {
@@ -420,11 +425,11 @@ func startPolling(sessionId: String) {
 Check the status of a payment session:
 
 ```swift
-NovaPay.getSession(sessionId: "your_session_id") { result in
-    switch result {
-    case .success(let status):
-        print("Session status: \(status)")
-    case .failure(let error):
+Task {
+    do {
+        let session = try await NPAPIClient.shared.getSession(sessionId: "your_session_id")
+        print("Session: \(String(describing: session))")
+    } catch {
         print("Error: \(error)")
     }
 }
@@ -495,28 +500,9 @@ class WalletViewController: UIViewController {
     
     // MARK: - Wallet Setup
     private func setupWalletSheet() {
-        // Disable the button until wallet sheet is ready
-        walletButton.isEnabled = false
-        walletButton.setTitle("Loading...", for: .normal)
-
-        Task {
-            do {
-                // Initialize the wallet sheet
-                self.walletSheet = try await WalletSheet(
-                    token: token
-                )
-
-                // Enable the button when wallet sheet is ready
-                await MainActor.run {
-                    self.walletButton.isEnabled = true
-                    self.walletButton.setTitle("Manage Cards", for: .normal)
-                }
-            } catch {
-                await MainActor.run {
-                    self.handleError(error)
-                }
-            }
-        }
+        // The initializer does not block: it starts loading the session in the
+        // background, and the sheet shows a skeleton until the data arrives.
+        self.walletSheet = WalletSheet(token: token)
     }
     
     // MARK: - Actions
@@ -621,25 +607,7 @@ class WalletModel: ObservableObject {
     }
     
     func initializeWalletSheet() {
-        isLoading = true
-        
-        Task {
-            do {
-                let sheet = try await WalletSheet(
-                    token: token
-                )
-
-                await MainActor.run {
-                    self.walletSheet = sheet
-                    self.isLoading = false
-                }
-            } catch {
-                await MainActor.run {
-                    self.isLoading = false
-                    self.showError(message: error.localizedDescription)
-                }
-            }
-        }
+        walletSheet = WalletSheet(token: token)
     }
     
     func handleWalletSheetStatus(_ result: WalletSheetResult) {
@@ -705,19 +673,23 @@ func getAuthToken(completion: @escaping (Result<String, Error>) -> Void) {
 getAuthToken { result in
     switch result {
     case .success(let token):
-        Task {
-            do {
-                let walletSheet = try await WalletSheet(token: token)
-                // Use wallet sheet
-            } catch {
-                print("Failed to initialize wallet sheet: \(error)")
-            }
-        }
+        let walletSheet = WalletSheet(token: token)
+        // Use wallet sheet — the session loads in the background
     case .failure(let error):
         print("Failed to get auth token: \(error)")
     }
 }
 ```
+
+#### Loading and Errors
+
+`WalletSheet(token:)` returns immediately and starts loading the session in the
+background. `present(from:onDismiss:)` can therefore be called right away: the
+sheet appears with a skeleton placeholder and fills in once the data arrives.
+If the session was already loaded by the time the user taps, no skeleton is shown.
+
+When loading fails, the sheet shows an alert with a retry option — the merchant
+app does not need to handle it. The user can always leave with the back button.
 
 #### Card Management Features
 
@@ -769,23 +741,14 @@ struct PayoutView: View {
             }
         }
         .onAppear {
-            Task {
-                do {
-                    let sheet = try await PayoutSheet(
-                        sessionId: "your_session_id"
-                    )
-                    self.payoutSheet = sheet
-                } catch {
-                    print("Failed to initialize payout sheet: \(error)")
-                }
-            }
+            payoutSheet = PayoutSheet(sessionId: "your_session_id")
         }
     }
 
     func handlePayoutStatus(_ result: PayoutSheetResult) {
         switch result {
-        case .success:
-            print("Payout completed!")
+        case .success(let cardId, let pan):
+            print("Payout card saved: \(cardId) \(pan)")
         case .canceled:
             print("Payout canceled")
         case .failed(let error):
@@ -830,31 +793,21 @@ class PayoutViewController: UIViewController {
         payoutButton.setTitleColor(.white, for: .normal)
         payoutButton.layer.cornerRadius = 8
         payoutButton.addTarget(self, action: #selector(payoutButtonTapped), for: .touchUpInside)
-        payoutButton.isEnabled = false
         view.addSubview(payoutButton)
         // Add layout constraints here
     }
 
     private func setupPayoutSheet() {
-        Task {
-            do {
-                let sheet = try await PayoutSheet(sessionId: sessionId)
-                self.payoutSheet = sheet
-                DispatchQueue.main.async {
-                    self.payoutButton.isEnabled = true
-                }
-            } catch {
-                print("Failed to initialize payout sheet: \(error)")
-            }
-        }
+        payoutSheet = PayoutSheet(sessionId: sessionId)
+        payoutButton.isEnabled = true
     }
 
     @objc private func payoutButtonTapped() {
         guard let sheet = payoutSheet else { return }
         sheet.present(from: self) { result in
             switch result {
-            case .success:
-                print("Payout completed")
+            case .success(let cardId, let pan):
+                print("Payout card saved: \(cardId) \(pan)")
             case .canceled:
                 print("Payout canceled")
             case .failed(let message):
@@ -867,6 +820,15 @@ class PayoutViewController: UIViewController {
 }
 ```
 
+#### Loading and Errors
+
+`PayoutSheet(sessionId:payoutSheetStatusHandler:)` returns immediately and loads
+the session in the background, so `present(from:)` can be called right away. The
+sheet opens with a skeleton placeholder and fills in once the data arrives.
+
+When loading fails, the sheet shows an alert; dismissing it reports
+`.failed` through `payoutSheetStatusHandler`.
+
 #### Result Types
 
 ```swift
@@ -874,7 +836,7 @@ class PayoutViewController: UIViewController {
     case undefined
     case canceled
     case failed(String)
-    case success
+    case success(String, String) // saved card id, masked pan
 }
 ```
 
@@ -916,27 +878,136 @@ The example demonstrates:
 
 ## 🌍 Environment Configuration
 
-| Environment | Description |
-|------------|-------------|
-| `development` | Development and testing environment |
-| `staging` | Pre-production testing environment |
-| `production` | Production environment |
+### Available environments
 
-## 🔒 Security Features
+```swift
+public enum NPEnvironmentType: Hashable {
+    case prod
+    case staging
+    case development(String)
+}
+```
 
-- Secure handling of sensitive payment information
-- HTTPS communication
-- Optional card details storage
-- Comprehensive error handling through status callbacks
+| Case | Host | Description |
+|---|---|---|
+| `.prod` | `https://e-com.novapay.ua` | Production environment |
+| `.staging` | `https://qecom.novapay.ua` | Pre-production testing environment |
+| `.development(String)` | your own URL | Development environment |
 
-## 📞 Support
+```swift
+try NPAPIClient.shared.configure(with: .staging, languageType: .uk)
+try NPAPIClient.shared.configure(with: .development("https://your-dev-host"))
+```
 
-For technical support or questions, please contact NovaPay support team.
+`configure(with:languageType:)` throws and never leaves the client in a
+half-configured state: if the environment is rejected, the previously
+configured one stays in effect.
 
-## 📄 License
+Both parameters stay optional, so changing only the language still works:
 
-This SDK is proprietary software. Usage terms and conditions are defined in your license agreement.
+```swift
+try NPAPIClient.shared.configure(languageType: .uk)
+```
 
----
+### Persisting the selected environment
 
-For detailed implementation examples and advanced features, please refer to the example app included in the SDK package. 
+`identifier` and `init?(identifier:)` form a round-trip contract — a string
+stored today is readable by the next SDK version.
+
+| Environment | identifier |
+|---|---|
+| `.prod` | `prod` |
+| `.staging` | `staging` |
+| `.development(url)` | `development\|<url>` |
+
+```swift
+UserDefaults.standard.set(environment.identifier, forKey: "NPEnvironment")
+
+if let saved = UserDefaults.standard.string(forKey: "NPEnvironment") {
+    try NPAPIClient.shared.configure(withIdentifier: saved)
+}
+```
+
+For a non-throwing path, resolve the identifier yourself:
+
+```swift
+guard let environment = NPEnvironmentType(identifier: saved) else {
+    // show an error and let the user pick an environment again
+    return
+}
+try NPAPIClient.shared.configure(with: environment)
+```
+
+### Error behaviour
+
+```swift
+public enum NPConfigurationError: Error, LocalizedError {
+    case unknownEnvironmentIdentifier(String)
+    case invalidEnvironmentURL(String)
+}
+```
+
+| Situation | Behaviour |
+|---|---|
+| Unrecognized identifier | `init(validating:)` and `configure(withIdentifier:)` throw `unknownEnvironmentIdentifier`; `init?(identifier:)` returns `nil` |
+| Development URL with no scheme | `invalidEnvironmentURL` |
+| Development URL with no host | `invalidEnvironmentURL` |
+| Development URL with a scheme other than `http`/`https` | `invalidEnvironmentURL` |
+| Empty development URL | `invalidEnvironmentURL` |
+| `configure(with:)` with an invalid URL | throws `invalidEnvironmentURL`, **the environment is not changed** |
+
+A URL is valid when it has an `http` or `https` scheme and a non-empty host.
+The check is public:
+
+```swift
+NPEnvironmentType.isValidBaseURL("https://dev.example") // true
+NPEnvironmentType.isValidBaseURL("dev.example")         // false
+```
+
+The SDK never silently falls back to a different server. Validation happens once,
+at `configure`, so the client can only ever hold an environment whose URL is
+already known to be valid — no API method can be reached with a broken base URL.
+
+### Migration
+
+#### Source changes
+
+Every change below is caught by the compiler — no behaviour changes silently.
+
+| Before | After |
+|---|---|
+| `.dev` | `.development("<url>")` — the URL must now be explicit |
+| `.custom(url)` | `.development(url)` |
+| `configure(environment:languageType:)` | `try configure(with:languageType:)` — same parameters, now throwing |
+
+`.dev` has no automatic replacement: it carried no URL, so there is nothing to
+substitute. Each `.dev` usage fails to compile after the update and the address
+has to be supplied explicitly.
+
+#### Stored identifiers
+
+The previous formats (`dev`, `custom(<url>)`, `development(<url>)`) are **not
+read**. `init?(identifier:)` returns `nil` and `init(validating:)` throws
+`unknownEnvironmentIdentifier`.
+
+If your app persisted `identifier` as a string, the stored selection will fail
+to restore once after the update. Handle it explicitly instead of falling back
+to a default:
+
+```swift
+let saved = UserDefaults.standard.string(forKey: "NPEnvironment")
+if let saved, NPEnvironmentType(identifier: saved) == nil {
+    UserDefaults.standard.removeObject(forKey: "NPEnvironment")
+    showEnvironmentPicker(message: "The stored environment is no longer supported")
+}
+```
+
+The separator `|` replaced the previous parenthesis wrapping because it cannot
+appear in a URL scheme — the old parser split on brackets and corrupted URLs
+containing `)` in their query string.
+
+#### Error type
+
+Configuration failures are reported as `NPConfigurationError`, thrown from
+`configure(with:languageType:)` and from `NPEnvironmentType(validating:)`.
+No other method signature changed.

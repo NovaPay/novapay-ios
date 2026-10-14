@@ -2,55 +2,105 @@ import Foundation
 import NovaPaySDKFramework
 
 enum NovaPayAPIEnvironmentType: Hashable {
-    case dev
     case staging
-    case custom(String)
+    case development(String)
+
+    private static let developmentPrefix = "development|"
+
+    static let storageKey = "NovaPayAPIEnvironmentIdentifier"
 
     var baseURL: String {
         switch self {
-        case .dev, .staging:
+        case .staging:
             return "https://int-api-qecom.novapay.ua"
-        case .custom(let url):
+        case .development(let url):
             return url
         }
     }
 
     var identifier: String {
         switch self {
-        case .dev: return "dev"
-        case .staging: return "staging"
-        case .custom(let url): return "custom(\(url))"
+        case .staging:
+            return "staging"
+        case .development(let url):
+            return Self.developmentPrefix + url
+        }
+    }
+
+    var title: String {
+        switch self {
+        case .staging: return "Staging"
+        case .development: return "Development"
         }
     }
 
     init?(identifier: String) {
-        switch identifier {
-        case "dev": self = .dev
-        case "staging": self = .staging
-        default:
-            if identifier.hasPrefix("custom("), identifier.hasSuffix(")") {
-                self = .custom(String(identifier.dropFirst(7).dropLast()))
-            } else {
-                return nil
-            }
+        if identifier == "staging" {
+            self = .staging
+        } else if identifier.hasPrefix(Self.developmentPrefix) {
+            let urlString = String(identifier.dropFirst(Self.developmentPrefix.count))
+            guard Self.isValidBaseURL(urlString) else { return nil }
+            self = .development(urlString)
+        } else {
+            return nil
+        }
+    }
+
+    static func isValidBaseURL(_ urlString: String) -> Bool {
+        guard let components = URLComponents(string: urlString),
+              let scheme = components.scheme?.lowercased(),
+              scheme == "http" || scheme == "https",
+              let host = components.host,
+              !host.isEmpty
+        else { return false }
+        return true
+    }
+
+    var sdkEnvironment: NPEnvironmentType {
+        switch self {
+        case .staging: return .staging
+        case .development(let url): return .development(url)
         }
     }
 }
 
-// MARK: - API Service
+extension NovaPayAPIEnvironmentType {
+
+    static func restore(
+        from defaults: UserDefaults = .standard
+    ) -> (environment: NovaPayAPIEnvironmentType, unreadableIdentifier: String?) {
+        guard let saved = defaults.string(forKey: storageKey) else {
+            return (.staging, nil)
+        }
+        guard let restored = NovaPayAPIEnvironmentType(identifier: saved) else {
+            return (.staging, saved)
+        }
+        return (restored, nil)
+    }
+
+    func store(in defaults: UserDefaults = .standard) {
+        defaults.set(identifier, forKey: Self.storageKey)
+    }
+}
+
 class NovaPayAPIService {
     static let shared = NovaPayAPIService()
 
-    private var baseURL = NovaPayAPIEnvironmentType.dev.baseURL
+    private(set) var environment: NovaPayAPIEnvironmentType = .staging
+    private var baseURL: String { environment.baseURL }
     private let token = "lolkekcheburek"
-    
+
     private init() {}
-    
-    @MainActor public func configure(with environment: NovaPayAPIEnvironmentType = .dev) {
-        baseURL = environment.baseURL
+
+    @MainActor public func configure(with environment: NovaPayAPIEnvironmentType = .staging) throws {
+        guard NovaPayAPIEnvironmentType.isValidBaseURL(environment.baseURL) else {
+            throw APIError.invalidEnvironmentURL(environment.baseURL)
+        }
+        try NPAPIClient.shared.configure(with: environment.sdkEnvironment)
+        self.environment = environment
+        environment.store()
     }
 
-    // Fetch waybills from API
     func fetchWaybills(phoneNumber: String) async throws -> [WaybillsResponse] {
         guard let encodedPhone = phoneNumber.addingPercentEncoding(withAllowedCharacters: .allowedCharacters) else {
             throw APIError.invalidPhoneFormat
@@ -64,30 +114,28 @@ class NovaPayAPIService {
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "Content-type")
         request.addValue(token, forHTTPHeaderField: "x-token")
-        
+
         let (data, _) = try await URLSession.shared.data(for: request)
         return try JSONDecoder().decode([WaybillsResponse].self, from: data)
     }
-    
-    // Initialize payment for a waybill
+
     func initializePayment(paymentRequest: PaymentInitRequest) async throws -> PaymentInitResponse {
         guard let url = URL(string: "\(baseURL)/v1/init") else {
             throw APIError.invalidURL
         }
-        
+
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-type")
         request.addValue(token, forHTTPHeaderField: "x-token")
-        
+
         let jsonData = try JSONEncoder().encode(paymentRequest)
         request.httpBody = jsonData
-        
+
         let (data, _) = try await URLSession.shared.data(for: request)
         return try JSONDecoder().decode(PaymentInitResponse.self, from: data)
     }
 
-    // Monitor session status
     func startPolling(sessionId: String, completion: @escaping @Sendable (PaymentSheetResult) -> Void) async throws {
         let sessionService = NPSessionStatusService()
         try await sessionService.startPolling(sessionId: sessionId, completion: completion)
@@ -100,20 +148,19 @@ class NovaPayAPIService {
 }
 
 extension NovaPayAPIService {
-    // Initialize wallet
     func initializeWallet(walletRequest: WalletInitRequest) async throws -> WalletInitResponse {
         guard let url = URL(string: "\(baseURL)/v1/init-wallet-management") else {
             throw APIError.invalidURL
         }
-        
+
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-type")
         request.addValue(token, forHTTPHeaderField: "x-token")
-        
+
         let jsonData = try JSONEncoder().encode(walletRequest)
         request.httpBody = jsonData
-        
+
         let (data, _) = try await URLSession.shared.data(for: request)
         let string = String(data: data, encoding: .utf8)!
         print(string)
@@ -122,17 +169,16 @@ extension NovaPayAPIService {
 }
 
 extension NovaPayAPIService {
-    // Initialize payout
     func initializePayout(payoutRequest: PayoutInitRequest) async throws -> PayoutInitResponse {
         guard let url = URL(string: "\(baseURL)/v1/init-payout") else {
             throw APIError.invalidURL
         }
-        
+
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-type")
         request.addValue(token, forHTTPHeaderField: "x-token")
-        
+
         let jsonData = try JSONEncoder().encode(payoutRequest)
         request.httpBody = jsonData
 
@@ -143,19 +189,24 @@ extension NovaPayAPIService {
     }
 }
 
-// MARK: - API Errors
 enum APIError: Error, LocalizedError {
     case invalidPhoneFormat
     case invalidURL
+    case invalidEnvironmentURL(String)
+    case unknownEnvironmentIdentifier(String)
     case noDataReceived
     case decodingError(String)
-    
+
     var errorDescription: String? {
         switch self {
         case .invalidPhoneFormat:
             return "Invalid phone number format"
         case .invalidURL:
             return "Invalid URL"
+        case .invalidEnvironmentURL(let urlString):
+            return "Invalid environment URL: \(urlString)"
+        case .unknownEnvironmentIdentifier(let identifier):
+            return "Unknown environment identifier: \(identifier)"
         case .noDataReceived:
             return "No data received"
         case .decodingError(let message):
