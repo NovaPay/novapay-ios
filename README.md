@@ -35,15 +35,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         // Initialize SDK
-        do {
-            try NPAPIClient.shared.configure(
-                with: .staging, // Options: .prod, .staging, .development(url) . By default .staging
-                languageType: .uk // Options: uk, en . By default uk
-            )
-        } catch {
-            // NPConfigurationError — the environment was left unchanged
-            print("Failed to configure SDK: \(error)")
-        }
+        NPAPIClient.shared.configure(
+            with: .staging, // Options: .prod, .staging, .development(url) . By default .staging
+            languageType: .uk // Options: uk, en . By default uk
+        )
 
         return true
     }
@@ -518,17 +513,6 @@ class WalletViewController: UIViewController {
         )
     }
 
-    private func handleError(_ error: Error) {
-        walletButton.isEnabled = false
-        walletButton.setTitle("Error", for: .normal)
-        showAlert(title: "Error", message: "Failed to initialize wallet: \(error.localizedDescription)")
-    }
-    
-    private func showAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true)
-    }
 }
 ```
 
@@ -574,7 +558,8 @@ struct WalletView: View {
                     EmptyView()
                         .walletSheet(
                             isPresented: $walletModel.isPresentedWalletSheet,
-                            walletSheet: walletSheet
+                            walletSheet: walletSheet,
+                            onDismiss: walletModel.onWalletDismiss
                         )
                 }
             }
@@ -610,45 +595,9 @@ class WalletModel: ObservableObject {
         walletSheet = WalletSheet(token: token)
     }
     
-    func handleWalletSheetStatus(_ result: WalletSheetResult) {
-        switch result {
-        case .addCard(let card):
-            print("Card added: \(card)")
-            dismissWalletSheet()
-        case .removeCard:
-            print("Card removed")
-            dismissWalletSheet()
-        case .favouriteCardChanged(let cardId, let isFavourite):
-            print("Favourite card changed - ID: \(cardId ?? -1), isFavourite: \(isFavourite ?? false)")
-        case .mainCardChanged(let cardId, let isMain):
-            print("Main card changed - ID: \(cardId ?? -1), isMain: \(isMain ?? false)")
-        case .canceled:
-            dismissWalletSheet()
-            print("Wallet management canceled!")
-        case .failed(let errorMessage):
-            showError(message: errorMessage)
-            dismissWalletSheet()
-        case .undefined:
-            dismissWalletSheet()
-            print("Wallet status undefined!")
-        }
-    }
-    
-    func handleSessionStatus(_ status: NPSessionStatusType) {
-        // Handle session status if needed
-        switch status {
-        case .completed:
-            print("Session completed")
-        case .failed:
-            print("Session failed")
-        default:
-            break
-        }
-    }
-    
-    private func dismissWalletSheet() {
-        walletSheet?.dismiss()
+    func onWalletDismiss() {
         isPresentedWalletSheet = false
+        walletSheet = nil
     }
     
     func showError(message: String) {
@@ -688,8 +637,11 @@ background. `present(from:onDismiss:)` can therefore be called right away: the
 sheet appears with a skeleton placeholder and fills in once the data arrives.
 If the session was already loaded by the time the user taps, no skeleton is shown.
 
-When loading fails, the sheet shows an alert with a retry option — the merchant
-app does not need to handle it. The user can always leave with the back button.
+When loading fails, the sheet shows an alert and closes after the user taps OK,
+calling `onDismiss`. The failure is **not** reported to the integration:
+`WalletSheetResult` is not public in this release, so `WalletSheet` has no result
+channel. Error handling that previously lived in the `catch` around
+`WalletSheet.init` no longer runs.
 
 #### Card Management Features
 
@@ -799,7 +751,6 @@ class PayoutViewController: UIViewController {
 
     private func setupPayoutSheet() {
         payoutSheet = PayoutSheet(sessionId: sessionId)
-        payoutButton.isEnabled = true
     }
 
     @objc private func payoutButtonTapped() {
@@ -826,8 +777,10 @@ class PayoutViewController: UIViewController {
 the session in the background, so `present(from:)` can be called right away. The
 sheet opens with a skeleton placeholder and fills in once the data arrives.
 
-When loading fails, the sheet shows an alert; dismissing it reports
-`.failed` through `payoutSheetStatusHandler`.
+When loading fails, the sheet closes itself and reports
+`PayoutSheetResult.failed(String)` through the status handler. The SDK shows no
+alert of its own — presenting the error is yours to do, exactly as it was when
+`init` threw.
 
 #### Result Types
 
@@ -844,7 +797,8 @@ When loading fails, the sheet shows an alert; dismissing it reports
 
 - ✅ SwiftUI + UIKit support
 - ✅ `.payoutSheet` ViewModifier and `PaymentButton` view
-- ✅ Built-in error handling and async-ready
+- ✅ Non-blocking initializer with a skeleton while the session loads
+- ✅ Every exit reported through a single status handler
 
 
 ## 📱 Example Project
@@ -878,8 +832,6 @@ The example demonstrates:
 
 ## 🌍 Environment Configuration
 
-### Available environments
-
 ```swift
 public enum NPEnvironmentType: Hashable {
     case prod
@@ -892,122 +844,34 @@ public enum NPEnvironmentType: Hashable {
 |---|---|---|
 | `.prod` | `https://e-com.novapay.ua` | Production environment |
 | `.staging` | `https://qecom.novapay.ua` | Pre-production testing environment |
-| `.development(String)` | your own URL | Development environment |
+| `.development(String)` | your own URL | Development and testing environment |
 
 ```swift
-try NPAPIClient.shared.configure(with: .staging, languageType: .uk)
-try NPAPIClient.shared.configure(with: .development("https://your-dev-host"))
+NPAPIClient.shared.configure(with: .staging, languageType: .uk)
+NPAPIClient.shared.configure(with: .development("https://your-dev-host"))
 ```
 
-`configure(with:languageType:)` throws and never leaves the client in a
-half-configured state: if the environment is rejected, the previously
-configured one stays in effect.
-
-Both parameters stay optional, so changing only the language still works:
+Both parameters are optional, so the language can be changed on its own:
 
 ```swift
-try NPAPIClient.shared.configure(languageType: .uk)
+NPAPIClient.shared.configure(languageType: .uk)
 ```
 
-### Persisting the selected environment
+## 🔒 Security Features
 
-`identifier` and `init?(identifier:)` form a round-trip contract — a string
-stored today is readable by the next SDK version.
+- Secure handling of sensitive payment information
+- HTTPS communication
+- Optional card details storage
+- Comprehensive error handling through status callbacks
 
-| Environment | identifier |
-|---|---|
-| `.prod` | `prod` |
-| `.staging` | `staging` |
-| `.development(url)` | `development\|<url>` |
+## 📞 Support
 
-```swift
-UserDefaults.standard.set(environment.identifier, forKey: "NPEnvironment")
+For technical support or questions, please contact NovaPay support team.
 
-if let saved = UserDefaults.standard.string(forKey: "NPEnvironment") {
-    try NPAPIClient.shared.configure(withIdentifier: saved)
-}
-```
+## 📄 License
 
-For a non-throwing path, resolve the identifier yourself:
+This SDK is proprietary software. Usage terms and conditions are defined in your license agreement.
 
-```swift
-guard let environment = NPEnvironmentType(identifier: saved) else {
-    // show an error and let the user pick an environment again
-    return
-}
-try NPAPIClient.shared.configure(with: environment)
-```
+---
 
-### Error behaviour
-
-```swift
-public enum NPConfigurationError: Error, LocalizedError {
-    case unknownEnvironmentIdentifier(String)
-    case invalidEnvironmentURL(String)
-}
-```
-
-| Situation | Behaviour |
-|---|---|
-| Unrecognized identifier | `init(validating:)` and `configure(withIdentifier:)` throw `unknownEnvironmentIdentifier`; `init?(identifier:)` returns `nil` |
-| Development URL with no scheme | `invalidEnvironmentURL` |
-| Development URL with no host | `invalidEnvironmentURL` |
-| Development URL with a scheme other than `http`/`https` | `invalidEnvironmentURL` |
-| Empty development URL | `invalidEnvironmentURL` |
-| `configure(with:)` with an invalid URL | throws `invalidEnvironmentURL`, **the environment is not changed** |
-
-A URL is valid when it has an `http` or `https` scheme and a non-empty host.
-The check is public:
-
-```swift
-NPEnvironmentType.isValidBaseURL("https://dev.example") // true
-NPEnvironmentType.isValidBaseURL("dev.example")         // false
-```
-
-The SDK never silently falls back to a different server. Validation happens once,
-at `configure`, so the client can only ever hold an environment whose URL is
-already known to be valid — no API method can be reached with a broken base URL.
-
-### Migration
-
-#### Source changes
-
-Every change below is caught by the compiler — no behaviour changes silently.
-
-| Before | After |
-|---|---|
-| `.dev` | `.development("<url>")` — the URL must now be explicit |
-| `.custom(url)` | `.development(url)` |
-| `configure(environment:languageType:)` | `try configure(with:languageType:)` — same parameters, now throwing |
-
-`.dev` has no automatic replacement: it carried no URL, so there is nothing to
-substitute. Each `.dev` usage fails to compile after the update and the address
-has to be supplied explicitly.
-
-#### Stored identifiers
-
-The previous formats (`dev`, `custom(<url>)`, `development(<url>)`) are **not
-read**. `init?(identifier:)` returns `nil` and `init(validating:)` throws
-`unknownEnvironmentIdentifier`.
-
-If your app persisted `identifier` as a string, the stored selection will fail
-to restore once after the update. Handle it explicitly instead of falling back
-to a default:
-
-```swift
-let saved = UserDefaults.standard.string(forKey: "NPEnvironment")
-if let saved, NPEnvironmentType(identifier: saved) == nil {
-    UserDefaults.standard.removeObject(forKey: "NPEnvironment")
-    showEnvironmentPicker(message: "The stored environment is no longer supported")
-}
-```
-
-The separator `|` replaced the previous parenthesis wrapping because it cannot
-appear in a URL scheme — the old parser split on brackets and corrupted URLs
-containing `)` in their query string.
-
-#### Error type
-
-Configuration failures are reported as `NPConfigurationError`, thrown from
-`configure(with:languageType:)` and from `NPEnvironmentType(validating:)`.
-No other method signature changed.
+For detailed implementation examples and advanced features, please refer to the example app included in the SDK package. 
