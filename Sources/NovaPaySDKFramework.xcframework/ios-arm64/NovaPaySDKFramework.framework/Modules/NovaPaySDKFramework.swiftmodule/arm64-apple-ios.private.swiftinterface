@@ -784,22 +784,22 @@ extension NovaPaySDKFramework.PayoutCreditCardView : UIKit.UITextFieldDelegate {
 extension NovaPaySDKFramework.WalletCreditCardView : UIKit.UITextFieldDelegate {
   @_Concurrency.MainActor @preconcurrency @objc dynamic public func textField(_ textField: UIKit.UITextField, shouldChangeCharactersIn range: Foundation.NSRange, replacementString string: Swift.String) -> Swift.Bool
 }
-public enum NPFonts {
-  public static func interRegular(size: CoreFoundation.CGFloat, useMetrics: Swift.Bool = true, maxMetricsFontSize: CoreFoundation.CGFloat? = nil) -> UIKit.UIFont
-  public static func interSemibold(size: CoreFoundation.CGFloat, useMetrics: Swift.Bool = true, maxMetricsFontSize: CoreFoundation.CGFloat? = nil) -> UIKit.UIFont
-  public static func interMedium(size: CoreFoundation.CGFloat, useMetrics: Swift.Bool = true, maxMetricsFontSize: CoreFoundation.CGFloat? = nil) -> UIKit.UIFont
-  public static func registerFonts(named names: [Swift.String]) throws
-  public enum InputFormFonts {
-    public static var errorFont: UIKit.UIFont {
+@_Concurrency.MainActor public enum NPFonts {
+  @_Concurrency.MainActor public static func interRegular(size: CoreFoundation.CGFloat, useMetrics: Swift.Bool = true, maxMetricsFontSize: CoreFoundation.CGFloat? = nil) -> UIKit.UIFont
+  @_Concurrency.MainActor public static func interSemibold(size: CoreFoundation.CGFloat, useMetrics: Swift.Bool = true, maxMetricsFontSize: CoreFoundation.CGFloat? = nil) -> UIKit.UIFont
+  @_Concurrency.MainActor public static func interMedium(size: CoreFoundation.CGFloat, useMetrics: Swift.Bool = true, maxMetricsFontSize: CoreFoundation.CGFloat? = nil) -> UIKit.UIFont
+  @_Concurrency.MainActor public static func registerFonts(named names: [Swift.String]) throws
+  @_Concurrency.MainActor public enum InputFormFonts {
+    @_Concurrency.MainActor public static var errorFont: UIKit.UIFont {
       get
     }
-    public static var placholderFont: UIKit.UIFont {
+    @_Concurrency.MainActor public static var placholderFont: UIKit.UIFont {
       get
     }
-    public static var placholderSelectedFont: UIKit.UIFont {
+    @_Concurrency.MainActor public static var placholderSelectedFont: UIKit.UIFont {
       get
     }
-    public static var textFont: UIKit.UIFont {
+    @_Concurrency.MainActor public static var textFont: UIKit.UIFont {
       get
     }
   }
@@ -930,6 +930,9 @@ extension NovaPaySDKFramework.Confirm3dsViewController : WebKit.WKNavigationDele
   @objc deinit
 }
 extension NovaPaySDKFramework.ManualInputViewController : UIKit.UITextViewDelegate {
+  @available(iOS 17.0, *)
+  @_Concurrency.MainActor @preconcurrency @objc final public func textView(_ textView: UIKit.UITextView, primaryActionFor textItem: UIKit.UITextItem, defaultAction: UIKit.UIAction) -> UIKit.UIAction?
+  @available(iOS, deprecated: 17.0)
   @_Concurrency.MainActor @preconcurrency @objc final public func textView(_ textView: UIKit.UITextView, shouldInteractWith URL: Foundation.URL, in characterRange: Foundation.NSRange, interaction: UIKit.UITextItemInteraction) -> Swift.Bool
 }
 extension NovaPaySDKFramework.ManualInputViewController : @preconcurrency NovaPaySDKFramework.CreditCardFieldServiceDelegate {
@@ -938,6 +941,7 @@ extension NovaPaySDKFramework.ManualInputViewController : @preconcurrency NovaPa
   @_Concurrency.MainActor @preconcurrency @objc final public func cardCVVValidated(cvv: Swift.String)
 }
 extension NovaPaySDKFramework.ManualInputViewController {
+  @available(iOS, deprecated: 17.0)
   @_Concurrency.MainActor @preconcurrency @objc override final public func traitCollectionDidChange(_ previousTraitCollection: UIKit.UITraitCollection?)
 }
 @objc @_inheritsConvenienceInitializers @_Concurrency.MainActor @preconcurrency public class PaymentSheetFavouriteButtonView : UIKit.UIView {
@@ -981,7 +985,7 @@ extension NovaPaySDKFramework.PaymentSheet {
   }
 }
 public struct PaymentSheetConfiguration {
-  public static func registerFonts()
+  @_Concurrency.MainActor public static func registerFonts()
 }
 public enum PayoutManualInputType {
   case addCard
@@ -1000,9 +1004,13 @@ public enum PayoutManualInputType {
   @objc deinit
 }
 extension NovaPaySDKFramework.PayoutManualInputViewController : UIKit.UITextViewDelegate {
+  @available(iOS 17.0, *)
+  @_Concurrency.MainActor @preconcurrency @objc final public func textView(_ textView: UIKit.UITextView, primaryActionFor textItem: UIKit.UITextItem, defaultAction: UIKit.UIAction) -> UIKit.UIAction?
+  @available(iOS, deprecated: 17.0)
   @_Concurrency.MainActor @preconcurrency @objc final public func textView(_ textView: UIKit.UITextView, shouldInteractWith URL: Foundation.URL, in characterRange: Foundation.NSRange, interaction: UIKit.UITextItemInteraction) -> Swift.Bool
 }
 extension NovaPaySDKFramework.PayoutManualInputViewController {
+  @available(iOS, deprecated: 17.0)
   @_Concurrency.MainActor @preconcurrency @objc override final public func traitCollectionDidChange(_ previousTraitCollection: UIKit.UITraitCollection?)
 }
 extension NovaPaySDKFramework.PayoutManualInputViewController : @preconcurrency NovaPaySDKFramework.CreditCardFieldServiceDelegate {
@@ -1019,7 +1027,7 @@ extension SwiftUICore.View {
   case success(Swift.String, Swift.String)
 }
 @_Concurrency.MainActor public class PayoutSheet {
-  @_Concurrency.MainActor public init(sessionId: Swift.String, payoutSheetStatusHandler: ((NovaPaySDKFramework.PayoutSheetResult) -> Swift.Void)? = nil) async throws
+  @_Concurrency.MainActor public init(sessionId: Swift.String, payoutSheetStatusHandler: ((NovaPaySDKFramework.PayoutSheetResult) -> Swift.Void)? = nil)
   @_Concurrency.MainActor public func present(from presentingViewController: UIKit.UIViewController, payoutSheetStatusHandler: ((NovaPaySDKFramework.PayoutSheetResult) -> Swift.Void)? = nil)
   @_Concurrency.MainActor public func dismiss(animated: Swift.Bool = true, completion: (() -> Swift.Void)? = nil)
   @objc deinit
@@ -1034,7 +1042,7 @@ extension NovaPaySDKFramework.PayoutSheet {
   }
 }
 public struct PayoutSheetConfiguration {
-  public static func registerFonts()
+  @_Concurrency.MainActor public static func registerFonts()
 }
 public struct WalletPaymentCard {
 }
@@ -1068,6 +1076,9 @@ public enum WalletManualInputType {
   @objc deinit
 }
 extension NovaPaySDKFramework.WalletManualInputViewController : UIKit.UITextViewDelegate {
+  @available(iOS 17.0, *)
+  @_Concurrency.MainActor @preconcurrency @objc final public func textView(_ textView: UIKit.UITextView, primaryActionFor textItem: UIKit.UITextItem, defaultAction: UIKit.UIAction) -> UIKit.UIAction?
+  @available(iOS, deprecated: 17.0)
   @_Concurrency.MainActor @preconcurrency @objc final public func textView(_ textView: UIKit.UITextView, shouldInteractWith URL: Foundation.URL, in characterRange: Foundation.NSRange, interaction: UIKit.UITextItemInteraction) -> Swift.Bool
 }
 extension NovaPaySDKFramework.WalletManualInputViewController : @preconcurrency NovaPaySDKFramework.CreditCardFieldServiceDelegate {
@@ -1076,6 +1087,7 @@ extension NovaPaySDKFramework.WalletManualInputViewController : @preconcurrency 
   @_Concurrency.MainActor @preconcurrency @objc final public func cardNameValidated(name: Swift.String)
 }
 extension NovaPaySDKFramework.WalletManualInputViewController {
+  @available(iOS, deprecated: 17.0)
   @_Concurrency.MainActor @preconcurrency @objc override final public func traitCollectionDidChange(_ previousTraitCollection: UIKit.UITraitCollection?)
 }
 @objc @_inheritsConvenienceInitializers @_Concurrency.MainActor @preconcurrency final public class WalletRemoveCardAlertViewController : UIKit.UIViewController {
@@ -1086,6 +1098,7 @@ extension NovaPaySDKFramework.WalletManualInputViewController {
   @objc deinit
 }
 extension NovaPaySDKFramework.WalletRemoveCardAlertViewController {
+  @available(iOS, deprecated: 17.0)
   @_Concurrency.MainActor @preconcurrency @objc override final public func traitCollectionDidChange(_ previousTraitCollection: UIKit.UITraitCollection?)
 }
 extension SwiftUICore.View {
@@ -1102,7 +1115,7 @@ public enum WalletSheetFailedType {
   }
 }
 @_Concurrency.MainActor public class WalletSheet {
-  @_Concurrency.MainActor public init(token: Swift.String) async throws
+  @_Concurrency.MainActor public init(token: Swift.String)
   @_Concurrency.MainActor public func present(from presentingViewController: UIKit.UIViewController, onDismiss: (() -> Swift.Void)? = nil)
   @_Concurrency.MainActor public func dismiss(animated: Swift.Bool = true, completion: (() -> Swift.Void)? = nil)
   @objc deinit
@@ -1117,7 +1130,7 @@ extension NovaPaySDKFramework.WalletSheet {
   }
 }
 public struct WalletSheetConfiguration {
-  public static func registerFonts()
+  @_Concurrency.MainActor public static func registerFonts()
 }
 extension NovaPaySDKFramework.ImageLoader : Swift.Sendable {}
 extension NovaPaySDKFramework.NovaPaySDKLogger : Swift.Sendable {}
@@ -1153,6 +1166,8 @@ extension NovaPaySDKFramework.PassportDocumentType : Swift.RawRepresentable {}
 extension NovaPaySDKFramework.PaymentWarningTab : Swift.Equatable {}
 extension NovaPaySDKFramework.PaymentWarningTab : Swift.Hashable {}
 extension NovaPaySDKFramework.PaymentWarningTab : Swift.RawRepresentable {}
+extension NovaPaySDKFramework.NPFonts : Swift.Sendable {}
+extension NovaPaySDKFramework.NPFonts.InputFormFonts : Swift.Sendable {}
 extension NovaPaySDKFramework.FontError : Swift.Equatable {}
 extension NovaPaySDKFramework.FontError : Swift.Hashable {}
 extension NovaPaySDKFramework.NPFeaturesImages : Swift.Equatable {}
